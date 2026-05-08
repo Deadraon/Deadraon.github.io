@@ -8,22 +8,24 @@ async function checkAdmin(userId: string) {
   return ADMIN_USER_IDS.length === 0 || ADMIN_USER_IDS.includes(userId);
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
   if (!userId || !(await checkAdmin(userId))) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   await connectDB();
-  const project = await Project.findById(params.id).lean();
+  const { id } = await params;
+  const project = await Project.findById(id).lean();
   if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ project });
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
   if (!userId || !(await checkAdmin(userId))) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   await connectDB();
 
   const body = await req.json();
-  const oldProject = await Project.findById(params.id);
+  const { id } = await params;
+  const oldProject = await Project.findById(id);
   if (!oldProject) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   // Auto-log status changes
@@ -32,14 +34,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     body.changelog = [...(body.changelog || oldProject.changelog), log];
   }
 
-  const project = await Project.findByIdAndUpdate(params.id, { $set: body }, { new: true }).lean();
+  const project = await Project.findByIdAndUpdate(id, { $set: body }, { new: true }).lean();
   return NextResponse.json({ project });
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
   if (!userId || !(await checkAdmin(userId))) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   await connectDB();
-  await Project.findByIdAndDelete(params.id);
+  const { id } = await params;
+  await Project.findByIdAndDelete(id);
   return NextResponse.json({ success: true });
 }

@@ -5,12 +5,13 @@ import Project from "@/models/Project";
 import { getStatusColor, getStatusLabel, formatDate, formatRelativeDate } from "@/lib/utils";
 import { CheckCircle, Circle, Clock, FileText, MessageSquare, Activity } from "lucide-react";
 
-export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
   await connectDB();
-  const project = await Project.findOne({ _id: params.id, clientId: userId }).lean() as any;
+  const { id } = await params;
+  const project = await Project.findOne({ _id: id, clientId: userId }).lean() as any;
   if (!project) notFound();
 
   const tabs = [

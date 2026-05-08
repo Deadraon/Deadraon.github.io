@@ -7,8 +7,6 @@ import { getStatusLabel, formatRelativeDate } from "@/lib/utils";
 import { Save, Loader2, Plus, Trash2, ArrowLeft, CheckCircle, Circle } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { v4 as uuid } from "crypto";
-
 const STATUSES = ["pending", "in-progress", "review", "delivered", "on-hold"];
 
 export default function AdminProjectEditPage() {
