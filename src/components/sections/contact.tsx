@@ -98,8 +98,8 @@ export function ContactSection() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5 p-8 rounded-2xl border border-border bg-card">
                 <div className="grid sm:grid-cols-2 gap-5">
-                  {[{ name: "name", label: "Full Name", placeholder: "John Doe" },
-                    { name: "email", label: "Email Address", placeholder: "john@example.com", type: "email" }
+                  {[{ name: "name", label: "Full Name", placeholder: "Enter your name" },
+                    { name: "email", label: "Email Address", placeholder: "Enter your email", type: "email" }
                   ].map((f) => (
                     <div key={f.name}>
                       <label className="block text-sm font-medium mb-2">{f.label}</label>
