@@ -1,0 +1,114 @@
+"use client";
+
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Globe, Smartphone, Palette, Plug, Wrench, ArrowRight } from "lucide-react";
+
+const services = [
+  {
+    icon: Globe,
+    title: "Web Development",
+    description: "Full-stack web applications built with Next.js, React, and Node.js. Fast, scalable, and SEO-optimized.",
+    features: ["Next.js / React", "REST & GraphQL APIs", "Database Design", "Deployment & CI/CD"],
+    color: "from-purple-500 to-blue-500",
+    href: "/services#web",
+  },
+  {
+    icon: Smartphone,
+    title: "App Development",
+    description: "Cross-platform mobile applications using Flutter. One codebase, native-quality experience on iOS & Android.",
+    features: ["Flutter / Dart", "iOS & Android", "State Management", "App Store Deployment"],
+    color: "from-blue-500 to-cyan-500",
+    href: "/services#app",
+  },
+  {
+    icon: Palette,
+    title: "UI/UX Design",
+    description: "Modern, conversion-focused interfaces. From wireframes to pixel-perfect designs that users love.",
+    features: ["Figma Prototypes", "Design Systems", "Responsive Layouts", "Animation & Motion"],
+    color: "from-cyan-500 to-teal-500",
+    href: "/services#ui",
+  },
+  {
+    icon: Plug,
+    title: "API Integration",
+    description: "Connect your product to third-party services, payment gateways, and external APIs seamlessly.",
+    features: ["Payment Gateways", "OAuth / Auth Flows", "Webhooks", "Real-time Systems"],
+    color: "from-teal-500 to-emerald-500",
+    href: "/services#api",
+  },
+  {
+    icon: Wrench,
+    title: "Maintenance & Support",
+    description: "Ongoing support, performance optimization, bug fixes, and feature updates to keep your app running flawlessly.",
+    features: ["Bug Fixes", "Performance Audit", "Security Updates", "Feature Additions"],
+    color: "from-emerald-500 to-green-500",
+    href: "/services#maintenance",
+  },
+];
+
+export function ServicesSection() {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section ref={ref} className="section-padding">
+      <div className="max-w-7xl mx-auto">
+        <div className={cn("text-center mb-16 transition-all duration-700", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+          <span className="text-primary text-sm font-semibold uppercase tracking-wider">What I Do</span>
+          <h2 className="text-4xl lg:text-5xl font-bold mt-2 mb-4">
+            Services I <span className="gradient-text">Offer</span>
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            End-to-end digital product development — from design to deployment, I handle it all with precision and care.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <div
+              key={service.title}
+              className={cn(
+                "group relative p-6 rounded-2xl border border-border bg-card hover:border-primary/30 transition-all duration-500 card-hover cursor-pointer",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+                i === 4 ? "md:col-span-2 lg:col-span-1" : ""
+              )}
+              style={{ transitionDelay: `${i * 100}ms` }}
+            >
+              {/* Icon */}
+              <div className={cn("w-12 h-12 rounded-xl bg-gradient-to-br mb-4 flex items-center justify-center shadow-lg", service.color)}>
+                <service.icon className="w-6 h-6 text-white" />
+              </div>
+
+              {/* Hover glow */}
+              <div className={cn("absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-500", service.color)} />
+
+              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{service.description}</p>
+
+              <ul className="space-y-2 mb-6">
+                {service.features.map((f) => (
+                  <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <Link href={service.href} className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                Learn more <ArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        <div className={cn("text-center mt-12 transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+          <Button asChild size="lg" variant="gradient">
+            <Link href="/services">View All Services <ArrowRight className="w-4 h-4" /></Link>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
