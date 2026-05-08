@@ -97,7 +97,7 @@ export function Footer() {
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <span>Built with</span>
             <span className="text-red-500">♥</span>
-            <span>using Next.js & Tailwind CSS</span>
+            <span>by MOB</span>
           </div>
         </div>
       </div>
