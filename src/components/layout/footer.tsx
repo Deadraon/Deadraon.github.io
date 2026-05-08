@@ -25,11 +25,9 @@ const footerLinks = {
 };
 
 const socials = [
-  { icon: Github, href: "https://github.com/deadraon", label: "GitHub" },
-  { icon: Twitter, href: "https://twitter.com/deadraon", label: "Twitter" },
-  { icon: Linkedin, href: "https://linkedin.com/in/deadraon", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:hello@deadraon.dev", label: "Email" },
-  { icon: MessageCircle, href: "https://wa.me/+1234567890", label: "WhatsApp" },
+  { icon: Github, href: "https://github.com/Deadraon", label: "GitHub" },
+  { icon: Mail, href: "mailto:chauhankunal695@gmail.com", label: "Email" },
+  { icon: MessageCircle, href: "https://wa.me/916396714325", label: "WhatsApp" },
 ];
 
 export function Footer() {

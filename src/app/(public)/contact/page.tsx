@@ -5,11 +5,9 @@ import { Github, Linkedin, Twitter, Mail, MessageCircle } from "lucide-react";
 export const metadata: Metadata = { title: "Contact — Deadraon" };
 
 const socials = [
-  { icon: Github, label: "GitHub", href: "https://github.com/deadraon", color: "hover:text-white hover:bg-gray-800" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/deadraon", color: "hover:text-white hover:bg-blue-600" },
-  { icon: Twitter, label: "Twitter / X", href: "https://twitter.com/deadraon", color: "hover:text-white hover:bg-black" },
-  { icon: Mail, label: "Email", href: "mailto:hello@deadraon.dev", color: "hover:text-white hover:bg-primary" },
-  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/+1234567890", color: "hover:text-white hover:bg-emerald-600" },
+  { icon: Github, label: "GitHub", href: "https://github.com/Deadraon", color: "hover:text-white hover:bg-gray-800" },
+  { icon: Mail, label: "Email", href: "mailto:chauhankunal695@gmail.com", color: "hover:text-white hover:bg-primary" },
+  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/916396714325", color: "hover:text-white hover:bg-emerald-600" },
 ];
 
 export default function ContactPage() {
