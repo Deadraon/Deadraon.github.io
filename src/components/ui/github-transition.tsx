@@ -42,15 +42,15 @@ export function GithubTransition() {
     };
   }, []);
 
-  if (stage === "idle") return null;
-
+  // The component remains mounted so the fade-in animation can play smoothly
   return (
-    <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center">
+    <div 
+      className={`fixed inset-0 z-[100] flex items-center justify-center transition-all duration-700 ease-in-out ${
+        stage === "idle" ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
+      }`}
+    >
       {/* Cinematic Dim background */}
-      <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-xl transition-all duration-700 ease-in-out"
-        style={{ opacity: stage === "idle" ? 0 : 1 }}
-      />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
 
       <style dangerouslySetInnerHTML={{__html: `
         .premium-flip-container {
