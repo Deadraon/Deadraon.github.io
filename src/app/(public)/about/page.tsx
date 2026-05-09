@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Download, ArrowRight, Code2, Zap, Github } from "lucide-react";
+import { Download, ArrowRight, Code2, Zap } from "lucide-react";
+import { GithubButton } from "@/components/ui/github-button";
 
 export const metadata: Metadata = { title: "About — Kunal Chauhan" };
 
@@ -52,12 +53,7 @@ export default function AboutPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
                 <a href="/resume.pdf" download><Download className="w-4 h-4 mr-2" /> Download CV</a>
               </Button>
-              <Button 
-                onClick={() => window.dispatchEvent(new CustomEvent('triggerGithubTransition'))}
-                variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10"
-              >
-                <Github className="w-4 h-4 mr-2" /> GitHub
-              </Button>
+              <GithubButton />
             </div>
           </div>
 
