@@ -26,7 +26,7 @@ const footerLinks = {
 
 const socials = [
   { icon: Github, href: "https://github.com/Deadraon", label: "GitHub" },
-  { icon: Mail, href: "mailto:chauhankunal695@gmail.com", label: "Email" },
+  { icon: Mail, href: "mailto:deadraon@gmail.com", label: "Email" },
   { icon: MessageCircle, href: "https://wa.me/916396714325", label: "WhatsApp" },
 ];
 

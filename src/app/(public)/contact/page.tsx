@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Contact — Deadraon" };
 
 const socials = [
   { icon: FaGithub, label: "GitHub", href: "https://github.com/Deadraon", brandColor: "text-white group-hover:text-black", bgColor: "hover:bg-white border-white/10", textColor: "text-white group-hover:text-black" },
-  { icon: FaEnvelope, label: "Email", href: "mailto:chauhankunal695@gmail.com", brandColor: "text-red-500 group-hover:text-white", bgColor: "hover:bg-red-500 border-red-500/20", textColor: "text-white group-hover:text-white" },
+  { icon: FaEnvelope, label: "Email", href: "mailto:deadraon@gmail.com", brandColor: "text-red-500 group-hover:text-white", bgColor: "hover:bg-red-500 border-red-500/20", textColor: "text-white group-hover:text-white" },
   { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/916396714325", brandColor: "text-green-500 group-hover:text-white", bgColor: "hover:bg-green-500 border-green-500/20", textColor: "text-white group-hover:text-white" },
 ];
 
