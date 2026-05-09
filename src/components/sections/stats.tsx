@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const stats = [
   { value: "50+", label: "Projects Delivered", color: "from-purple-600 to-blue-600" },
   { value: "30+", label: "Happy Clients", color: "from-blue-600 to-cyan-500" },
-  { value: "4+", label: "Years Experience", color: "from-cyan-500 to-emerald-500" },
+  { value: "2+", label: "Years Experience", color: "from-cyan-500 to-emerald-500" },
   { value: "99%", label: "Client Satisfaction", color: "from-emerald-500 to-green-500" },
 ];
 
