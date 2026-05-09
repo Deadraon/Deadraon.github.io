@@ -31,7 +31,7 @@ export async function sendContactEmail({
   timeline?: string;
   phone?: string;
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL || "chauhankunal695@gmail.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "deadraon@gmail.com";
 
   const mailOptions = {
     from: `"Deadraon Portfolio" <${process.env.SMTP_USER}>`,
@@ -82,7 +82,7 @@ export async function notifyAdminOfResumeRequest({
   company?: string;
   token: string;
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL || "chauhankunal695@gmail.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "deadraon@gmail.com";
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
   const approveUrl = `${baseUrl}/api/resume/action?token=${token}&action=approve`;
