@@ -85,7 +85,7 @@ export function Navbar() {
                 <Button variant="ghost" size="sm">Client Login</Button>
               </SignInButton>
               <Button asChild variant="gradient" size="sm">
-                <Link href="/contact">
+                <Link href="/contact#contact-form">
                   <Zap className="w-4 h-4" /> Hire Me
                 </Link>
               </Button>
@@ -134,7 +134,7 @@ export function Navbar() {
                     <Button variant="outline" className="w-full">Client Login</Button>
                   </SignInButton>
                   <Button asChild variant="gradient" className="w-full">
-                    <Link href="/contact" onClick={() => setIsMobileOpen(false)}>
+                    <Link href="/contact#contact-form" onClick={() => setIsMobileOpen(false)}>
                       <Zap className="w-4 h-4" /> Hire Me
                     </Link>
                   </Button>

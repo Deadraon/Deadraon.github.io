@@ -1,19 +1,23 @@
 import { Metadata } from "next";
 import { ContactSection } from "@/components/sections/contact";
-import { Github, Linkedin, Twitter, Mail, MessageCircle } from "lucide-react";
+import { FaGithub, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export const metadata: Metadata = { title: "Contact — Deadraon" };
 
 const socials = [
-  { icon: Github, label: "GitHub", href: "https://github.com/Deadraon", color: "hover:text-white hover:bg-gray-800" },
-  { icon: Mail, label: "Email", href: "mailto:chauhankunal695@gmail.com", color: "hover:text-white hover:bg-primary" },
-  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/916396714325", color: "hover:text-white hover:bg-emerald-600" },
+  { icon: FaGithub, label: "GitHub", href: "https://github.com/Deadraon", brandColor: "text-white group-hover:text-black", bgColor: "hover:bg-white border-white/10" },
+  { icon: FaEnvelope, label: "Email", href: "mailto:chauhankunal695@gmail.com", brandColor: "text-red-500 group-hover:text-white", bgColor: "hover:bg-red-500 border-red-500/20" },
+  { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/916396714325", brandColor: "text-green-500 group-hover:text-white", bgColor: "hover:bg-green-500 border-green-500/20" },
 ];
 
 export default function ContactPage() {
   return (
-    <div className="pt-24">
-      <section className="section-padding pb-8">
+    <div className="pt-24 relative overflow-hidden">
+      {/* SaaS AI glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0070F3]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-[#8A2BE2]/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <section className="section-padding pb-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-primary text-sm font-semibold uppercase tracking-wider">Hire Me</span>
           <h1 className="text-5xl lg:text-6xl font-black mt-2 mb-6">
@@ -24,19 +28,21 @@ export default function ContactPage() {
           </p>
 
           {/* Social links */}
-          <div className="flex flex-wrap gap-3 justify-center">
+          <div className="flex flex-wrap gap-4 justify-center">
             {socials.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-card text-muted-foreground text-sm font-medium transition-all duration-200 ${s.color}`}>
-                <s.icon className="w-4 h-4" />
-                {s.label}
+                className={`group flex items-center gap-3 px-6 py-3 rounded-2xl border bg-black/50 backdrop-blur-md transition-all duration-300 ${s.bgColor}`}>
+                <s.icon className={`w-5 h-5 transition-colors ${s.brandColor}`} />
+                <span className="text-white font-medium group-hover:text-white transition-colors">{s.label}</span>
               </a>
             ))}
           </div>
         </div>
       </section>
 
-      <ContactSection />
+      <div id="contact-form" className="relative z-10 scroll-mt-24">
+        <ContactSection />
+      </div>
     </div>
   );
 }
