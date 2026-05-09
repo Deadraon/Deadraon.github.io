@@ -41,7 +41,7 @@ export default function AboutPage() {
               The Developer <br /><span className="gradient-text">Behind the Code</span>
             </h1>
             <p className="text-white/60 text-lg leading-relaxed mb-6">
-              I&apos;m <strong className="text-white font-medium">Kunal Chauhan</strong>, also known as <strong className="text-white font-medium">MOB</strong> and <strong className="text-white font-medium">Deadraon</strong>. I am a passionate Full Stack Developer with 4+ years of experience crafting digital products that combine elegant design with robust engineering.
+              I&apos;m <strong className="text-white font-medium">Kunal Chauhan</strong>, also known as <strong className="text-white font-medium">MOB</strong>. I am a passionate Full Stack Developer with 4+ years of experience crafting digital products that combine elegant design with robust engineering.
             </p>
             <p className="text-white/50 leading-relaxed mb-8">
               From enterprise SaaS dashboards to consumer mobile apps, I bring a product-minded approach to every project. My goal is always the same — deliver work that drives real business results and delights users at every interaction.
