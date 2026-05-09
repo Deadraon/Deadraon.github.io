@@ -5,9 +5,9 @@ import { FaGithub, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 export const metadata: Metadata = { title: "Contact — Deadraon" };
 
 const socials = [
-  { icon: FaGithub, label: "GitHub", href: "https://github.com/Deadraon", brandColor: "text-white group-hover:text-black", bgColor: "hover:bg-white border-white/10" },
-  { icon: FaEnvelope, label: "Email", href: "mailto:chauhankunal695@gmail.com", brandColor: "text-red-500 group-hover:text-white", bgColor: "hover:bg-red-500 border-red-500/20" },
-  { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/916396714325", brandColor: "text-green-500 group-hover:text-white", bgColor: "hover:bg-green-500 border-green-500/20" },
+  { icon: FaGithub, label: "GitHub", href: "https://github.com/Deadraon", brandColor: "text-white group-hover:text-black", bgColor: "hover:bg-white border-white/10", textColor: "text-white group-hover:text-black" },
+  { icon: FaEnvelope, label: "Email", href: "mailto:chauhankunal695@gmail.com", brandColor: "text-red-500 group-hover:text-white", bgColor: "hover:bg-red-500 border-red-500/20", textColor: "text-white group-hover:text-white" },
+  { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/916396714325", brandColor: "text-green-500 group-hover:text-white", bgColor: "hover:bg-green-500 border-green-500/20", textColor: "text-white group-hover:text-white" },
 ];
 
 export default function ContactPage() {
@@ -33,7 +33,7 @@ export default function ContactPage() {
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
                 className={`group flex items-center gap-3 px-6 py-3 rounded-2xl border bg-black/50 backdrop-blur-md transition-all duration-300 ${s.bgColor}`}>
                 <s.icon className={`w-5 h-5 transition-colors ${s.brandColor}`} />
-                <span className="text-white font-medium group-hover:text-white transition-colors">{s.label}</span>
+                <span className={`${s.textColor} font-medium transition-colors`}>{s.label}</span>
               </a>
             ))}
           </div>
