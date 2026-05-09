@@ -52,8 +52,11 @@ export default function AboutPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
                 <a href="/resume.pdf" download><Download className="w-4 h-4 mr-2" /> Download CV</a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
-                <a href="https://github.com/Deadraon" target="_blank" rel="noopener noreferrer"><Github className="w-4 h-4 mr-2" /> GitHub</a>
+              <Button 
+                onClick={() => window.dispatchEvent(new CustomEvent('triggerGithubTransition'))}
+                variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10"
+              >
+                <Github className="w-4 h-4 mr-2" /> GitHub
               </Button>
             </div>
           </div>

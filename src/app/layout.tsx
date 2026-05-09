@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { GithubTransition } from "@/components/ui/github-transition";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
           >
             {children}
             <Toaster richColors position="top-right" />
+            <GithubTransition />
           </ThemeProvider>
         </body>
       </html>
