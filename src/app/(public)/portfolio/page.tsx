@@ -95,7 +95,7 @@ export default function PortfolioPage() {
   const filtered = projects.filter((p) => active === "all" || p.category === active);
 
   return (
-    <div className="pt-24">
+    <div className="pt-14">
       {/* Header */}
       <section className="section-padding pb-12">
         <div className="max-w-4xl mx-auto text-center">

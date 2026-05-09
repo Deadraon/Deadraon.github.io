@@ -25,7 +25,7 @@ const workProcess = [
 
 export default function AboutPage() {
   return (
-    <div className="pt-24 relative overflow-hidden">
+    <div className="pt-14 relative overflow-hidden">
       {/* SaaS AI Background Glows */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0070F3]/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-[#8A2BE2]/10 rounded-full blur-[100px] pointer-events-none" />
