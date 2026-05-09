@@ -18,10 +18,11 @@ export async function POST(req: NextRequest) {
 
     // Send email notification
     try {
-      await sendContactEmail({ name, email, subject, message, projectType, budget, timeline, phone });
+      console.log("Attempting to send email to:", name);
+      const emailRes = await sendContactEmail({ name, email, subject, message, projectType, budget, timeline, phone });
+      console.log("Email sent successfully! MessageId:", emailRes.messageId);
     } catch (emailError) {
-      console.error("Email sending failed:", emailError);
-      // We don't return an error to the user if email fails, but contact is saved
+      console.error("CRITICAL: Email sending failed:", emailError);
     }
 
     return NextResponse.json({ success: true, id: contact._id }, { status: 201 });
