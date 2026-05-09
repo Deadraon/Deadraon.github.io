@@ -7,13 +7,14 @@ import { useUser, UserButton, SignInButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X, Code2, Zap } from "lucide-react";
+import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
+
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/services", label: "Services and Pricing" },
-  { href: "/resume.pdf", label: "Resume" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -67,16 +68,15 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             link.href.endsWith(".pdf") ? (
-              <a
-                key={link.href}
-                href={link.href}
-                download
-                className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-accent"
-                )}
-              >
-                {link.label}
-              </a>
+              <ResumeRequestModal key={link.href}>
+                <button
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-accent"
+                  )}
+                >
+                  {link.label}
+                </button>
+              </ResumeRequestModal>
             ) : (
               <Link
                 key={link.href}
@@ -135,17 +135,16 @@ export function Navbar() {
           <div className="px-4 py-4 space-y-1">
             {navLinks.map((link) => (
               link.href.endsWith(".pdf") ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  download
-                  onClick={() => setIsMobileOpen(false)}
-                  className={cn(
-                    "block px-4 py-3 rounded-lg text-sm font-medium transition-all text-muted-foreground hover:text-foreground hover:bg-accent"
-                  )}
-                >
-                  {link.label}
-                </a>
+                <ResumeRequestModal key={link.href}>
+                  <button
+                    onClick={() => setIsMobileOpen(false)}
+                    className={cn(
+                      "block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all text-muted-foreground hover:text-foreground hover:bg-accent"
+                    )}
+                  >
+                    {link.label}
+                  </button>
+                </ResumeRequestModal>
               ) : (
                 <Link
                   key={link.href}

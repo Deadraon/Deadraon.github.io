@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Download, ArrowRight, Code2, Zap } from "lucide-react";
 import { GithubButton } from "@/components/ui/github-button";
+import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
+
 
 export const metadata: Metadata = { title: "About — Kunal Chauhan" };
 
@@ -50,9 +52,11 @@ export default function AboutPage() {
               <Button asChild size="lg" className="rounded-full bg-white text-black hover:bg-white/90 font-medium">
                 <Link href="/contact"><Zap className="w-4 h-4 mr-2 text-[#0070F3]" /> Hire Me</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
-                <a href="/resume.pdf" download><Download className="w-4 h-4 mr-2" /> Download CV</a>
-              </Button>
+              <ResumeRequestModal>
+                <Button variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
+                  <Download className="w-4 h-4 mr-2" /> Request CV
+                </Button>
+              </ResumeRequestModal>
               <GithubButton />
             </div>
           </div>

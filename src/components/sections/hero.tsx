@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Code, LayoutTemplate, Database } from "lucide-react";
+import { ArrowRight, Sparkles, Code, LayoutTemplate, Database, FileText } from "lucide-react";
+import { ResumeRequestModal } from "./resume-request-modal";
+
 
 const roles = ["Full Stack Developer", "React & Next.js Expert", "Mobile App Developer", "UI/UX Craftsman", "API Architect"];
 
@@ -86,11 +88,12 @@ export function HeroSection() {
               Explore Work
             </Link>
           </Button>
-          <Button asChild size="xl" variant="outline" className="h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-lg transition-all">
-            <a href="/resume.pdf" download>
+          <ResumeRequestModal>
+            <Button size="xl" variant="outline" className="h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-lg transition-all">
+              <FileText className="w-5 h-5 mr-2" />
               Resume
-            </a>
-          </Button>
+            </Button>
+          </ResumeRequestModal>
         </div>
 
         {/* Floating UI Elements (SaaS Mockup Vibe) */}

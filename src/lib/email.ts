@@ -69,3 +69,60 @@ export async function sendContactEmail({
 
   return transporter.sendMail(mailOptions);
 }
+export async function notifyAdminOfResumeRequest({
+  name,
+  email,
+  company,
+}: {
+  name: string;
+  email: string;
+  company?: string;
+}) {
+  const adminEmail = process.env.ADMIN_EMAIL || "chauhankunal695@gmail.com";
+
+  const mailOptions = {
+    from: `"Deadraon Portfolio" <${process.env.SMTP_USER}>`,
+    to: adminEmail,
+    subject: `Resume Request from ${name}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #0070F3;">New Resume Request</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Company:</strong> ${company || "N/A"}</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
+        <p>Go to your dashboard to approve or reject this request.</p>
+      </div>
+    `,
+  };
+
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendResumeEmail(toEmail: string, name: string) {
+  const mailOptions = {
+    from: `"Deadraon Portfolio" <${process.env.SMTP_USER}>`,
+    to: toEmail,
+    subject: `Resume - Kunal Chauhan`,
+    text: `Hello ${name},\n\nThank you for your interest. Please find my resume attached.\n\nBest regards,\nKunal Chauhan`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #0070F3;">Resume Request Approved</h2>
+        <p>Hello ${name},</p>
+        <p>Thank you for your interest in my professional background. Please find my resume attached to this email.</p>
+        <p>If you have any questions or would like to discuss potential opportunities, feel free to reply to this email.</p>
+        <br />
+        <p>Best regards,</p>
+        <p><strong>Kunal Chauhan</strong></p>
+      </div>
+    `,
+    attachments: [
+      {
+        filename: "Kunal_Chauhan_Resume.pdf",
+        path: "public/resume.pdf", // Ensure this path is correct relative to process.cwd()
+      },
+    ],
+  };
+
+  return transporter.sendMail(mailOptions);
+}

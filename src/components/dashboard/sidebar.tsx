@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
-import { Code2, LayoutDashboard, FolderOpen, Bell, Settings, MessageSquare, X, Menu } from "lucide-react";
+import { Code2, LayoutDashboard, FolderOpen, Bell, Settings, MessageSquare, X, Menu, FileText } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/projects", label: "My Projects", icon: FolderOpen },
   { href: "/dashboard/messages", label: "Messages", icon: MessageSquare },
+  { href: "/dashboard/resume-requests", label: "Resume Requests", icon: FileText },
   { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
