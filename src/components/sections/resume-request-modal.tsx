@@ -54,49 +54,49 @@ export function ResumeRequestModal({ children }: { children: React.ReactNode }) 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-background/95 backdrop-blur-xl border-border/50">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-primary" />
-            Request Resume
+      <DialogContent className="sm:max-w-[425px] bg-card border border-border p-8 rounded-2xl shadow-2xl">
+        <DialogHeader className="mb-4">
+          <DialogTitle className="flex items-center gap-2 text-2xl font-bold">
+            <FileText className="w-6 h-6 text-primary" />
+            Request <span className="gradient-text">Resume</span>
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-muted-foreground mt-2">
             Enter your details below. Once approved, my resume will be sent to your email.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={onSubmit} className="space-y-4 py-4">
+        <form onSubmit={onSubmit} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
             <Input
               id="name"
               name="name"
-              placeholder="John Doe"
+              placeholder="Enter your name"
               required
-              className="bg-background/50"
+              className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
+            <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="john@example.com"
+              placeholder="Enter your email"
               required
-              className="bg-background/50"
+              className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="company">Company (Optional)</Label>
+            <Label htmlFor="company" className="text-sm font-medium">Company (Optional)</Label>
             <Input
               id="company"
               name="company"
-              placeholder="Google, Meta, etc."
-              className="bg-background/50"
+              placeholder="Enter your company"
+              className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
           </div>
           <DialogFooter className="pt-4">
-            <Button type="submit" disabled={loading} className="w-full">
+            <Button type="submit" variant="gradient" size="lg" disabled={loading} className="w-full h-12 rounded-xl">
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

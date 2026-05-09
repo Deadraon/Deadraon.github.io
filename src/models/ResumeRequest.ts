@@ -5,6 +5,7 @@ export interface IResumeRequest extends Document {
   email: string;
   company?: string;
   status: "pending" | "approved" | "rejected";
+  token: string;
   createdAt: Date;
 }
 
@@ -13,6 +14,7 @@ const ResumeRequestSchema = new Schema<IResumeRequest>(
     name: { type: String, required: true },
     email: { type: String, required: true },
     company: String,
+    token: { type: String, required: true, unique: true },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

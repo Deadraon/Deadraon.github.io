@@ -13,11 +13,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const request = await ResumeRequest.create({ name, email, company });
+    const token = crypto.randomUUID();
+    const request = await ResumeRequest.create({ name, email, company, token });
 
     // Notify admin
     try {
-      await notifyAdminOfResumeRequest({ name, email, company });
+      await notifyAdminOfResumeRequest({ name, email, company, token });
     } catch (emailError) {
       console.error("Failed to notify admin of resume request:", emailError);
     }

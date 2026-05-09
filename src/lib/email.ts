@@ -73,12 +73,18 @@ export async function notifyAdminOfResumeRequest({
   name,
   email,
   company,
+  token,
 }: {
   name: string;
   email: string;
   company?: string;
+  token: string;
 }) {
   const adminEmail = process.env.ADMIN_EMAIL || "chauhankunal695@gmail.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+  const approveUrl = `${baseUrl}/api/resume/action?token=${token}&action=approve`;
+  const rejectUrl = `${baseUrl}/api/resume/action?token=${token}&action=reject`;
 
   const mailOptions = {
     from: `"Deadraon Portfolio" <${process.env.SMTP_USER}>`,
@@ -91,7 +97,11 @@ export async function notifyAdminOfResumeRequest({
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Company:</strong> ${company || "N/A"}</p>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
-        <p>Go to your dashboard to approve or reject this request.</p>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <a href="${approveUrl}" style="background-color: #0070F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Approve & Send</a>
+          <a href="${rejectUrl}" style="background-color: #ff4444; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Decline</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 12px; color: #666;">Alternatively, go to your dashboard to manage this request.</p>
       </div>
     `,
   };
