@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import path from "path";
+
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -129,10 +131,12 @@ export async function sendResumeEmail(toEmail: string, name: string) {
     attachments: [
       {
         filename: "Kunal_Chauhan_Resume.pdf",
-        path: "public/resume.pdf", // Ensure this path is correct relative to process.cwd()
+        path: path.join(process.cwd(), "public", "resume.pdf"),
       },
     ],
   };
 
+  console.log("Sending resume email to:", toEmail, "with attachment from:", path.join(process.cwd(), "public", "resume.pdf"));
   return transporter.sendMail(mailOptions);
+
 }
