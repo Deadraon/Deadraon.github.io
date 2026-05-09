@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Contact from "@/models/Contact";
+import { sendContactEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,6 +14,15 @@ export async function POST(req: NextRequest) {
     }
 
     const contact = await Contact.create({ name, email, subject, message, projectType, budget, timeline, phone });
+
+    // Send email notification
+    try {
+      await sendContactEmail({ name, email, subject, message, projectType, budget, timeline, phone });
+    } catch (emailError) {
+      console.error("Email sending failed:", emailError);
+      // We don't return an error to the user if email fails, but contact is saved
+    }
+
     return NextResponse.json({ success: true, id: contact._id }, { status: 201 });
   } catch (error) {
     console.error("Contact API error:", error);
