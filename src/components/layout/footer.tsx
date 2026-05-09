@@ -6,10 +6,10 @@ const footerLinks = {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Portfolio", href: "/portfolio" },
-    { label: "Services", href: "/services" },
+    { label: "Services and Pricing", href: "/services" },
     { label: "Contact", href: "/contact" },
   ],
-  Services: [
+  "Services & Pricing": [
     { label: "Web Development", href: "/services#web" },
     { label: "App Development", href: "/services#app" },
     { label: "UI/UX Design", href: "/services#ui" },

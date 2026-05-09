@@ -105,7 +105,7 @@ export function ServicesSection() {
 
         <div className={cn("text-center mt-12 transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
           <Button asChild size="lg" variant="gradient">
-            <Link href="/services">View All Services <ArrowRight className="w-4 h-4" /></Link>
+            <Link href="/services">View All Services & Pricing <ArrowRight className="w-4 h-4" /></Link>
           </Button>
         </div>
       </div>

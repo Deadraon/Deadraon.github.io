@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Zap, Globe, Smartphone, Palette, Plug, Wrench } from "lucide-react";
 
-export const metadata: Metadata = { title: "Services — Deadraon" };
+export const metadata: Metadata = { title: "Services & Pricing — Deadraon" };
 
 const services = [
   {
@@ -69,7 +69,7 @@ export default function ServicesPage() {
       {/* Header */}
       <section className="section-padding pb-12">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-primary text-sm font-semibold uppercase tracking-wider">Services</span>
+          <span className="text-primary text-sm font-semibold uppercase tracking-wider">Services & Pricing</span>
           <h1 className="text-5xl lg:text-6xl font-black mt-2 mb-6">
             What I Can <span className="gradient-text">Build For You</span>
           </h1>
