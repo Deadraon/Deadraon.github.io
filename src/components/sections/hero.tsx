@@ -86,6 +86,11 @@ export function HeroSection() {
               Explore Work
             </Link>
           </Button>
+          <Button asChild size="xl" variant="outline" className="h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-lg transition-all">
+            <a href="/resume.pdf" download>
+              Resume
+            </a>
+          </Button>
         </div>
 
         {/* Floating UI Elements (SaaS Mockup Vibe) */}
