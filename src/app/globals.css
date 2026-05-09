@@ -6,54 +6,54 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 222 84% 5%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 5%;
+    --card-foreground: 0 0% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 5%;
-    --primary: 252 87% 62%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 252 87% 62%;
-    --radius: 0.75rem;
+    --popover-foreground: 0 0% 9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 9%;
+    --radius: 0.35rem;
     
-    /* Brand colors */
-    --brand-purple: 252 87% 62%;
-    --brand-blue: 217 91% 60%;
-    --brand-cyan: 189 100% 42%;
-    --brand-pink: 330 81% 60%;
+    /* Neutralized Brand colors for backward compatibility */
+    --brand-purple: 0 0% 9%;
+    --brand-blue: 0 0% 15%;
+    --brand-cyan: 0 0% 25%;
+    --brand-pink: 0 0% 40%;
   }
 
   .dark {
-    --background: 222 47% 5%;
-    --foreground: 213 31% 91%;
-    --card: 222 47% 8%;
-    --card-foreground: 213 31% 91%;
-    --popover: 222 47% 8%;
-    --popover-foreground: 213 31% 91%;
-    --primary: 252 87% 62%;
-    --primary-foreground: 222 47% 5%;
-    --secondary: 222 47% 12%;
-    --secondary-foreground: 213 31% 91%;
-    --muted: 222 47% 12%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 222 47% 12%;
-    --accent-foreground: 213 31% 91%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 213 31% 91%;
-    --border: 222 47% 15%;
-    --input: 222 47% 15%;
-    --ring: 252 87% 62%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
   }
 }
 
@@ -71,37 +71,38 @@
 }
 
 @layer components {
-  /* Glass morphism utility */
+  /* Minimalist structural replacements for flashy classes */
+  
   .glass {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl;
+    @apply bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border border-border shadow-sm;
   }
   
   .glass-dark {
-    @apply bg-black/20 backdrop-blur-xl border border-white/10 shadow-2xl;
+    @apply bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 border border-border shadow-sm;
   }
   
-  /* Gradient text */
+  /* Replace gradient text with solid high-contrast text */
   .gradient-text {
-    @apply bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent;
+    @apply text-foreground font-semibold tracking-tight;
   }
   
   .gradient-text-pink {
-    @apply bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent;
+    @apply text-muted-foreground font-medium;
   }
   
-  /* Glow effects */
-  .glow-purple {
-    box-shadow: 0 0 30px hsl(252 87% 62% / 0.3);
+  /* Remove excessive glows, replace with refined minimal shadows */
+  .glow-purple, .glow-blue {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
   }
   
-  .glow-blue {
-    box-shadow: 0 0 30px hsl(217 91% 60% / 0.3);
+  .dark .glow-purple, .dark .glow-blue {
+    box-shadow: 0 4px 20px -2px rgba(255, 255, 255, 0.02);
   }
   
-  /* Scrollbar */
+  /* Minimal Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   
   ::-webkit-scrollbar-track {
@@ -109,16 +110,16 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/40 rounded-full;
+    @apply bg-muted-foreground/30 rounded-full border-2 border-background;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary/60;
+    @apply bg-muted-foreground/50;
   }
   
-  /* Card hover */
+  /* Clean Card hover */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 hover:border-muted-foreground/20;
   }
   
   /* Section padding */
@@ -126,55 +127,39 @@
     @apply py-20 px-4 md:px-8 lg:px-16;
   }
   
-  /* Noise overlay */
+  /* Remove noise completely */
   .noise-overlay::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
+    display: none;
   }
 
-  /* Animated gradient border */
+  /* Replace animated border with standard border */
   .gradient-border {
-    position: relative;
-    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-      linear-gradient(135deg, hsl(252 87% 62%), hsl(217 91% 60%), hsl(189 100% 42%)) border-box;
-    border: 2px solid transparent;
+    @apply border border-border rounded-lg bg-card;
   }
   
-  /* Status badge */
-  .status-pending { @apply bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400; }
-  .status-in-progress { @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400; }
-  .status-review { @apply bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400; }
-  .status-delivered { @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400; }
-  .status-on-hold { @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400; }
+  /* Refined Status badges */
+  .status-pending { @apply bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700; }
+  .status-in-progress { @apply bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700; }
+  .status-review { @apply bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 border border-gray-200 dark:border-gray-700; }
+  .status-delivered { @apply bg-zinc-900 text-zinc-50 dark:bg-zinc-100 dark:text-zinc-900 border border-zinc-800 dark:border-zinc-200; }
+  .status-on-hold { @apply bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300 border border-stone-200 dark:border-stone-700; }
   
-  /* Hero gradient mesh */
+  /* Remove mesh backgrounds entirely */
   .hero-mesh {
-    background: radial-gradient(ellipse at 20% 50%, hsl(252 87% 62% / 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, hsl(217 91% 60% / 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, hsl(189 100% 42% / 0.1) 0%, transparent 50%);
+    background: none;
   }
 }
 
-/* Custom animations */
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+/* Subdued custom animations */
 .animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 4s ease infinite;
+  background: none;
 }
 
-/* Typing cursor */
+/* Clean Typing cursor */
 .typing-cursor::after {
   content: '|';
   animation: blink 1s infinite;
+  @apply font-mono text-muted-foreground ml-0.5;
 }
 
 @keyframes blink {
@@ -185,10 +170,11 @@
 /* Page transitions */
 .page-enter {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(4px);
 }
 .page-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 400ms, transform 400ms;
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
 }
+
