@@ -14,6 +14,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/testimonials",
   "/api/portfolio",
   "/api/services",
+  "/api/resume(.*)",
 ]);
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
