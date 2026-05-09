@@ -1,3 +1,4 @@
+// Contact API with Email Notifications enabled
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Contact from "@/models/Contact";
