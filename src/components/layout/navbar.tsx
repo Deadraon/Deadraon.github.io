@@ -3,11 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { useUser, UserButton, SignInButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Moon, Sun, Menu, X, Code2, Zap } from "lucide-react";
+import { Menu, X, Code2, Zap } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,7 +21,6 @@ export function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
   const { isSignedIn } = useUser();
 
   useEffect(() => {
@@ -73,15 +71,6 @@ export function Navbar() {
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-3">
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-200"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          )}
 
           {isSignedIn ? (
             <div className="flex items-center gap-3">
@@ -106,14 +95,6 @@ export function Navbar() {
 
         {/* Mobile menu button */}
         <div className="flex md:hidden items-center gap-2">
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground"
-            >
-              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          )}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground"
