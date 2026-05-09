@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Download, ArrowRight, Code2, Zap } from "lucide-react";
 
@@ -60,7 +61,9 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-[#0070F3]/5 to-[#8A2BE2]/5 rounded-[2.5rem] pointer-events-none" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center relative z-10">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#0070F3] to-[#8A2BE2] flex items-center justify-center text-white text-5xl font-black mx-auto mb-6 shadow-[0_0_30px_rgba(0,112,243,0.4)]">K</div>
+                  <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(0,112,243,0.4)] overflow-hidden bg-black/50 border border-white/10">
+                    <Image src="/logo.png" alt="Profile Logo" width={128} height={128} className="object-cover" />
+                  </div>
                   <p className="text-3xl font-bold text-white mb-2">Kunal Chauhan</p>
                   <p className="text-[#0070F3] font-medium tracking-wide mb-1">@Deadraon</p>
                   <p className="text-white/40 text-sm">Full Stack Developer</p>
