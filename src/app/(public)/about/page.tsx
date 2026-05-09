@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Download, ArrowRight, Code2, Zap } from "lucide-react";
+import { Download, ArrowRight, Code2, Zap, Github } from "lucide-react";
 
 export const metadata: Metadata = { title: "About — Kunal Chauhan" };
 
@@ -40,17 +40,20 @@ export default function AboutPage() {
               The Developer <br /><span className="gradient-text">Behind the Code</span>
             </h1>
             <p className="text-white/60 text-lg leading-relaxed mb-6">
-              I&apos;m <strong className="text-white font-medium">Kunal Chauhan</strong>, also known as <strong className="text-white font-medium">Deadraon</strong>. I am a passionate Full Stack Developer with 4+ years of experience crafting digital products that combine elegant design with robust engineering.
+              I&apos;m <strong className="text-white font-medium">Kunal Chauhan</strong>, also known as <strong className="text-white font-medium">MOB</strong> and <strong className="text-white font-medium">Deadraon</strong>. I am a passionate Full Stack Developer with 4+ years of experience crafting digital products that combine elegant design with robust engineering.
             </p>
             <p className="text-white/50 leading-relaxed mb-8">
               From enterprise SaaS dashboards to consumer mobile apps, I bring a product-minded approach to every project. My goal is always the same — deliver work that drives real business results and delights users at every interaction.
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="rounded-full bg-white text-black hover:bg-white/90 font-medium">
                 <Link href="/contact"><Zap className="w-4 h-4 mr-2 text-[#0070F3]" /> Hire Me</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
                 <a href="/resume.pdf" download><Download className="w-4 h-4 mr-2" /> Download CV</a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full border-white/10 bg-white/[0.03] text-white hover:bg-white/10">
+                <a href="https://github.com/Deadraon" target="_blank" rel="noopener noreferrer"><Github className="w-4 h-4 mr-2" /> GitHub</a>
               </Button>
             </div>
           </div>
