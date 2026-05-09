@@ -17,7 +17,7 @@ export default function ContactPage() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0070F3]/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-[#8A2BE2]/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <section className="px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <section className="section-padding pb-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-primary text-sm font-semibold uppercase tracking-wider">Hire Me</span>
           <h1 className="text-5xl lg:text-6xl font-black mt-2 mb-6">
