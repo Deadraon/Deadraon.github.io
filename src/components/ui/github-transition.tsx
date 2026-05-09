@@ -38,8 +38,24 @@ export function GithubTransition() {
       }, 800);
     };
 
+    // Fix for browser back-forward cache (bfcache)
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setStage("idle");
+        const realLogo = document.getElementById("navbar-logo");
+        if (realLogo) {
+          realLogo.style.opacity = "1";
+        }
+      }
+    };
+
     window.addEventListener("triggerGithubTransition", handleTrigger);
-    return () => window.removeEventListener("triggerGithubTransition", handleTrigger);
+    window.addEventListener("pageshow", handlePageShow);
+    
+    return () => {
+      window.removeEventListener("triggerGithubTransition", handleTrigger);
+      window.removeEventListener("pageshow", handlePageShow);
+    };
   }, []);
 
   if (stage === "idle") return null;
