@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Kunal Chauhan | Premium Full Stack Developer";
+export const alt = "Deadraon | Premium Full Stack Developer";
 export const size = {
   width: 1200,
   height: 630,
@@ -80,7 +80,7 @@ export default async function Image() {
           >
             <h1
               style={{
-                fontSize: "110px",
+                fontSize: "120px",
                 fontWeight: "900",
                 color: "white",
                 lineHeight: 1,
@@ -88,19 +88,7 @@ export default async function Image() {
                 margin: 0,
               }}
             >
-              Kunal
-            </h1>
-            <h1
-              style={{
-                fontSize: "110px",
-                fontWeight: "900",
-                color: "white",
-                lineHeight: 1,
-                letterSpacing: "-0.05em",
-                margin: 0,
-              }}
-            >
-              Chauhan.
+              Deadraon.
             </h1>
           </div>
 

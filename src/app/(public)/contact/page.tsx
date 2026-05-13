@@ -4,7 +4,7 @@ import { FaGithub, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Kunal Chauhan for freelance opportunities, consulting, or project collaborations.",
+  description: "Get in touch with Deadraon for freelance opportunities, consulting, or project collaborations.",
 };
 
 const socials = [
