@@ -7,7 +7,10 @@ import { GithubButton } from "@/components/ui/github-button";
 import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
 
 
-export const metadata: Metadata = { title: "About — Kunal Chauhan" };
+export const metadata: Metadata = {
+  title: "About",
+  description: "Learn more about Kunal Chauhan, a Full Stack Developer specializing in modern web and mobile apps.",
+};
 
 const experience = [
   { year: "2024 – Present", role: "Senior Full Stack Developer", company: "Freelance", desc: "Building premium web and mobile applications for clients globally. Specializing in Next.js, Flutter, and scalable backend systems." },

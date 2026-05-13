@@ -3,7 +3,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Zap, Globe, Smartphone, Palette, Plug, Wrench } from "lucide-react";
 
-export const metadata: Metadata = { title: "Services & Pricing — Deadraon" };
+export const metadata: Metadata = {
+  title: "Services & Pricing",
+  description: "End-to-end digital product development including web apps, mobile apps, and UI/UX design.",
+};
 
 const services = [
   {

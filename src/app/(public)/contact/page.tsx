@@ -2,7 +2,10 @@ import { Metadata } from "next";
 import { ContactSection } from "@/components/sections/contact";
 import { FaGithub, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
-export const metadata: Metadata = { title: "Contact — Deadraon" };
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Get in touch with Kunal Chauhan for freelance opportunities, consulting, or project collaborations.",
+};
 
 const socials = [
   { icon: FaGithub, label: "GitHub", href: "https://github.com/Deadraon", brandColor: "text-white group-hover:text-black", bgColor: "hover:bg-white border-white/10", textColor: "text-white group-hover:text-black" },

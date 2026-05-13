@@ -46,6 +46,24 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Kunal Chauhan",
+                url: "https://deadraon.dev",
+                jobTitle: "Full Stack Developer",
+                sameAs: [
+                  "https://github.com/Deadraon",
+                  "https://twitter.com/Deadraon",
+                ],
+              }),
+            }}
+          />
+        </head>
         <body className={`${inter.variable} antialiased`}>
           <ThemeProvider
             attribute="class"
