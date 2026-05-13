@@ -53,7 +53,7 @@ export default function RootLayout({
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "Person",
-                name: "Deadraon",
+                name: "Kunal Chauhan",
                 url: "https://deadraon.dev",
                 jobTitle: "Full Stack Developer",
                 sameAs: [

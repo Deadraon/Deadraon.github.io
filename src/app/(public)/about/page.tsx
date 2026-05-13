@@ -9,7 +9,7 @@ import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Deadraon, a Full Stack Developer specializing in modern web and mobile apps.",
+  description: "Learn more about Kunal Chauhan, a Full Stack Developer specializing in modern web and mobile apps.",
 };
 
 const experience = [
@@ -46,7 +46,7 @@ export default function AboutPage() {
               The Developer <br /><span className="gradient-text">Behind the Code</span>
             </h1>
             <p className="text-white/60 text-lg leading-relaxed mb-6">
-              I&apos;m <strong className="text-white font-medium">Deadraon</strong>. I am a passionate Full Stack Developer with 2+ years of experience crafting digital products that combine elegant design with robust engineering.
+              I&apos;m <strong className="text-white font-medium">Kunal Chauhan</strong>. I am a passionate Full Stack Developer with 2+ years of experience crafting digital products that combine elegant design with robust engineering.
             </p>
             <p className="text-white/50 leading-relaxed mb-8">
               From enterprise SaaS dashboards to consumer mobile apps, I bring a product-minded approach to every project. My goal is always the same — deliver work that drives real business results and delights users at every interaction.
@@ -73,7 +73,7 @@ export default function AboutPage() {
                   <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(0,112,243,0.4)] overflow-hidden bg-black/50 border border-white/10">
                     <Image src="/logo.png" alt="Profile Logo" width={128} height={128} className="object-cover" />
                   </div>
-                  <p className="text-3xl font-bold text-white mb-2">Deadraon</p>
+                  <p className="text-3xl font-bold text-white mb-2">Kunal Chauhan</p>
                   <p className="text-[#0070F3] font-medium tracking-wide mb-1">@Deadraon</p>
                   <p className="text-white/40 text-sm">Full Stack Developer</p>
                 </div>
