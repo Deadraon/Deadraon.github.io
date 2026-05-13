@@ -43,7 +43,6 @@ export default async function Image() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 10,
           }}
         >
           <div

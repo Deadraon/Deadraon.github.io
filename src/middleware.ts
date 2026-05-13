@@ -15,6 +15,10 @@ const isPublicRoute = createRouteMatcher([
   "/api/portfolio",
   "/api/services",
   "/api/resume(.*)",
+  "/opengraph-image(.*)",
+  "/twitter-image(.*)",
+  "/sitemap.xml",
+  "/robots.txt",
 ]);
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
