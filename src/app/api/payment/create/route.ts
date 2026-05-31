@@ -71,13 +71,21 @@ export async function POST(req: NextRequest) {
     const data = await response.json();
     console.log("MyMobPay API response received:", data);
 
-    const paymentUrl = data.payment_url || data.paymentUrl;
+    const paymentUrl = data.payment_url || data.paymentUrl || data.pay_url || data.payUrl;
     const orderId = data.order_id || data.orderId || `mymob_${Date.now()}`;
 
     if (!paymentUrl) {
       console.error("MyMobPay API response is missing payment_url:", data);
+      
+      let gatewayError = "Payment gateway did not return a payment URL.";
+      if (typeof data === "object" && data !== null) {
+        gatewayError = data.error || data.message || data.errorMessage || data.msg || JSON.stringify(data);
+      } else if (typeof data === "string") {
+        gatewayError = data;
+      }
+      
       return NextResponse.json(
-        { error: "Payment gateway did not return a payment URL." },
+        { error: gatewayError },
         { status: 502 }
       );
     }
