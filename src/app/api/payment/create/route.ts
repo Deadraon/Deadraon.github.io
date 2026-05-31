@@ -74,9 +74,9 @@ export async function POST(req: NextRequest) {
     const orderId = data.orderId || data.order_id;
     const orderAmount = data.orderAmount || numericAmount;
 
-    // Construct the checkout/payment URL dynamically
+    // Construct the checkout/payment URL dynamically using the pre-created order ID
     const gatewayBaseUrl = apiUrl.replace(/\/api\/orders\/?$/, "");
-    const paymentUrl = `${gatewayBaseUrl}/pay?api_key=${apiKey}&amount=${orderAmount}&ref=${orderId}`;
+    const paymentUrl = `${gatewayBaseUrl}/pay?id=${orderId}`;
 
     // Create a pending payment log in MongoDB
     const payment = await Payment.create({
