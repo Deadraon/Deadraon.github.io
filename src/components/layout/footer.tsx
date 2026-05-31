@@ -21,6 +21,7 @@ const footerLinks = {
     { label: "Project Dashboard", href: "/dashboard" },
     { label: "Hire Me", href: "/contact" },
     { label: "Get a Quote", href: "/contact#quote" },
+    { label: "Make Payment", href: "/pay" },
   ],
 };
 

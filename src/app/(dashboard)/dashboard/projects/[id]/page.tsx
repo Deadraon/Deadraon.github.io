@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect, notFound } from "next/navigation";
+import Link from "next/link";
 import connectDB from "@/lib/mongodb";
 import Project from "@/models/Project";
 import { getStatusColor, getStatusLabel, formatDate, formatRelativeDate } from "@/lib/utils";
@@ -34,6 +35,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </div>
           <p className="text-muted-foreground text-sm">{project.description}</p>
         </div>
+        {project.paymentStatus !== "paid" && (
+          <div className="flex-shrink-0">
+            <Link
+              href={`/pay?projectId=${project._id}&projectName=${encodeURIComponent(project.projectName)}&clientEmail=${encodeURIComponent(project.clientEmail)}&clientName=${encodeURIComponent(project.clientName)}&amount=${project.budget}`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium text-sm hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-purple-500/10"
+            >
+              Pay Invoice (₹{project.budget})
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Stats row */}
