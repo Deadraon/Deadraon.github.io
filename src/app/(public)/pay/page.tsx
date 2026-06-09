@@ -322,20 +322,39 @@ function PaymentForm() {
           </Button>
           
           {/* Brand Badges / SSL Certification Row */}
-          <div className="pt-3 border-t border-white/[0.05] flex flex-col items-center justify-center gap-2">
-            <span className="text-[9px] font-medium text-white/30 uppercase tracking-widest flex items-center gap-1.5">
-              <Lock className="w-3 h-3 text-emerald-500" /> Secure 256-bit SSL Payment Gateway
+          <div className="pt-4 border-t border-white/[0.05] flex flex-col items-center justify-center gap-3">
+            <span className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1.5 select-none">
+              <Lock className="w-3.5 h-3.5 text-emerald-500" /> Secure 256-bit SSL Payment Gateway
             </span>
-            <div className="flex items-center justify-center gap-4 opacity-50 hover:opacity-80 transition-opacity duration-300 select-none">
-              <span className="text-[10px] font-bold text-white flex items-center gap-0.5">
-                <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
-                  <path d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-6.887 4.114-4.907 0-8.905-4.018-8.905-8.914 0-4.896 3.998-8.914 8.905-8.914 2.7 0 4.71 1.018 6.136 2.37l3.036-3.037C19.03 1.63 15.93 0 12.24 0 5.48 0 0 5.48 0 12.24s5.48 12.24 12.24 12.24c7.05 0 11.72-4.958 11.72-11.936 0-.805-.078-1.56-.222-2.259H12.24z"/>
-                </svg>
-                Pay
-              </span>
-              <span className="text-[10px] font-black italic text-purple-400">PhonePe</span>
-              <span className="text-[10px] font-extrabold text-sky-400">Paytm</span>
-              <span className="text-[9px] font-extrabold text-[#be38f3] border border-[#be38f3]/30 px-1 rounded-sm">UPI</span>
+            <div className="flex items-center justify-center gap-3 select-none">
+              <div className="h-8 px-3.5 rounded-xl border border-white/[0.03] bg-white/[0.01] hover:bg-white/[0.04] hover:border-white/[0.08] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center group cursor-pointer" title="Google Pay">
+                <img 
+                  src="/google-pay.svg" 
+                  alt="Google Pay" 
+                  className="h-4.5 w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+                />
+              </div>
+              <div className="h-8 px-3.5 rounded-xl border border-white/[0.03] bg-white/[0.01] hover:bg-white/[0.04] hover:border-white/[0.08] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center group cursor-pointer" title="PhonePe">
+                <img 
+                  src="/phonepe.svg" 
+                  alt="PhonePe" 
+                  className="h-4 w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+                />
+              </div>
+              <div className="h-8 px-3.5 rounded-xl border border-white/[0.03] bg-white/[0.01] hover:bg-white/[0.04] hover:border-white/[0.08] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center group cursor-pointer" title="Paytm">
+                <img 
+                  src="/paytm.svg" 
+                  alt="Paytm" 
+                  className="h-3.5 w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+                />
+              </div>
+              <div className="h-8 px-3.5 rounded-xl border border-white/[0.03] bg-white/[0.01] hover:bg-white/[0.04] hover:border-white/[0.08] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center group cursor-pointer" title="UPI">
+                <img 
+                  src="/upi.svg" 
+                  alt="UPI" 
+                  className="h-4.5 w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+                />
+              </div>
             </div>
           </div>
         </form>
