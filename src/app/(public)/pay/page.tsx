@@ -248,7 +248,7 @@ function PaymentForm() {
               </div>
               <div>
                 <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-1">
-                  Payment For / Note <span className="text-white/30">*</span>
+                  Payment For / Note <span className="text-white/30">(Optional)</span>
                 </label>
                 <div className="relative group">
                   <div className="absolute left-3 top-2.5 flex items-center justify-center text-[#be38f3] group-hover:text-white/40 transition-colors">
@@ -260,7 +260,6 @@ function PaymentForm() {
                     placeholder="e.g. Website development milestone 1"
                     value={formData.note}
                     onChange={handleChange}
-                    required
                     className="w-full pl-9 pr-3 py-2 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all resize-none placeholder:text-white/15"
                   />
                 </div>
