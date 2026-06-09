@@ -2,12 +2,14 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { CreditCard, Loader2, Send, ShieldCheck, IndianRupee, User, Mail, Phone, FileText, Lock } from "lucide-react";
 
 function PaymentForm() {
   const searchParams = useSearchParams();
+  const { user, isLoaded } = useUser();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -18,17 +20,19 @@ function PaymentForm() {
     projectId: "",
   });
 
-  // Prefill form from query parameters
+  // Prefill form from query parameters or user session
   useEffect(() => {
-    setFormData({
-      name: searchParams.get("name") || searchParams.get("clientName") || "",
-      email: searchParams.get("email") || searchParams.get("clientEmail") || "",
-      phone: searchParams.get("phone") || "",
-      note: searchParams.get("note") || searchParams.get("projectName") || "",
-      amount: searchParams.get("amount") || searchParams.get("budget") || "",
-      projectId: searchParams.get("projectId") || "",
-    });
-  }, [searchParams]);
+    if (isLoaded) {
+      setFormData((prev) => ({
+        name: prev.name || searchParams.get("name") || searchParams.get("clientName") || user?.fullName || user?.username || "",
+        email: prev.email || searchParams.get("email") || searchParams.get("clientEmail") || user?.primaryEmailAddress?.emailAddress || "",
+        phone: prev.phone || searchParams.get("phone") || "",
+        note: prev.note || searchParams.get("note") || searchParams.get("projectName") || "",
+        amount: prev.amount || searchParams.get("amount") || searchParams.get("budget") || "",
+        projectId: prev.projectId || searchParams.get("projectId") || "",
+      }));
+    }
+  }, [searchParams, user, isLoaded]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -102,36 +106,63 @@ function PaymentForm() {
         >
           {/* Subtle top brand border line */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#be38f3] to-transparent" />
+          {/* Amount Section - Primary Focus */}
+          <div className="bg-[#be38f3]/[0.02] border border-[#be38f3]/15 p-5 rounded-2xl relative overflow-hidden shadow-[0_0_30px_rgba(190,56,243,0.02)]">
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#be38f3]/30 to-transparent" />
+            <label className="block text-center text-xs font-semibold text-[#be38f3] uppercase tracking-wider mb-3">
+              Enter Amount to Pay <span className="text-[#be38f3]">*</span>
+            </label>
+            <div className="relative max-w-[240px] mx-auto">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-[#be38f3] pointer-events-none">
+                <IndianRupee className="w-5 h-5 stroke-[2.5]" />
+              </div>
+              <input
+                name="amount"
+                type="number"
+                min="1"
+                placeholder="0"
+                value={formData.amount}
+                onChange={handleChange}
+                required
+                className="w-full text-center pl-11 pr-4 py-4 rounded-xl border-2 border-[#be38f3]/25 focus:border-[#be38f3] bg-[#0d0d15]/60 text-white text-3xl font-black focus:outline-none focus:ring-4 focus:ring-[#be38f3]/10 transition-all placeholder:text-white/10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+            </div>
+            <p className="text-center text-[10px] text-white/40 mt-2">
+              Secure Indian Rupee (INR) Transaction
+            </p>
+          </div>
 
-          {/* Form Fields */}
-          <div className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
+          {/* Secondary Client Details */}
+          <div className="space-y-4 pt-4 border-t border-white/[0.05]">
+            <h3 className="text-xs font-medium text-white/40 mb-1">Billing Details</h3>
+            
+            <div className="grid sm:grid-cols-2 gap-3.5">
               <div>
-                <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">
-                  Client Name <span className="text-[#be38f3]">*</span>
+                <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-1">
+                  Client Name <span className="text-white/30">*</span>
                 </label>
                 <div className="relative group">
-                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 group-focus-within:text-[#be38f3] group-hover:text-white/50 transition-colors">
-                    <User className="w-4 h-4" />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/20 group-focus-within:text-[#be38f3] group-hover:text-white/40 transition-colors">
+                    <User className="w-3.5 h-3.5" />
                   </div>
                   <input
                     name="name"
                     type="text"
-                    placeholder="Enter your name"
+                    placeholder="Your name"
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-[#0d0d15]/40 hover:bg-[#0d0d15]/60 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#be38f3]/30 focus:border-[#be38f3] transition-all placeholder:text-white/20"
+                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all placeholder:text-white/15"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">
-                  Email Address <span className="text-[#be38f3]">*</span>
+                <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-1">
+                  Email Address <span className="text-white/30">*</span>
                 </label>
                 <div className="relative group">
-                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 group-focus-within:text-[#be38f3] group-hover:text-white/50 transition-colors">
-                    <Mail className="w-4 h-4" />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/20 group-focus-within:text-[#be38f3] group-hover:text-white/40 transition-colors">
+                    <Mail className="w-3.5 h-3.5" />
                   </div>
                   <input
                     name="email"
@@ -140,20 +171,20 @@ function PaymentForm() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-[#0d0d15]/40 hover:bg-[#0d0d15]/60 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#be38f3]/30 focus:border-[#be38f3] transition-all placeholder:text-white/20"
+                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all placeholder:text-white/15"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3.5">
               <div>
-                <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">
-                  Phone Number <span className="text-[#be38f3]">*</span>
+                <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-1">
+                  Phone Number <span className="text-white/30">*</span>
                 </label>
                 <div className="relative group">
-                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 group-focus-within:text-[#be38f3] group-hover:text-white/50 transition-colors">
-                    <Phone className="w-4 h-4" />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/20 group-focus-within:text-[#be38f3] group-hover:text-white/40 transition-colors">
+                    <Phone className="w-3.5 h-3.5" />
                   </div>
                   <input
                     name="phone"
@@ -163,49 +194,28 @@ function PaymentForm() {
                     onChange={handleChange}
                     required
                     pattern="[0-9]{10}"
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-[#0d0d15]/40 hover:bg-[#0d0d15]/60 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#be38f3]/30 focus:border-[#be38f3] transition-all placeholder:text-white/20"
+                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all placeholder:text-white/15"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">
-                  Amount (₹ INR) <span className="text-[#be38f3]">*</span>
+                <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-1">
+                  Payment For / Note <span className="text-white/30">*</span>
                 </label>
                 <div className="relative group">
-                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 group-focus-within:text-[#be38f3] group-hover:text-white/50 transition-colors">
-                    <IndianRupee className="w-4 h-4" />
+                  <div className="absolute left-3 top-2.5 flex items-center justify-center text-white/20 group-focus-within:text-[#be38f3] group-hover:text-white/40 transition-colors">
+                    <FileText className="w-3.5 h-3.5" />
                   </div>
-                  <input
-                    name="amount"
-                    type="number"
-                    min="1"
-                    placeholder="Enter amount in INR"
-                    value={formData.amount}
+                  <textarea
+                    name="note"
+                    rows={2}
+                    placeholder="e.g. Website development milestone 1"
+                    value={formData.note}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-[#0d0d15]/40 hover:bg-[#0d0d15]/60 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#be38f3]/30 focus:border-[#be38f3] transition-all placeholder:text-white/20 font-medium"
+                    className="w-full pl-9 pr-3 py-2 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all resize-none placeholder:text-white/15"
                   />
                 </div>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">
-                Payment For / Note <span className="text-[#be38f3]">*</span>
-              </label>
-              <div className="relative group">
-                <div className="absolute left-3.5 top-3 flex items-center justify-center text-white/30 group-focus-within:text-[#be38f3] group-hover:text-white/50 transition-colors">
-                  <FileText className="w-4 h-4" />
-                </div>
-                <textarea
-                  name="note"
-                  rows={3}
-                  placeholder="e.g. Website development milestone 1, Project invoice ID"
-                  value={formData.note}
-                  onChange={handleChange}
-                  required
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-[#0d0d15]/40 hover:bg-[#0d0d15]/60 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#be38f3]/30 focus:border-[#be38f3] transition-all resize-none placeholder:text-white/20"
-                />
               </div>
             </div>
             
