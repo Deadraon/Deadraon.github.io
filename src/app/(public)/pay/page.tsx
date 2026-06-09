@@ -331,7 +331,7 @@ function PaymentForm() {
                 <img 
                   src="/google-pay.svg" 
                   alt="Google Pay" 
-                  className="h-4.5 w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+                  className="h-[18px] w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
                 />
               </div>
               <div className="h-8 px-3.5 rounded-xl border border-white/[0.03] bg-white/[0.01] hover:bg-white/[0.04] hover:border-white/[0.08] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center group cursor-pointer" title="PhonePe">
@@ -352,7 +352,7 @@ function PaymentForm() {
                 <img 
                   src="/upi.svg" 
                   alt="UPI" 
-                  className="h-4.5 w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+                  className="h-[18px] w-auto opacity-40 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
                 />
               </div>
             </div>
