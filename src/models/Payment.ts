@@ -9,6 +9,8 @@ export interface IPayment extends Document {
   note?: string;
   status: "pending" | "success" | "failed";
   projectId?: string;
+  utr?: string;
+  paymentMode?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,6 +29,8 @@ const PaymentSchema = new Schema<IPayment>(
       default: "pending",
     },
     projectId: { type: String }, // Stored as a string representing the project ID
+    utr: { type: String },
+    paymentMode: { type: String },
   },
   { timestamps: true }
 );

@@ -71,6 +71,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing orderId" }, { status: 400 });
     }
 
+    const utr = payload.utr || payload.utr_number || payload.utrNumber || payload.bank_ref_num || payload.bank_ref_no || payload.transaction_id || payload.txn_id || "";
+    const paymentMode = payload.payment_mode || payload.paymentMode || payload.mode || payload.method || "UPI";
+
     // Find transaction log in DB
     let payment = await Payment.findOne({ orderId });
 
@@ -85,7 +88,13 @@ export async function POST(req: NextRequest) {
         amount: isNaN(amount) ? 0 : amount,
         note: payload.note || "Ad-hoc payment via webhook",
         status: "pending",
+        utr,
+        paymentMode,
       });
+    } else {
+      // Update fields if they exist in webhook payload
+      payment.utr = utr || payment.utr;
+      payment.paymentMode = paymentMode || payment.paymentMode;
     }
 
     // Handle payment status updates
