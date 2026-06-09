@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { CreditCard, Loader2, Send, ShieldCheck, IndianRupee, User, Mail, Phone, FileText, Lock } from "lucide-react";
+import { CreditCard, Loader2, Send, ShieldCheck, IndianRupee, User, Mail, Phone, FileText, Lock, History, CheckCircle2, XCircle, Clock } from "lucide-react";
 
 function PaymentForm() {
   const searchParams = useSearchParams();
@@ -19,6 +19,37 @@ function PaymentForm() {
     amount: "",
     projectId: "",
   });
+
+  const [payments, setPayments] = useState<any[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(true);
+
+  // Fetch payments function
+  const fetchPayments = async () => {
+    try {
+      const res = await fetch("/api/payment/history");
+      const data = await res.json();
+      if (data.success) {
+        setPayments(data.payments);
+      }
+    } catch (err) {
+      console.error("Error fetching payment history:", err);
+    } finally {
+      setHistoryLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoaded && user) {
+      fetchPayments();
+      
+      // Set up polling interval if there are pending payments
+      const hasPending = payments.some((p) => p.status === "pending");
+      if (hasPending) {
+        const interval = setInterval(fetchPayments, 8000);
+        return () => clearInterval(interval);
+      }
+    }
+  }, [isLoaded, user, payments.length]);
 
   // Prefill form from query parameters or user session
   useEffect(() => {
@@ -308,6 +339,84 @@ function PaymentForm() {
             </div>
           </div>
         </form>
+
+        {/* Payment History List (Below the payment card) */}
+        {user && (
+          <div className="mt-8 space-y-4">
+            <div className="flex items-center justify-between px-1">
+              <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider flex items-center gap-1.5">
+                <History className="w-4 h-4 text-[#be38f3]" />
+                Recent Payments
+              </h2>
+              {historyLoading && <Loader2 className="w-3.5 h-3.5 animate-spin text-white/30" />}
+            </div>
+
+            {historyLoading ? (
+              <div className="p-8 rounded-3xl border border-white/[0.05] bg-[#080810]/20 backdrop-blur-2xl text-center">
+                <Loader2 className="w-6 h-6 animate-spin mx-auto text-[#be38f3]/60 mb-2" />
+                <p className="text-xs text-white/40">Loading payment history...</p>
+              </div>
+            ) : payments.length === 0 ? (
+              <div className="p-8 rounded-3xl border border-white/[0.05] bg-[#080810]/20 backdrop-blur-2xl text-center">
+                <p className="text-xs text-white/40">No payment history found for this account.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {payments.slice(0, 5).map((payment: any) => (
+                  <div
+                    key={payment._id}
+                    className="p-4 rounded-2xl border border-white/[0.05] bg-[#080810]/30 backdrop-blur-md flex items-center justify-between gap-4 transition-all hover:border-white/10"
+                  >
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      {payment.status === "success" && (
+                        <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle2 className="w-4 h-4" />
+                        </div>
+                      )}
+                      {payment.status === "pending" && (
+                        <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center flex-shrink-0 animate-pulse">
+                          <Clock className="w-4 h-4" />
+                        </div>
+                      )}
+                      {payment.status === "failed" && (
+                        <div className="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center flex-shrink-0">
+                          <XCircle className="w-4 h-4" />
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-semibold text-white/80 truncate">
+                          {payment.note || "Milestone Payment"}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5 text-[10px] text-white/40">
+                          <span>
+                            {new Intl.DateTimeFormat("en-IN", {
+                              dateStyle: "medium",
+                              timeStyle: "short",
+                            }).format(new Date(payment.createdAt))}
+                          </span>
+                          {payment.utr && (
+                            <>
+                              <span className="text-white/10">•</span>
+                              <span className="font-mono truncate">UTR: {payment.utr}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-xs font-bold text-white">
+                        ₹{payment.amount.toLocaleString("en-IN")}
+                      </p>
+                      <span className="text-[9px] uppercase tracking-wider font-semibold text-white/40">
+                        {payment.paymentMode || "UPI"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
