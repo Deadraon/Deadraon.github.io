@@ -70,6 +70,10 @@ function PaymentForm() {
     }
   };
 
+  const handlePresetClick = (amountValue: number) => {
+    setFormData((prev) => ({ ...prev, amount: amountValue.toString() }));
+  };
+
   const formattedAmount = formData.amount && !isNaN(Number(formData.amount)) && Number(formData.amount) > 0
     ? new Intl.NumberFormat("en-IN", {
         style: "currency",
@@ -88,14 +92,14 @@ function PaymentForm() {
         {/* Header Title */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#be38f3]/20 bg-[#be38f3]/5 text-white/90 text-xs font-semibold mb-4 shadow-[0_0_15px_rgba(190,56,243,0.1)]">
-            <CreditCard className="w-3.5 h-3.5 text-[#be38f3]" />
-            <span>UPI Payment Gateway</span>
+            <Lock className="w-3.5 h-3.5 text-[#be38f3]" />
+            <span>Secure Checkout Gateway</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black mt-1 mb-3 tracking-tight">
             Make a <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#d364ff] to-[#be38f3] drop-shadow-[0_0_15px_rgba(190,56,243,0.2)]">Payment</span>
           </h1>
           <p className="text-muted-foreground text-sm max-w-sm mx-auto">
-            Pay for invoices, milestones, or service contracts securely via UPI.
+            Pay securely to <strong className="text-white">Deadraon Development</strong>.
           </p>
         </div>
 
@@ -106,16 +110,15 @@ function PaymentForm() {
         >
           {/* Subtle top brand border line */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#be38f3] to-transparent" />
+          
           {/* Amount Section - Primary Focus */}
           <div className="bg-[#be38f3]/[0.02] border border-[#be38f3]/15 p-5 rounded-2xl relative overflow-hidden shadow-[0_0_30px_rgba(190,56,243,0.02)]">
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#be38f3]/30 to-transparent" />
-            <label className="block text-center text-xs font-semibold text-[#be38f3] uppercase tracking-wider mb-3">
+            <label className="block text-center text-[10px] font-bold text-[#be38f3] uppercase tracking-widest mb-3">
               Enter Amount to Pay <span className="text-[#be38f3]">*</span>
             </label>
-            <div className="relative max-w-[240px] mx-auto">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-[#be38f3] pointer-events-none">
-                <IndianRupee className="w-5 h-5 stroke-[2.5]" />
-              </div>
+            <div className="flex items-center justify-center gap-2 max-w-[240px] mx-auto border-b-2 border-[#be38f3]/20 focus-within:border-[#be38f3] pb-1.5 transition-all">
+              <span className="text-3xl font-extrabold text-[#be38f3] select-none mb-1">₹</span>
               <input
                 name="amount"
                 type="number"
@@ -124,16 +127,61 @@ function PaymentForm() {
                 value={formData.amount}
                 onChange={handleChange}
                 required
-                className="w-full text-center pl-11 pr-4 py-4 rounded-xl border-2 border-[#be38f3]/25 focus:border-[#be38f3] bg-[#0d0d15]/60 text-white text-3xl font-black focus:outline-none focus:ring-4 focus:ring-[#be38f3]/10 transition-all placeholder:text-white/10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="bg-transparent text-white text-4xl font-black focus:outline-none placeholder:text-white/10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all"
+                style={{ width: formData.amount ? `${Math.max(1, formData.amount.length) * 22 + 10}px` : '40px' }}
               />
             </div>
-            <p className="text-center text-[10px] text-white/40 mt-2">
-              Secure Indian Rupee (INR) Transaction
+            
+            {/* Quick-Select Preset Chips */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+              {[1000, 5000, 10000, 25000].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => handlePresetClick(preset)}
+                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#be38f3]/5 border border-[#be38f3]/10 text-white/70 hover:text-white hover:bg-[#be38f3]/25 hover:border-[#be38f3]/40 active:scale-95 transition-all shadow-sm"
+                >
+                  ₹{preset.toLocaleString("en-IN")}
+                </button>
+              ))}
+            </div>
+
+            <p className="text-center text-[9px] text-white/30 tracking-wide uppercase mt-4">
+              Instant settlement via secure UPI Transfer
             </p>
           </div>
 
           {/* Secondary Client Details */}
           <div className="space-y-4 pt-4 border-t border-white/[0.05]">
+            
+            {/* User Session Info Badge */}
+            {user && (
+              <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 mb-4 backdrop-blur-md animate-fade-in">
+                {user.imageUrl ? (
+                  <img
+                    src={user.imageUrl}
+                    alt={user.fullName || "User avatar"}
+                    className="w-8 h-8 rounded-full border border-white/10"
+                  />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8a2be2] to-[#be38f3] flex items-center justify-center text-white text-xs font-bold">
+                    {user.firstName?.charAt(0) || "U"}
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-white/80 truncate">
+                    Paying as <span className="text-[#be38f3]">{user.fullName || user.username}</span>
+                  </p>
+                  <p className="text-[10px] text-white/40 truncate">
+                    {user.primaryEmailAddress?.emailAddress}
+                  </p>
+                </div>
+                <div className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-semibold select-none uppercase tracking-wider">
+                  Verified Client
+                </div>
+              </div>
+            )}
+
             <h3 className="text-xs font-medium text-white/40 mb-1">Billing Details</h3>
             
             <div className="grid sm:grid-cols-2 gap-3.5">
@@ -152,7 +200,7 @@ function PaymentForm() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all placeholder:text-white/15"
+                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all placeholder:text-white/15"
                   />
                 </div>
               </div>
@@ -171,7 +219,7 @@ function PaymentForm() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all placeholder:text-white/15"
+                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all placeholder:text-white/15"
                   />
                 </div>
               </div>
@@ -194,7 +242,7 @@ function PaymentForm() {
                     onChange={handleChange}
                     required
                     pattern="[0-9]{10}"
-                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all placeholder:text-white/15"
+                    className="w-full pl-9 pr-3 py-2 h-10 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all placeholder:text-white/15"
                   />
                 </div>
               </div>
@@ -203,7 +251,7 @@ function PaymentForm() {
                   Payment For / Note <span className="text-white/30">*</span>
                 </label>
                 <div className="relative group">
-                  <div className="absolute left-3 top-2.5 flex items-center justify-center text-white/20 group-focus-within:text-[#be38f3] group-hover:text-white/40 transition-colors">
+                  <div className="absolute left-3 top-2.5 flex items-center justify-center text-[#be38f3] group-hover:text-white/40 transition-colors">
                     <FileText className="w-3.5 h-3.5" />
                   </div>
                   <textarea
@@ -213,7 +261,7 @@ function PaymentForm() {
                     value={formData.note}
                     onChange={handleChange}
                     required
-                    className="w-full pl-9 pr-3 py-2 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/20 transition-all resize-none placeholder:text-white/15"
+                    className="w-full pl-9 pr-3 py-2 rounded-lg border border-white/5 bg-[#0d0d15]/30 hover:bg-[#0d0d15]/50 text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all resize-none placeholder:text-white/15"
                   />
                 </div>
               </div>
@@ -221,21 +269,6 @@ function PaymentForm() {
             
             {/* Hidden field for project linkage */}
             <input type="hidden" name="projectId" value={formData.projectId} />
-          </div>
-
-          {/* Secured banner */}
-          <div className="p-4 rounded-2xl border border-emerald-500/15 bg-emerald-500/[0.02] backdrop-blur-md flex items-start gap-3 shadow-[0_4px_20px_rgba(16,185,129,0.02)] transition-colors hover:border-emerald-500/25">
-            <div className="p-1 rounded-lg bg-emerald-500/10 text-emerald-400 mt-0.5">
-              <ShieldCheck className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-semibold text-emerald-400 mb-0.5">
-                Direct Bank Settlement
-              </h4>
-              <p className="text-[11px] text-white/60 leading-relaxed">
-                Payments route directly to our bank account. Securely verified and processed in real-time by <strong className="text-white">MyMobPay UPI Gateway</strong>.
-              </p>
-            </div>
           </div>
 
           {/* Action Button */}
@@ -257,6 +290,24 @@ function PaymentForm() {
               </>
             )}
           </Button>
+          
+          {/* Brand Badges / SSL Certification Row */}
+          <div className="pt-3 border-t border-white/[0.05] flex flex-col items-center justify-center gap-2">
+            <span className="text-[9px] font-medium text-white/30 uppercase tracking-widest flex items-center gap-1.5">
+              <Lock className="w-3 h-3 text-emerald-500" /> Secure 256-bit SSL Payment Gateway
+            </span>
+            <div className="flex items-center justify-center gap-4 opacity-50 hover:opacity-80 transition-opacity duration-300 select-none">
+              <span className="text-[10px] font-bold text-white flex items-center gap-0.5">
+                <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-6.887 4.114-4.907 0-8.905-4.018-8.905-8.914 0-4.896 3.998-8.914 8.905-8.914 2.7 0 4.71 1.018 6.136 2.37l3.036-3.037C19.03 1.63 15.93 0 12.24 0 5.48 0 0 5.48 0 12.24s5.48 12.24 12.24 12.24c7.05 0 11.72-4.958 11.72-11.936 0-.805-.078-1.56-.222-2.259H12.24z"/>
+                </svg>
+                Pay
+              </span>
+              <span className="text-[10px] font-black italic text-purple-400">PhonePe</span>
+              <span className="text-[10px] font-extrabold text-sky-400">Paytm</span>
+              <span className="text-[9px] font-extrabold text-[#be38f3] border border-[#be38f3]/30 px-1 rounded-sm">UPI</span>
+            </div>
+          </div>
         </form>
       </div>
     </div>
