@@ -67,6 +67,12 @@ export default function AdminPortfolioPage() {
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
+  // GitHub import states
+  const [gitRepos, setGitRepos] = useState<any[]>([]);
+  const [loadingGit, setLoadingGit] = useState(false);
+  const [showGitModal, setShowGitModal] = useState(false);
+  const [gitSearch, setGitSearch] = useState("");
+
   const showToast = (msg: string, type: "success" | "error" = "success") => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
@@ -88,6 +94,94 @@ export default function AdminPortfolioPage() {
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+
+  const fetchGitRepos = async () => {
+    setLoadingGit(true);
+    try {
+      const res = await fetch("/api/github-projects");
+      const data = await res.json();
+      setGitRepos(data.projects || []);
+    } catch {
+      showToast("Failed to fetch GitHub repositories", "error");
+    } finally {
+      setLoadingGit(false);
+    }
+  };
+
+  const openGitImport = () => {
+    setShowGitModal(true);
+    fetchGitRepos();
+  };
+
+  const detectCategory = (repoName: string, desc: string, lang: string, topics: string[]): FormCategory => {
+    const allText = `${repoName} ${desc} ${lang} ${topics.join(" ")}`.toLowerCase();
+    
+    if (
+      allText.includes("flutter") ||
+      allText.includes("dart") ||
+      allText.includes("swift") ||
+      allText.includes("kotlin") ||
+      allText.includes("react-native") ||
+      allText.includes("android") ||
+      allText.includes("ios") ||
+      allText.includes("mobile-app")
+    ) {
+      return "app";
+    }
+
+    if (
+      allText.includes("express") ||
+      allText.includes("django") ||
+      allText.includes("flask") ||
+      allText.includes("spring-boot") ||
+      allText.includes("node") ||
+      allText.includes("backend") ||
+      allText.includes("python") ||
+      allText.includes("golang") ||
+      allText.includes("rust") ||
+      allText.includes("api") ||
+      allText.includes("mongodb") ||
+      allText.includes("postgresql")
+    ) {
+      return "backend";
+    }
+
+    if (
+      allText.includes("figma") ||
+      allText.includes("design") ||
+      allText.includes("ui-ux") ||
+      allText.includes("framer-motion") ||
+      allText.includes("tailwindcss") ||
+      allText.includes("css")
+    ) {
+      return "ui";
+    }
+
+    return "web";
+  };
+
+  const handleSelectRepo = (repo: any) => {
+    const detected = detectCategory(repo.name, repo.description, repo.language, repo.topics);
+    const tagsArray = Array.from(new Set([repo.language, ...repo.topics].filter(Boolean)));
+    
+    setEditingId(null);
+    setForm({
+      title: repo.name,
+      description: repo.description || "",
+      longDesc: repo.description || "",
+      image: "",
+      tags: tagsArray.join(", "),
+      category: detected,
+      github: repo.githubUrl || "",
+      live: repo.liveUrl || "",
+      featured: false,
+      published: true,
+      order: 0,
+    });
+    
+    setShowGitModal(false);
+    setShowForm(true);
+  };
 
   const openAdd = () => {
     setEditingId(null);
@@ -209,6 +303,12 @@ export default function AdminPortfolioPage() {
               {seeding ? "Seeding..." : "Seed Old Projects"}
             </button>
           )}
+          <button
+            onClick={openGitImport}
+            className="flex items-center gap-2 px-4 py-2.5 bg-secondary hover:bg-accent border border-border text-foreground rounded-xl text-sm font-medium transition-all animate-in fade-in duration-200"
+          >
+            <Github className="w-4 h-4" /> Import from GitHub
+          </button>
           <button
             onClick={openAdd}
             className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
@@ -500,6 +600,99 @@ export default function AdminPortfolioPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* GitHub Import Modal */}
+      {showGitModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200" onClick={() => setShowGitModal(false)}>
+          <div className="bg-card border border-border rounded-3xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-6 border-b border-border">
+              <div>
+                <h2 className="text-lg font-bold flex items-center gap-2">
+                  <Github className="w-5 h-5 text-primary" /> Import from GitHub
+                </h2>
+                <p className="text-xs text-muted-foreground mt-0.5">Select a repository to pre-fill the project showcase form.</p>
+              </div>
+              <button onClick={() => setShowGitModal(false)} className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center hover:bg-accent transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Search */}
+            <div className="p-4 border-b border-border bg-card">
+              <input
+                value={gitSearch}
+                onChange={(e) => setGitSearch(e.target.value)}
+                placeholder="Search repositories by name, language, or topic..."
+                className="w-full px-4 py-2.5 rounded-xl bg-secondary border border-border text-sm focus:outline-none focus:border-primary/50 transition-colors"
+              />
+            </div>
+
+            {/* Repos list */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-3">
+              {loadingGit ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-3 text-muted-foreground">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                  <span className="text-sm">Fetching public repositories...</span>
+                </div>
+              ) : gitRepos.length === 0 ? (
+                <div className="text-center py-20 text-muted-foreground text-sm">
+                  No public repositories found.
+                </div>
+              ) : (() => {
+                const filtered = gitRepos.filter((r) => {
+                  if (!gitSearch) return true;
+                  const q = gitSearch.toLowerCase();
+                  return (
+                    r.name.toLowerCase().includes(q) ||
+                    (r.description || "").toLowerCase().includes(q) ||
+                    (r.language || "").toLowerCase().includes(q) ||
+                    (r.topics || []).some((t: string) => t.toLowerCase().includes(q))
+                  );
+                });
+
+                if (filtered.length === 0) {
+                  return (
+                    <div className="text-center py-20 text-muted-foreground text-sm">
+                      No repositories matching &quot;{gitSearch}&quot;
+                    </div>
+                  );
+                }
+
+                return filtered.map((repo) => (
+                  <div key={repo.id} className="flex items-start justify-between gap-4 p-4 rounded-2xl border border-border bg-secondary/30 hover:border-primary/30 transition-all duration-300">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold text-sm text-foreground mb-1">{repo.name}</h3>
+                      <p className="text-muted-foreground text-xs line-clamp-2 mb-2">
+                        {repo.description || "No description provided."}
+                      </p>
+                      <div className="flex flex-wrap gap-2 items-center text-xs text-muted-foreground">
+                        {repo.language && (
+                          <span className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-primary" />
+                            {repo.language}
+                          </span>
+                        )}
+                        {repo.stars > 0 && <span>★ {repo.stars}</span>}
+                        {repo.topics && repo.topics.slice(0, 3).map((t: string) => (
+                          <span key={t} className="px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 text-[10px]">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleSelectRepo(repo)}
+                      className="px-3.5 py-2 bg-primary text-primary-foreground rounded-xl text-xs font-semibold hover:bg-primary/90 transition-all shrink-0 shadow-sm"
+                    >
+                      Select
+                    </button>
+                  </div>
+                ));
+              })()}
+            </div>
           </div>
         </div>
       )}
