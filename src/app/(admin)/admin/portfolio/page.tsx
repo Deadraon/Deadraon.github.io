@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Plus, Pencil, Trash2, Eye, EyeOff, Star, StarOff, ExternalLink, Github, Loader2, X, Check, GripVertical } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, Star, StarOff, ExternalLink, Github, Loader2, X, Check, GripVertical, Database } from "lucide-react";
 
 interface PortfolioProject {
   _id: string;
@@ -60,6 +60,7 @@ export default function AdminPortfolioPage() {
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [seeding, setSeeding] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(EMPTY_FORM);
@@ -165,6 +166,21 @@ export default function AdminPortfolioPage() {
     }
   };
 
+  const handleSeed = async () => {
+    setSeeding(true);
+    try {
+      const res = await fetch("/api/admin/portfolio/seed", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Seed failed");
+      showToast(data.message);
+      fetchProjects();
+    } catch (err: any) {
+      showToast(err.message || "Seed failed", "error");
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   return (
     <div className="p-6 lg:p-8 pt-16 lg:pt-8 min-h-screen">
       {/* Toast */}
@@ -181,12 +197,25 @@ export default function AdminPortfolioPage() {
           <h1 className="text-2xl font-bold">Portfolio Projects</h1>
           <p className="text-muted-foreground text-sm mt-1">Manage what shows on your public portfolio & home page.</p>
         </div>
-        <button
-          onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
-        >
-          <Plus className="w-4 h-4" /> Add Project
-        </button>
+        <div className="flex items-center gap-2">
+          {projects.length === 0 && !loading && (
+            <button
+              onClick={handleSeed}
+              disabled={seeding}
+              className="flex items-center gap-2 px-4 py-2.5 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl text-sm font-medium hover:bg-amber-500/30 transition-all disabled:opacity-60"
+              title="Seed database with your original projects"
+            >
+              {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Database className="w-4 h-4" />}
+              {seeding ? "Seeding..." : "Seed Old Projects"}
+            </button>
+          )}
+          <button
+            onClick={openAdd}
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
+          >
+            <Plus className="w-4 h-4" /> Add Project
+          </button>
+        </div>
       </div>
 
       {/* Stats bar */}
