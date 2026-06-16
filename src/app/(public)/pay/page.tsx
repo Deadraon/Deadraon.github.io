@@ -215,10 +215,10 @@ function PaymentForm() {
               {/* Option 1: MyMobPay */}
               <div
                 onClick={() => setGateway("mymobpay")}
-                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[95px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_15px_rgba(190,56,243,0.12)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[95px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.04] border-[#be38f3] shadow-[0_0_15px_rgba(190,56,243,0.15)] ring-1 ring-[#be38f3]/30" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Small Background Watermark Logo (MyMobPay Text Logo) */}
-                <div className="absolute right-2 bottom-1 select-none pointer-events-none text-white/[0.01] group-hover:text-white/[0.02] text-2xl font-black tracking-tighter transition-colors leading-none">
+                {/* Contained Background Watermark Logo (MyMobPay Text Logo) */}
+                <div className="absolute right-4 bottom-3 select-none pointer-events-none text-white/[0.015] group-hover:text-white/[0.03] text-lg font-black tracking-tighter transition-colors leading-none">
                   MyMob<span className="text-[#3b82f6] italic">Pay</span>
                 </div>
 
@@ -237,7 +237,7 @@ function PaymentForm() {
                   
                   {/* Radio indicator - Absolutely Positioned */}
                   <div className={`absolute top-4 right-4 w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
-                    {gateway === "mymobpay" && <div className="w-1.5 h-1.5 rounded-full bg-[#be38f3]" />}
+                    {gateway === "mymobpay" && <div className="w-1.5 h-1.5 rounded-full bg-[#be38f3] shadow-[0_0_6px_#be38f3]" />}
                   </div>
 
                   <div className="space-y-0.5">
@@ -252,14 +252,14 @@ function PaymentForm() {
               {/* Option 2: Cashfree */}
               <div
                 onClick={() => setGateway("cashfree")}
-                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[95px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.06] border-[#0070F3] shadow-[0_0_15px_rgba(0,112,243,0.12)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[95px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.04] border-[#0070F3] shadow-[0_0_15px_rgba(0,112,243,0.15)] ring-1 ring-[#0070F3]/30" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Small Background Watermark Logo (Cashfree Original Symbol) */}
-                <div className="absolute right-1 bottom-1 w-10 h-10 text-white/[0.01] group-hover:text-white/[0.02] transition-colors pointer-events-none">
+                {/* Contained Background Watermark Logo (Cashfree Original Symbol) */}
+                <div className="absolute right-4 bottom-3 w-6 h-6 text-white/[0.015] group-hover:text-white/[0.03] transition-colors pointer-events-none">
                   <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
-                    <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
-                    <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
-                    <path d="M 52 48 L 78 48" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+                    <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="currentColor" strokeWidth="12" strokeLinecap="round" />
+                    <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="currentColor" strokeWidth="12" strokeLinecap="round" />
+                    <path d="M 52 48 L 78 48" stroke="currentColor" strokeWidth="12" strokeLinecap="round" />
                   </svg>
                 </div>
 
@@ -268,7 +268,7 @@ function PaymentForm() {
                     <div className="flex items-center gap-2">
                       {/* Cashfree Logo Symbol + Text */}
                       <div className="flex items-center gap-1.5">
-                        <svg viewBox="0 0 100 100" fill="none" className="w-4.5 h-4.5 shrink-0">
+                        <svg viewBox="0 0 100 100" fill="none" className="w-5 h-5 shrink-0">
                           <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="#FBB03B" strokeWidth="12" strokeLinecap="round" />
                           <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="#009F55" strokeWidth="12" strokeLinecap="round" />
                           <path d="M 52 48 L 78 48" stroke="#FBB03B" strokeWidth="12" strokeLinecap="round" />
@@ -282,7 +282,7 @@ function PaymentForm() {
                   
                   {/* Radio indicator - Absolutely Positioned */}
                   <div className={`absolute top-4 right-4 w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
-                    {gateway === "cashfree" && <div className="w-1.5 h-1.5 rounded-full bg-[#0070F3]" />}
+                    {gateway === "cashfree" && <div className="w-1.5 h-1.5 rounded-full bg-[#0070F3] shadow-[0_0_6px_#0070F3]" />}
                   </div>
 
                   <div className="space-y-0.5">
