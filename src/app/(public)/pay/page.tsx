@@ -217,23 +217,17 @@ function PaymentForm() {
                 onClick={() => setGateway("mymobpay")}
                 className={`relative group p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[135px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_20px_rgba(190,56,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Large Background Watermark Logo (MyMobPay M Symbol) */}
-                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-[#be38f3]/[0.03] group-hover:text-[#be38f3]/[0.05] transition-colors pointer-events-none">
-                  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
-                    <path d="M 25 75 L 25 30 L 50 55 L 75 30 L 75 75" />
-                    <circle cx="50" cy="22" r="7" fill="currentColor" />
-                  </svg>
+                {/* Large Background Watermark Logo (MyMobPay Text Logo) */}
+                <div className="absolute right-[-10px] bottom-[-5px] select-none pointer-events-none text-white/[0.015] group-hover:text-white/[0.03] text-4xl sm:text-5xl font-black tracking-tighter transition-colors leading-none">
+                  MyMob<span className="text-[#3b82f6] italic">Pay</span>
                 </div>
 
                 <div className="relative z-10 flex flex-col justify-between h-full space-y-3">
                   <div className="flex flex-col gap-1.5 pr-6">
                     <div className="flex items-center gap-2">
-                      <svg viewBox="0 0 100 100" fill="none" className="w-5.5 h-5.5 shrink-0">
-                        <path d="M 25 75 L 25 30 L 50 55 L 75 30 L 75 75" stroke="#be38f3" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
-                        <circle cx="50" cy="22" r="8" fill="#ff007f" />
-                      </svg>
-                      <span className="text-xs sm:text-sm font-black tracking-tight text-white">
-                        <span className="text-[#be38f3]">My</span>MobPay
+                      <span className="text-xs sm:text-sm font-extrabold tracking-tight text-white flex items-center select-none">
+                        <span>MyMob</span>
+                        <span className="text-[#3b82f6] italic ml-0.5">Pay</span>
                       </span>
                     </div>
                     <div>
