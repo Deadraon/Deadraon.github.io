@@ -215,34 +215,35 @@ function PaymentForm() {
               {/* Option 1: MyMobPay */}
               <div
                 onClick={() => setGateway("mymobpay")}
-                className={`relative group p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[125px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_20px_rgba(190,56,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[135px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_20px_rgba(190,56,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Large Background Watermark Logo (QR Code) */}
-                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-white/[0.02] group-hover:text-white/[0.04] transition-colors pointer-events-none">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="w-full h-full">
-                    <rect x="2" y="2" width="20" height="20" rx="4" />
-                    <rect x="5" y="5" width="6" height="6" />
-                    <rect x="13" y="5" width="6" height="6" />
-                    <rect x="5" y="13" width="6" height="6" />
-                    <rect x="13" y="13" width="2" height="2" />
-                    <rect x="17" y="17" width="2" height="2" />
-                    <rect x="13" y="17" width="2" height="2" />
-                    <rect x="17" y="13" width="2" height="2" />
+                {/* Large Background Watermark Logo (MyMobPay M Symbol) */}
+                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-[#be38f3]/[0.03] group-hover:text-[#be38f3]/[0.05] transition-colors pointer-events-none">
+                  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+                    <path d="M 25 75 L 25 30 L 50 55 L 75 30 L 75 75" />
+                    <circle cx="50" cy="22" r="7" fill="currentColor" />
                   </svg>
                 </div>
 
                 <div className="relative z-10 flex flex-col justify-between h-full space-y-3.5">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-black tracking-tight text-white flex items-center">
-                        <span className="text-[#be38f3]">My</span>MobPay
-                      </span>
-                      <span className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider scale-90 origin-left">
+                    <div className="flex items-center gap-2.5">
+                      {/* MyMobPay Logo Symbol + Text */}
+                      <div className="flex items-center gap-2">
+                        <svg viewBox="0 0 100 100" fill="none" className="w-6 h-6 shrink-0">
+                          <path d="M 25 75 L 25 30 L 50 55 L 75 30 L 75 75" stroke="#be38f3" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+                          <circle cx="50" cy="22" r="8" fill="#ff007f" />
+                        </svg>
+                        <span className="text-sm font-black tracking-tight text-white">
+                          <span className="text-[#be38f3]">My</span>MobPay
+                        </span>
+                      </div>
+                      <span className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider scale-90 origin-left shrink-0">
                         Recommended
                       </span>
                     </div>
                     
-                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
                       {gateway === "mymobpay" && <div className="w-2 h-2 rounded-full bg-[#be38f3]" />}
                     </div>
                   </div>
@@ -259,26 +260,34 @@ function PaymentForm() {
               {/* Option 2: Cashfree */}
               <div
                 onClick={() => setGateway("cashfree")}
-                className={`relative group p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[125px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.06] border-[#0070F3] shadow-[0_0_20px_rgba(0,112,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[135px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.06] border-[#0070F3] shadow-[0_0_20px_rgba(0,112,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Large Background Watermark Logo (Credit Card) */}
-                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-white/[0.02] group-hover:text-white/[0.04] transition-colors pointer-events-none">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="w-full h-full">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" />
-                    <rect x="6" y="14" width="4" height="2" />
+                {/* Large Background Watermark Logo (Cashfree Original Symbol) */}
+                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-white/[0.015] group-hover:text-white/[0.03] transition-colors pointer-events-none">
+                  <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
+                    <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="#FBB03B" strokeWidth="13" strokeLinecap="round" />
+                    <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="#009F55" strokeWidth="13" strokeLinecap="round" />
+                    <path d="M 52 48 L 78 48" stroke="#FBB03B" strokeWidth="13" strokeLinecap="round" />
                   </svg>
                 </div>
 
                 <div className="relative z-10 flex flex-col justify-between h-full space-y-3.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-black tracking-tight text-white flex items-center">
-                        <span className="text-[#0070F3]">Cash</span>free
-                      </span>
+                      {/* Cashfree Logo Symbol + Text */}
+                      <div className="flex items-center gap-2">
+                        <svg viewBox="0 0 100 100" fill="none" className="w-6 h-6 shrink-0">
+                          <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="#FBB03B" strokeWidth="13" strokeLinecap="round" />
+                          <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="#009F55" strokeWidth="13" strokeLinecap="round" />
+                          <path d="M 52 48 L 78 48" stroke="#FBB03B" strokeWidth="13" strokeLinecap="round" />
+                        </svg>
+                        <span className="text-sm font-black tracking-tight text-white">
+                          Cashfree
+                        </span>
+                      </div>
                     </div>
                     
-                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
                       {gateway === "cashfree" && <div className="w-2 h-2 rounded-full bg-[#0070F3]" />}
                     </div>
                   </div>
