@@ -207,37 +207,91 @@ function PaymentForm() {
 
           {/* Payment Method Selector */}
           <div className="space-y-3 pt-4 border-t border-white/[0.05]">
-            <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+            <label className="block text-[10px] font-bold text-white/50 uppercase tracking-widest mb-3">
               Select Payment Method <span className="text-white/30">*</span>
             </label>
-            <div className="grid grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              
               {/* Option 1: MyMobPay */}
               <div
                 onClick={() => setGateway("mymobpay")}
-                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between min-h-[90px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.05] border-[#be38f3] shadow-[0_0_15px_rgba(190,56,243,0.1)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[125px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_20px_rgba(190,56,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white group-hover:text-[#be38f3] transition-colors">Instant UPI</span>
-                  <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
-                    {gateway === "mymobpay" && <div className="w-1.5 h-1.5 rounded-full bg-[#be38f3]" />}
+                {/* Large Background Watermark Logo (QR Code) */}
+                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-white/[0.02] group-hover:text-white/[0.04] transition-colors pointer-events-none">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="w-full h-full">
+                    <rect x="2" y="2" width="20" height="20" rx="4" />
+                    <rect x="5" y="5" width="6" height="6" />
+                    <rect x="13" y="5" width="6" height="6" />
+                    <rect x="5" y="13" width="6" height="6" />
+                    <rect x="13" y="13" width="2" height="2" />
+                    <rect x="17" y="17" width="2" height="2" />
+                    <rect x="13" y="17" width="2" height="2" />
+                    <rect x="17" y="13" width="2" height="2" />
+                  </svg>
+                </div>
+
+                <div className="relative z-10 flex flex-col justify-between h-full space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-black tracking-tight text-white flex items-center">
+                        <span className="text-[#be38f3]">My</span>MobPay
+                      </span>
+                      <span className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider scale-90 origin-left">
+                        Recommended
+                      </span>
+                    </div>
+                    
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
+                      {gateway === "mymobpay" && <div className="w-2 h-2 rounded-full bg-[#be38f3]" />}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-xs font-bold text-white/95">QR Payments</p>
+                    <p className="text-[10px] text-white/40 leading-relaxed">
+                      Scan QR code with any UPI app (GPay, PhonePe, Paytm, BHIM) to pay instantly.
+                    </p>
                   </div>
                 </div>
-                <p className="text-[10px] text-white/40 leading-snug mt-1">Pay using any UPI app (GPay, PhonePe, Paytm, BHIM).</p>
               </div>
 
               {/* Option 2: Cashfree */}
               <div
                 onClick={() => setGateway("cashfree")}
-                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between min-h-[90px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.05] border-[#0070F3] shadow-[0_0_15px_rgba(0,112,243,0.1)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[125px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.06] border-[#0070F3] shadow-[0_0_20px_rgba(0,112,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white group-hover:text-[#0070F3] transition-colors">Cards & More</span>
-                  <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
-                    {gateway === "cashfree" && <div className="w-1.5 h-1.5 rounded-full bg-[#0070F3]" />}
+                {/* Large Background Watermark Logo (Credit Card) */}
+                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-white/[0.02] group-hover:text-white/[0.04] transition-colors pointer-events-none">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="w-full h-full">
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <line x1="2" y1="10" x2="22" y2="10" />
+                    <rect x="6" y="14" width="4" height="2" />
+                  </svg>
+                </div>
+
+                <div className="relative z-10 flex flex-col justify-between h-full space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-black tracking-tight text-white flex items-center">
+                        <span className="text-[#0070F3]">Cash</span>free
+                      </span>
+                    </div>
+                    
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
+                      {gateway === "cashfree" && <div className="w-2 h-2 rounded-full bg-[#0070F3]" />}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-xs font-bold text-white/95">Mobile UPI & Cards</p>
+                    <p className="text-[10px] text-white/40 leading-relaxed">
+                      Pay using Credit/Debit Cards, NetBanking, Wallets, or Mobile UPI checkout.
+                    </p>
                   </div>
                 </div>
-                <p className="text-[10px] text-white/40 leading-snug mt-1">Pay using Credit/Debit Cards, NetBanking, UPI, or Wallets.</p>
               </div>
+
             </div>
           </div>
 
