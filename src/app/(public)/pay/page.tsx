@@ -215,37 +215,35 @@ function PaymentForm() {
               {/* Option 1: MyMobPay */}
               <div
                 onClick={() => setGateway("mymobpay")}
-                className={`relative group p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[135px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_20px_rgba(190,56,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[95px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.06] border-[#be38f3] shadow-[0_0_15px_rgba(190,56,243,0.12)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Large Background Watermark Logo (MyMobPay Text Logo) */}
-                <div className="absolute right-[-10px] bottom-[-5px] select-none pointer-events-none text-white/[0.015] group-hover:text-white/[0.03] text-4xl sm:text-5xl font-black tracking-tighter transition-colors leading-none">
+                {/* Small Background Watermark Logo (MyMobPay Text Logo) */}
+                <div className="absolute right-2 bottom-1 select-none pointer-events-none text-white/[0.01] group-hover:text-white/[0.02] text-2xl font-black tracking-tighter transition-colors leading-none">
                   MyMob<span className="text-[#3b82f6] italic">Pay</span>
                 </div>
 
-                <div className="relative z-10 flex flex-col justify-between h-full space-y-3">
-                  <div className="flex flex-col gap-1.5 pr-6">
+                <div className="relative z-10 flex flex-col justify-between h-full space-y-2">
+                  <div className="flex flex-col gap-1 pr-6">
                     <div className="flex items-center gap-2">
                       <span className="text-xs sm:text-sm font-extrabold tracking-tight text-white flex items-center select-none">
                         <span>MyMob</span>
                         <span className="text-[#3b82f6] italic ml-0.5">Pay</span>
                       </span>
-                    </div>
-                    <div>
-                      <span className="inline-block text-[8px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider scale-95 origin-left">
+                      <span className="text-[8px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider scale-90 origin-left shrink-0">
                         Recommended
                       </span>
                     </div>
                   </div>
                   
                   {/* Radio indicator - Absolutely Positioned */}
-                  <div className={`absolute top-4 right-4 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
-                    {gateway === "mymobpay" && <div className="w-2 h-2 rounded-full bg-[#be38f3]" />}
+                  <div className={`absolute top-4 right-4 w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
+                    {gateway === "mymobpay" && <div className="w-1.5 h-1.5 rounded-full bg-[#be38f3]" />}
                   </div>
 
                   <div className="space-y-0.5">
-                    <p className="text-[11px] sm:text-xs font-bold text-white/95">QR Payments</p>
-                    <p className="text-[10px] text-white/40 leading-relaxed">
-                      Scan QR code with any UPI app (GPay, PhonePe, Paytm, BHIM) to pay instantly.
+                    <p className="text-[10px] font-bold text-white/95">QR Payments</p>
+                    <p className="text-[9px] text-white/40 leading-relaxed">
+                      Scan QR with any UPI app (GPay, PhonePe, Paytm, BHIM) to pay instantly.
                     </p>
                   </div>
                 </div>
@@ -254,39 +252,42 @@ function PaymentForm() {
               {/* Option 2: Cashfree */}
               <div
                 onClick={() => setGateway("cashfree")}
-                className={`relative group p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[135px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.06] border-[#0070F3] shadow-[0_0_20px_rgba(0,112,243,0.15)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[95px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.06] border-[#0070F3] shadow-[0_0_15px_rgba(0,112,243,0.12)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
               >
-                {/* Large Background Watermark Logo (Cashfree Original Symbol) */}
-                <div className="absolute right-[-10px] bottom-[-10px] w-24 h-24 text-white/[0.015] group-hover:text-white/[0.03] transition-colors pointer-events-none">
+                {/* Small Background Watermark Logo (Cashfree Original Symbol) */}
+                <div className="absolute right-1 bottom-1 w-10 h-10 text-white/[0.01] group-hover:text-white/[0.02] transition-colors pointer-events-none">
                   <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
-                    <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="currentColor" strokeWidth="13" strokeLinecap="round" />
-                    <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="currentColor" strokeWidth="13" strokeLinecap="round" />
-                    <path d="M 52 48 L 78 48" stroke="currentColor" strokeWidth="13" strokeLinecap="round" />
+                    <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+                    <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+                    <path d="M 52 48 L 78 48" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
                   </svg>
                 </div>
 
-                <div className="relative z-10 flex flex-col justify-between h-full space-y-3">
-                  <div className="flex flex-col gap-1.5 pr-6">
+                <div className="relative z-10 flex flex-col justify-between h-full space-y-2">
+                  <div className="flex flex-col gap-1 pr-6">
                     <div className="flex items-center gap-2">
-                      <svg viewBox="0 0 100 100" fill="none" className="w-5.5 h-5.5 shrink-0">
-                        <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="#FBB03B" strokeWidth="13" strokeLinecap="round" />
-                        <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="#009F55" strokeWidth="13" strokeLinecap="round" />
-                        <path d="M 52 48 L 78 48" stroke="#FBB03B" strokeWidth="13" strokeLinecap="round" />
-                      </svg>
-                      <span className="text-xs sm:text-sm font-black tracking-tight text-white">
-                        Cashfree
-                      </span>
+                      {/* Cashfree Logo Symbol + Text */}
+                      <div className="flex items-center gap-1.5">
+                        <svg viewBox="0 0 100 100" fill="none" className="w-4.5 h-4.5 shrink-0">
+                          <path d="M 34 92 L 34 44 A 14 14 0 0 1 48 30 L 58 30" stroke="#FBB03B" strokeWidth="12" strokeLinecap="round" />
+                          <path d="M 52 76 L 52 26 A 14 14 0 0 1 66 12 L 84 12" stroke="#009F55" strokeWidth="12" strokeLinecap="round" />
+                          <path d="M 52 48 L 78 48" stroke="#FBB03B" strokeWidth="12" strokeLinecap="round" />
+                        </svg>
+                        <span className="text-xs sm:text-sm font-black tracking-tight text-white">
+                          Cashfree
+                        </span>
+                      </div>
                     </div>
                   </div>
                   
                   {/* Radio indicator - Absolutely Positioned */}
-                  <div className={`absolute top-4 right-4 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
-                    {gateway === "cashfree" && <div className="w-2 h-2 rounded-full bg-[#0070F3]" />}
+                  <div className={`absolute top-4 right-4 w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
+                    {gateway === "cashfree" && <div className="w-1.5 h-1.5 rounded-full bg-[#0070F3]" />}
                   </div>
 
                   <div className="space-y-0.5">
-                    <p className="text-[11px] sm:text-xs font-bold text-white/95">Mobile UPI & Cards</p>
-                    <p className="text-[10px] text-white/40 leading-relaxed">
+                    <p className="text-[10px] font-bold text-white/95">Mobile UPI & Cards</p>
+                    <p className="text-[9px] text-white/40 leading-relaxed">
                       Pay using Credit/Debit Cards, NetBanking, Wallets, or Mobile UPI checkout.
                     </p>
                   </div>
