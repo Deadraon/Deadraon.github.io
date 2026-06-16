@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import Script from "next/script";
 import { CreditCard, Loader2, Send, ShieldCheck, IndianRupee, User, Mail, Phone, FileText, Lock, History, CheckCircle2, XCircle, Clock } from "lucide-react";
 
 function PaymentForm() {
@@ -12,6 +13,7 @@ function PaymentForm() {
   const { user, isLoaded } = useUser();
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [gateway, setGateway] = useState<"mymobpay" | "cashfree">("mymobpay");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -87,7 +89,7 @@ function PaymentForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, gateway }),
       });
 
       const data = await response.json();
@@ -96,10 +98,26 @@ function PaymentForm() {
         throw new Error(data.error || "Failed to initiate payment.");
       }
 
-      toast.success("Payment order created! Redirecting to UPI gateway...");
-      
-      // Redirect directly to the MyMobPay checkout page
-      window.location.href = data.paymentUrl;
+      if (data.isCashfree) {
+        toast.success("Payment session created! Initializing Cashfree...");
+        
+        // Initialize Cashfree checkout
+        const mode = process.env.NEXT_PUBLIC_CASHFREE_MODE || "sandbox";
+        const Cashfree = (window as any).Cashfree;
+        if (!Cashfree) {
+          throw new Error("Cashfree SDK failed to load. Please refresh and try again.");
+        }
+        
+        const cashfree = Cashfree({ mode });
+        cashfree.checkout({
+          paymentSessionId: data.paymentSessionId,
+          redirectTarget: "_self"
+        });
+      } else {
+        toast.success("Payment order created! Redirecting to UPI gateway...");
+        // Redirect directly to the MyMobPay checkout page
+        window.location.href = data.paymentUrl;
+      }
     } catch (err: any) {
       toast.error(err.message || "An unexpected error occurred.");
       setLoading(false);
@@ -183,8 +201,44 @@ function PaymentForm() {
             </div>
 
             <p className="text-center text-[9px] text-white/30 tracking-wide uppercase mt-4">
-              Instant settlement via secure UPI Transfer
+              Instant settlement via secure payment transfer
             </p>
+          </div>
+
+          {/* Payment Method Selector */}
+          <div className="space-y-3 pt-4 border-t border-white/[0.05]">
+            <label className="block text-[10px] font-semibold text-white/50 uppercase tracking-wider mb-2">
+              Select Payment Method <span className="text-white/30">*</span>
+            </label>
+            <div className="grid grid-cols-2 gap-3.5">
+              {/* Option 1: MyMobPay */}
+              <div
+                onClick={() => setGateway("mymobpay")}
+                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between min-h-[90px] ${gateway === "mymobpay" ? "bg-[#be38f3]/[0.05] border-[#be38f3] shadow-[0_0_15px_rgba(190,56,243,0.1)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-white group-hover:text-[#be38f3] transition-colors">Instant UPI</span>
+                  <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${gateway === "mymobpay" ? "border-[#be38f3]" : "border-white/30"}`}>
+                    {gateway === "mymobpay" && <div className="w-1.5 h-1.5 rounded-full bg-[#be38f3]" />}
+                  </div>
+                </div>
+                <p className="text-[10px] text-white/40 leading-snug mt-1">Pay using any UPI app (GPay, PhonePe, Paytm, BHIM).</p>
+              </div>
+
+              {/* Option 2: Cashfree */}
+              <div
+                onClick={() => setGateway("cashfree")}
+                className={`relative group p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col justify-between min-h-[90px] ${gateway === "cashfree" ? "bg-[#0070F3]/[0.05] border-[#0070F3] shadow-[0_0_15px_rgba(0,112,243,0.1)]" : "border-white/5 bg-[#0d0d15]/30 hover:border-white/20 hover:bg-[#0d0d15]/50"}`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-white group-hover:text-[#0070F3] transition-colors">Cards & More</span>
+                  <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${gateway === "cashfree" ? "border-[#0070F3]" : "border-white/30"}`}>
+                    {gateway === "cashfree" && <div className="w-1.5 h-1.5 rounded-full bg-[#0070F3]" />}
+                  </div>
+                </div>
+                <p className="text-[10px] text-white/40 leading-snug mt-1">Pay using Credit/Debit Cards, NetBanking, UPI, or Wallets.</p>
+              </div>
+            </div>
           </div>
 
           {/* Secondary Client Details */}
@@ -442,6 +496,7 @@ function PaymentForm() {
           </div>
         )}
       </div>
+      <Script src="https://sdk.cashfree.com/js/v3/cashfree.js" strategy="lazyOnload" />
     </div>
   );
 }
