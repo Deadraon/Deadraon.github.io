@@ -24,7 +24,7 @@ export function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-  const { isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
 
   useEffect(() => {
     setMounted(true);
@@ -48,7 +48,7 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        isScrolled
+        isScrolled || isMobileOpen
           ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-black/5"
           : "bg-transparent"
       )}
@@ -96,26 +96,29 @@ export function Navbar() {
         </div>
 
         {/* Right Actions */}
-        <div className="hidden md:flex items-center gap-3">
-
-          {isSignedIn ? (
-            <div className="flex items-center gap-3">
-              <Button asChild size="sm" variant="outline">
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
-              <UserButton afterSignOutUrl="/" />
-            </div>
+        <div className="hidden md:flex items-center gap-3 min-w-[100px] justify-end">
+          {mounted ? (
+            isSignedIn ? (
+              <div className="flex items-center gap-3">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+                <UserButton afterSignOutUrl="/" />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <SignInButton mode="modal">
+                  <Button variant="ghost" size="sm">Client Login</Button>
+                </SignInButton>
+                <Button asChild variant="gradient" size="sm">
+                  <Link href="/contact#contact-form">
+                    <Zap className="w-4 h-4" /> Hire Me
+                  </Link>
+                </Button>
+              </div>
+            )
           ) : (
-            <div className="flex items-center gap-2">
-              <SignInButton mode="modal">
-                <Button variant="ghost" size="sm">Client Login</Button>
-              </SignInButton>
-              <Button asChild variant="gradient" size="sm">
-                <Link href="/contact#contact-form">
-                  <Zap className="w-4 h-4" /> Hire Me
-                </Link>
-              </Button>
-            </div>
+            <div className="w-24 h-8 bg-muted/10 animate-pulse rounded-lg" />
           )}
         </div>
 
@@ -132,7 +135,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border shadow-xl">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-border shadow-xl">
           <div className="px-4 py-4 space-y-1">
             {navLinks.map((link) => (
               link.href.endsWith(".pdf") ? (
@@ -163,21 +166,40 @@ export function Navbar() {
               )
             ))}
             <div className="pt-3 border-t border-border flex flex-col gap-2">
-              {isSignedIn ? (
-                <Button asChild className="w-full" variant="outline">
-                  <Link href="/dashboard" onClick={() => setIsMobileOpen(false)}>Dashboard</Link>
-                </Button>
+              {mounted ? (
+                isSignedIn ? (
+                  <div className="flex items-center justify-between gap-3 px-4 py-3 border border-border/50 rounded-xl bg-accent/20">
+                    <div className="flex items-center gap-3">
+                      <UserButton afterSignOutUrl="/" />
+                      <div className="text-left min-w-0">
+                        <p className="text-sm font-semibold text-foreground truncate">
+                          {user?.fullName || user?.username || "My Account"}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground truncate">
+                          {user?.primaryEmailAddress?.emailAddress || "Signed in"}
+                        </p>
+                      </div>
+                    </div>
+                    <Button asChild size="sm" variant="outline" className="flex-shrink-0">
+                      <Link href="/dashboard" onClick={() => setIsMobileOpen(false)}>
+                        Dashboard
+                      </Link>
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <SignInButton mode="modal">
+                      <Button variant="outline" className="w-full">Client Login</Button>
+                    </SignInButton>
+                    <Button asChild variant="gradient" className="w-full">
+                      <Link href="/contact#contact-form" onClick={() => setIsMobileOpen(false)}>
+                        <Zap className="w-4 h-4" /> Hire Me
+                      </Link>
+                    </Button>
+                  </>
+                )
               ) : (
-                <>
-                  <SignInButton mode="modal">
-                    <Button variant="outline" className="w-full">Client Login</Button>
-                  </SignInButton>
-                  <Button asChild variant="gradient" className="w-full">
-                    <Link href="/contact#contact-form" onClick={() => setIsMobileOpen(false)}>
-                      <Zap className="w-4 h-4" /> Hire Me
-                    </Link>
-                  </Button>
-                </>
+                <div className="w-full h-10 bg-muted/10 animate-pulse rounded-lg" />
               )}
             </div>
           </div>

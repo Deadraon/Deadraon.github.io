@@ -11,6 +11,7 @@ function PaymentForm() {
   const searchParams = useSearchParams();
   const { user, isLoaded } = useUser();
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,6 +20,10 @@ function PaymentForm() {
     amount: "",
     projectId: "",
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [payments, setPayments] = useState<any[]>([]);
   const [historyLoading, setHistoryLoading] = useState(true);
@@ -186,7 +191,7 @@ function PaymentForm() {
           <div className="space-y-4 pt-4 border-t border-white/[0.05]">
             
             {/* User Session Info Badge */}
-            {user && (
+            {mounted && isLoaded && user && (
               <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 mb-4 backdrop-blur-md animate-fade-in">
                 {user.imageUrl ? (
                   <img
@@ -360,7 +365,7 @@ function PaymentForm() {
         </form>
 
         {/* Payment History List (Below the payment card) */}
-        {user && (
+        {mounted && isLoaded && user && (
           <div className="mt-8 space-y-4">
             <div className="flex items-center justify-between px-1">
               <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider flex items-center gap-1.5">
