@@ -94,32 +94,119 @@ export function MediaDownloadTool() {
     setBusy(true);
     setError(null);
     setStatus("Generating download link...");
-    setProgress(30);
+    setProgress(20);
 
     try {
-      const res = await fetch("/api/media-download", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url, format: formatType, quality: selectedQuality }),
-      });
-      
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to download media.");
+      // 1. Try custom backend url if provided
+      if (backendUrl.trim()) {
+        setStatus("Downloading via custom backend...");
+        const res = await fetch(`${backendUrl}/download`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url, format: formatType, quality: selectedQuality }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.url) {
+            setProgress(90);
+            const a = document.createElement("a");
+            a.href = data.url;
+            a.target = "_blank";
+            a.click();
+            setProgress(100);
+            setStatus("Completed!");
+            return;
+          }
+        }
       }
-      
-      setProgress(75);
-      const data = await res.json();
-      
-      if (!data.url) {
-        throw new Error("Download link not returned from server.");
+
+      // 2. Try the primary server proxy
+      setProgress(40);
+      let downloadUrl = "";
+      try {
+        const res = await fetch("/api/media-download", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url, format: formatType, quality: selectedQuality }),
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          if (data.url) {
+            downloadUrl = data.url;
+          } else if (data.error) {
+            console.warn("Primary API proxy returned error response:", data.error);
+          }
+        }
+      } catch (err) {
+        console.warn("Primary API proxy failed, falling back to direct client-side requests...", err);
+      }
+
+      // 3. Dual-layer fallback: Direct browser requests to Cobalt instances
+      if (!downloadUrl) {
+        setStatus("Retrying directly from browser...");
+        setProgress(60);
+        
+        const COBALT_CLIENT_INSTANCES = [
+          "https://lime.clxxped.lol/",
+          "https://grapefruit.clxxped.lol/",
+          "https://nuko-c.meowing.de/",
+          "https://cobaltapi.kittycat.boo/",
+          "https://apicobalt.mgytr.top/",
+          "https://cobaltapi.squair.xyz/"
+        ];
+
+        const isAudioOnly = formatType === "audio";
+        let videoQuality = "720";
+        if (selectedQuality === "1080p") videoQuality = "1080";
+        if (selectedQuality === "720p") videoQuality = "720";
+        if (selectedQuality === "480p") videoQuality = "480";
+        if (selectedQuality === "best") videoQuality = "1080";
+
+        const payload = {
+          url: url,
+          videoQuality: videoQuality,
+          downloadMode: isAudioOnly ? "audio" : "auto",
+          audioFormat: "mp3",
+          filenameStyle: "classic"
+        };
+
+        let lastError = "";
+        for (const endpoint of COBALT_CLIENT_INSTANCES) {
+          try {
+            const res = await fetch(endpoint, {
+              method: "POST",
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (data.url) {
+                downloadUrl = data.url;
+                break;
+              }
+            } else {
+              const errData = await res.json().catch(() => ({}));
+              lastError = errData.text || `HTTP error ${res.status}`;
+            }
+          } catch (err) {
+            lastError = err instanceof Error ? err.message : "Network error";
+          }
+        }
+
+        if (!downloadUrl) {
+          throw new Error(lastError || "Could not generate download link. All downloader nodes are currently offline or blocking the request.");
+        }
       }
 
       setProgress(90);
       
       // Open in a new tab/window to trigger direct browser file stream download
       const a = document.createElement("a");
-      a.href = data.url;
+      a.href = downloadUrl;
       a.target = "_blank";
       a.click();
       

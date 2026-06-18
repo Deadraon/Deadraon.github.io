@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 
 // Fallback list of public Cobalt instances in case the main one is rate-limited or offline
 const COBALT_INSTANCES = [
-  "https://api.cobalt.tools/api/json",
-  "https://co.wuk.sh/api/json",
-  "https://cobalt.kwiateknadziane.pl/api/json"
+  "https://lime.clxxped.lol/",
+  "https://grapefruit.clxxped.lol/",
+  "https://nuko-c.meowing.de/",
+  "https://cobaltapi.kittycat.boo/",
+  "https://apicobalt.mgytr.top/",
+  "https://cobaltapi.squair.xyz/"
 ];
 
 export async function POST(request: Request) {
@@ -26,8 +29,8 @@ export async function POST(request: Request) {
     const payload = {
       url: url,
       videoQuality: videoQuality,
-      isAudioOnly: isAudioOnly,
-      aFormat: "mp3",
+      downloadMode: isAudioOnly ? "audio" : "auto",
+      audioFormat: "mp3",
       filenameStyle: "classic"
     };
 
