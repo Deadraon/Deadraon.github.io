@@ -26,10 +26,9 @@ const CATEGORY_LABELS: Partial<Record<ToolCategory, string>> = {
 };
 
 function ToolIcon({ slug }: { slug: string }) {
-  const cls = "w-5 h-5 text-accent";
   return (
-    <div className="p-2 border border-accent/20 bg-accent/5">
-      <svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600/10 to-blue-600/10 border border-white/[0.06] flex items-center justify-center text-primary group-hover:from-purple-600/20 group-hover:to-blue-600/20 group-hover:text-white group-hover:scale-105 transition-all duration-300">
+      <svg className="w-5 h-5 text-primary group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
       </svg>
     </div>
@@ -38,9 +37,9 @@ function ToolIcon({ slug }: { slug: string }) {
 
 function StatBadge({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex flex-col gap-1 px-6 py-4 border-r border-border last:border-r-0">
-      <span className="monochrome-label">{label}</span>
-      <span className="text-xl font-bold font-mono text-accent">{value}</span>
+    <div className="flex flex-col gap-1.5 px-6 py-5 border-r border-white/[0.05] last:border-r-0 bg-white/[0.01]">
+      <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">{label}</span>
+      <span className="text-2xl font-extrabold text-primary font-mono tracking-tight">{value}</span>
     </div>
   );
 }
@@ -49,25 +48,30 @@ function ToolCard({ tool }: { tool: Tool }) {
   return (
     <Link
       href={`/tools/${tool.slug}`}
-      className="group flex flex-col rounded-2xl border border-border bg-card p-5 hover:border-primary/40 transition-all duration-300 card-hover relative overflow-hidden"
+      className="group relative flex flex-col rounded-2xl border border-white/[0.05] bg-gradient-to-b from-white/[0.03] to-white/[0.01] p-6 hover:border-primary/40 hover:bg-white/[0.04] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(59,130,246,0.1)] card-hover overflow-hidden"
     >
-      <div className="absolute top-0 right-0 px-2 py-0.5 bg-border/20 border-l border-b border-border rounded-bl-lg">
-        <span className="text-[8px] font-mono text-muted-foreground">ID_{tool.slug.substring(0,4).toUpperCase()}</span>
-      </div>
+      {/* Subtle ambient light glow on hover */}
+      <div className="absolute -right-10 -top-10 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all duration-500" />
       
-      <div className="flex items-start justify-between">
+      {/* Top row */}
+      <div className="flex items-center justify-between mb-4">
         <ToolIcon slug={tool.slug} />
-        <div className="flex flex-col items-end gap-1">
+        <div className="flex items-center gap-2">
           {tool.local ? (
-            <span className="text-[9px] font-semibold text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full bg-emerald-500/10 uppercase tracking-wider">Local</span>
+            <span className="text-[9px] font-bold text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full bg-emerald-500/10 uppercase tracking-widest">
+              Local
+            </span>
           ) : (
-            <span className="text-[9px] font-semibold text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full bg-amber-500/10 uppercase tracking-wider">Cloud</span>
+            <span className="text-[9px] font-bold text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full bg-amber-500/10 uppercase tracking-widest">
+              Cloud
+            </span>
           )}
         </div>
       </div>
 
-      <div className="flex-1 space-y-1.5 mt-2">
-        <h3 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+      {/* Title & Description */}
+      <div className="flex-1 space-y-2">
+        <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1">
           {tool.name}
         </h3>
         <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
@@ -75,11 +79,18 @@ function ToolCard({ tool }: { tool: Tool }) {
         </p>
       </div>
 
-      <div className="pt-3 border-t border-border/50 flex items-center justify-between mt-2">
-        <span className="text-[10px] font-mono text-muted-foreground/75">Status: OPERATIONAL</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary opacity-50 group-hover:opacity-100 transition-opacity">
-          <path d="M5 12h14m-7-7l7 7-7 7" />
-        </svg>
+      {/* Footer */}
+      <div className="pt-4 border-t border-white/[0.05] flex items-center justify-between mt-5">
+        <span className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-wider flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Ready
+        </span>
+        <div className="flex items-center gap-1 text-primary text-xs font-semibold group-hover:translate-x-1 transition-transform">
+          <span>Open</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-primary">
+            <path d="M5 12h14m-7-7l7 7-7 7" />
+          </svg>
+        </div>
       </div>
     </Link>
   );
@@ -153,10 +164,11 @@ export default function ToolsDashboard() {
             {grouped.map((g) => (
               <div key={g.category} className="relative">
                 <div className="flex items-center gap-4 mb-8">
-                  <h3 className="font-semibold text-xs tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full px-4 py-1 uppercase">
+                  <h3 className="font-bold text-sm tracking-widest text-primary uppercase flex items-center gap-2">
+                    <span className="w-1.5 h-4.5 bg-gradient-to-b from-purple-600 to-blue-600 rounded-full" />
                     {CATEGORY_LABELS[g.category]?.replace("_", " ") || g.category.toUpperCase()}
                   </h3>
-                  <div className="flex-1 h-px bg-border/50" />
+                  <div className="flex-1 h-px bg-gradient-to-r from-primary/20 to-transparent" />
                 </div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
