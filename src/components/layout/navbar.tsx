@@ -11,10 +11,10 @@ import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
 
 
 const navLinks = [
+  { href: "/tools", label: "ToolsOne" },
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/tools", label: "ToolsOne" },
   { href: "/services", label: "Services and Pricing" },
   { href: "/contact", label: "Contact" },
   { href: "/pay", label: "Pay" },
