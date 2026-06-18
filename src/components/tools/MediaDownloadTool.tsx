@@ -93,39 +93,38 @@ export function MediaDownloadTool() {
     if (!url) return;
     setBusy(true);
     setError(null);
-    setStatus("Preparing download...");
-    setProgress(10);
+    setStatus("Generating download link...");
+    setProgress(30);
 
     try {
-      if (backendUrl.trim()) {
-        setStatus("Downloading and converting on server...");
-        setProgress(40);
-        const res = await fetch(`${backendUrl}/download`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url, format: formatType, quality: selectedQuality }),
-        });
-        if (!res.ok) throw new Error("Backend downloader returned an error.");
-        setProgress(80);
-        const blob = await res.blob();
-        const downloadUrl = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = downloadUrl;
-        a.download = mediaInfo ? `${mediaInfo.title}.${formatType === "audio" ? "mp3" : "mp4"}` : `download.${formatType === "audio" ? "mp3" : "mp4"}`;
-        a.click();
-        URL.revokeObjectURL(downloadUrl);
-        setProgress(100);
-      } else {
-        for (let i = 20; i <= 90; i += 20) {
-          await new Promise((resolve) => setTimeout(resolve, 600));
-          setProgress(i);
-          setStatus(`Downloading chunks... ${i}%`);
-        }
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        setProgress(100);
-        setStatus("Completed!");
-        setError("Demo mode: To download actual files, connect a backend server with yt-dlp. Configure your endpoint in Developer Settings below.");
+      const res = await fetch("/api/media-download", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, format: formatType, quality: selectedQuality }),
+      });
+      
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to download media.");
       }
+      
+      setProgress(75);
+      const data = await res.json();
+      
+      if (!data.url) {
+        throw new Error("Download link not returned from server.");
+      }
+
+      setProgress(90);
+      
+      // Open in a new tab/window to trigger direct browser file stream download
+      const a = document.createElement("a");
+      a.href = data.url;
+      a.target = "_blank";
+      a.click();
+      
+      setProgress(100);
+      setStatus("Completed!");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Download failed.");
     } finally {
@@ -142,9 +141,9 @@ export function MediaDownloadTool() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
         </svg>
         <div className="space-y-1">
-          <p className="font-semibold text-indigo-200">Backend setup required for downloads</p>
+          <p className="font-semibold text-indigo-200">Serverless Downloader Proxy Active</p>
           <p className="text-indigo-300/70 text-xs leading-relaxed">
-            URL analysis works fully client-side. Actual file downloading requires a server with <span className="font-mono text-indigo-300">yt-dlp</span> + <span className="font-mono text-indigo-300">ffmpeg</span>. Configure your endpoint in Developer Settings.
+            Downloads are fully operational. Supports YouTube, TikTok, Twitter/X, Instagram, Vimeo, and more. Processing is completed client-side with a serverless link generator.
           </p>
         </div>
       </div>
