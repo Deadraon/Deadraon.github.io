@@ -8,6 +8,8 @@ const footerLinks = {
     { label: "Portfolio", href: "/portfolio" },
     { label: "Services and Pricing", href: "/services" },
     { label: "Contact", href: "/contact" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms & Conditions", href: "/terms" },
   ],
   "Services & Pricing": [
     { label: "Web Development", href: "/services#web" },

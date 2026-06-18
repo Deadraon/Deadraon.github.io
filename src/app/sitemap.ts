@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://deadraon.dev";
 
-  const routes = ["", "/about", "/portfolio", "/tools", "/services", "/contact", "/pay"];
+  const routes = ["", "/about", "/portfolio", "/tools", "/services", "/contact", "/pay", "/privacy", "/terms"];
 
   return routes.map((route) => {
     let priority = 0.5;
