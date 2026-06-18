@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -172,5 +172,94 @@
   opacity: 1;
   transform: translateY(0);
   transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --color-accent: hsl(var(--accent));
+  --color-accent-dim: rgba(251, 146, 60, 0.1);
+}
+
+.tools-theme {
+  /* Sleek Glassmorphism Theme integration */
+  --color-bg: hsl(var(--background));
+  --color-bg-panel: rgba(255, 255, 255, 0.015);
+  --color-bg-surface: rgba(255, 255, 255, 0.04);
+  --color-border: hsl(var(--border));
+  --color-border-bright: rgba(255, 255, 255, 0.1);
+  
+  /* Text */
+  --color-ink: hsl(var(--foreground));
+  --color-ink-soft: hsl(var(--muted-foreground));
+  --color-ink-faint: rgba(255, 255, 255, 0.15);
+
+  /* Accents */
+  --color-accent: hsl(var(--primary)); /* Sleek Violet/Blue Accent */
+  --color-accent-dim: rgba(59, 130, 246, 0.1);
+  --color-success: #10B981; /* SIGNAL Green -> Emerald */
+  --color-warning: #F59E0B; /* Caution Amber -> Amber */
+  
+  /* Tool categories */
+  --color-pdf: #EF4444;
+  --color-image: #8B5CF6;
+  --color-text: #3B82F6;
+  --color-convert: #F59E0B;
+  --color-generate: #10B981;
+  --color-media: #EF4444;
+
+  /* Typography */
+  --font-display: var(--font-inter), "Inter", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+}
+
+/* === SLEEK PORTFOLIO ELEMENTS === */
+.workbench-panel {
+  @apply bg-black/[0.3] backdrop-blur-2xl border border-white/[0.06] rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+}
+
+.hairline-divider {
+  height: 1px;
+  background: var(--color-border);
+}
+
+.monochrome-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft);
+  opacity: 0.8;
+}
+
+.telemetry-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* === SCANLINE EFFECT (REMOVED FOR PORTFOLIO THEME) === */
+.scanline {
+  display: none;
+}
+
+/* === CUSTOM UI === */
+.btn-primary {
+  @apply bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20 hover:-translate-y-0.5 cursor-pointer;
+}
+
+.glass-card {
+  @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] rounded-2xl transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04];
+}
+
+/* === ANIMATIONS === */
+@keyframes flicker {
+  0% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.animate-flicker {
+  animation: none;
 }
 

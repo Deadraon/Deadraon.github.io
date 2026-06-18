@@ -12,8 +12,31 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
+        display: ["IBM Plex Mono", "ui-monospace", "monospace"],
+        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
+        bg: {
+          DEFAULT: "var(--color-bg)",
+          panel: "var(--color-bg-panel)",
+          surface: "var(--color-bg-surface)",
+        },
+        ink: {
+          DEFAULT: "var(--color-ink)",
+          soft: "var(--color-ink-soft)",
+          faint: "var(--color-ink-faint)",
+        },
+        accent: {
+          DEFAULT: "var(--color-accent, hsl(var(--accent)))",
+          foreground: "hsl(var(--accent-foreground))",
+          dim: "var(--color-accent-dim)",
+        },
+        success: {
+          DEFAULT: "var(--color-success)",
+        },
+        warning: {
+          DEFAULT: "var(--color-warning)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -34,10 +57,6 @@ const config: Config = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

@@ -102,7 +102,9 @@ function PaymentForm() {
         toast.success("Payment session created! Initializing Cashfree...");
         
         // Initialize Cashfree checkout
-        const mode = process.env.NEXT_PUBLIC_CASHFREE_MODE || "sandbox";
+        const mode = (typeof window !== "undefined" && window.location.hostname.includes("deadraon.dev"))
+          ? "production"
+          : (process.env.NEXT_PUBLIC_CASHFREE_MODE || "sandbox");
         const Cashfree = (window as any).Cashfree;
         if (!Cashfree) {
           throw new Error("Cashfree SDK failed to load. Please refresh and try again.");

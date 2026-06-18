@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://deadraon.dev";
+    const host = req.headers.get("host") || "www.deadraon.dev";
+    const protocol = host.includes("localhost") ? "http" : "https";
+    const appUrl = `${protocol}://${host}`;
 
     // Handle Cashfree Payment Gateway
     if (gateway === "cashfree") {
