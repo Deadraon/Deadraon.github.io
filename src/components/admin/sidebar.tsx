@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
-import { Code2, LayoutDashboard, FolderOpen, Users, MessageSquare, Star, Settings, Briefcase, Menu, X } from "lucide-react";
+import { Code2, LayoutDashboard, FolderOpen, Users, MessageSquare, Star, Settings, Briefcase, Menu, X, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/admin/projects", label: "All Projects", icon: FolderOpen },
   { href: "/admin/clients", label: "Clients", icon: Users },
   { href: "/admin/contacts", label: "Inquiries", icon: MessageSquare },
+  { href: "/admin/tool-requests", label: "Tool Requests", icon: Sparkles },
   { href: "/admin/testimonials", label: "Testimonials", icon: Star },
   { href: "/admin/portfolio", label: "Portfolio", icon: Briefcase },
   { href: "/admin/settings", label: "Settings", icon: Settings },

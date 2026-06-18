@@ -1,26 +1,29 @@
 import connectDB from "@/lib/mongodb";
 import Project from "@/models/Project";
 import Contact from "@/models/Contact";
+import ToolRequest from "@/models/ToolRequest";
 import { getStatusColor, getStatusLabel, formatRelativeDate } from "@/lib/utils";
-import { Users, FolderOpen, MessageSquare, TrendingUp, ArrowRight, Activity } from "lucide-react";
+import { Users, FolderOpen, MessageSquare, TrendingUp, ArrowRight, Activity, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminDashboard() {
   await connectDB();
-  const [projects, contacts] = await Promise.all([
+  const [projects, contacts, toolRequests] = await Promise.all([
     Project.find({}).sort({ updatedAt: -1 }).lean(),
     Contact.find({}).sort({ createdAt: -1 }).lean(),
+    ToolRequest.find({}).sort({ createdAt: -1 }).lean(),
   ]);
 
   const uniqueClients = new Set(projects.map((p: any) => p.clientId)).size;
   const activeProjects = projects.filter((p: any) => p.status === "in-progress").length;
   const newInquiries = contacts.filter((c: any) => c.status === "new").length;
+  const newToolRequests = toolRequests.filter((r: any) => r.status === "new").length;
 
   const statCards = [
     { label: "Total Projects", value: projects.length, icon: FolderOpen, color: "from-purple-500 to-blue-500", href: "/admin/projects" },
-    { label: "Active Clients", value: uniqueClients, icon: Users, color: "from-blue-500 to-cyan-500", href: "/admin/clients" },
-    { label: "In Progress", value: activeProjects, icon: TrendingUp, color: "from-emerald-500 to-green-500", href: "/admin/projects" },
     { label: "New Inquiries", value: newInquiries, icon: MessageSquare, color: "from-amber-500 to-orange-500", href: "/admin/contacts" },
+    { label: "Tool Requests", value: toolRequests.length, icon: Sparkles, color: "from-pink-500 to-rose-500", href: "/admin/tool-requests" },
+    { label: "Active Clients", value: uniqueClients, icon: Users, color: "from-blue-500 to-cyan-500", href: "/admin/clients" },
   ];
 
   return (

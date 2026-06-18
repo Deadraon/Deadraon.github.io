@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Zap, Globe, Smartphone, Palette, Plug, Wrench } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Services & Pricing",
-  description: "End-to-end digital product development including web apps, mobile apps, and UI/UX design.",
+  title: "Full Stack App & Web Development Services | Deadraon Pricing",
+  description: "Explore professional software services by Kunal Chauhan (@Deadraon). Mobile app development using Flutter, Next.js/React full-stack web systems, UI/UX designing, and API integrations with clear, cost-effective pricing packages.",
+  keywords: ["Web Development Cost", "Mobile App Development Pricing", "Flutter developer cost", "Nextjs SaaS developer", "Figma design services", "freelance API integration", "Deadraon Services"],
 };
 
 const services = [

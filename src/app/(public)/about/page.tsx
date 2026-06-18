@@ -8,8 +8,9 @@ import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
 
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "Learn more about Kunal Chauhan, a Full Stack Developer specializing in modern web and mobile apps.",
+  title: "About Kunal Chauhan (Deadraon) | Expert Full Stack App & Web Developer",
+  description: "Learn more about Kunal Chauhan (@Deadraon), a Senior Full Stack App & Web Developer with 2+ years of experience building premium SaaS, React, Next.js, and Flutter mobile applications.",
+  keywords: ["Kunal Chauhan", "Deadraon", "About Deadraon", "About Kunal Chauhan", "Senior Full Stack Developer", "Next.js Developer portfolio", "Flutter Developer portfolio"],
 };
 
 const experience = [

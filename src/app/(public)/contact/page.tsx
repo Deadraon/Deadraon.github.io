@@ -3,8 +3,9 @@ import { ContactSection } from "@/components/sections/contact";
 import { FaGithub, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Kunal Chauhan for freelance opportunities, consulting, or project collaborations.",
+  title: "Hire Kunal Chauhan | Contact Deadraon Full Stack Developer",
+  description: "Get in touch with Kunal Chauhan (@Deadraon) for custom software engineering, Next.js web projects, Flutter cross-platform applications, or consulting. Contact via email, WhatsApp, or GitHub.",
+  keywords: ["Hire Next.js Developer", "Hire Flutter Developer India", "Freelance Software Engineer Contact", "Deadraon email", "Deadraon phone", "Kunal Chauhan contact"],
 };
 
 const socials = [
