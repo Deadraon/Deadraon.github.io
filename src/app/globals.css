@@ -263,3 +263,23 @@
   animation: none;
 }
 
+/* === INTERACTIVE GRADIENT BUTTON POPUP FOR TOOLS === */
+.tools-theme .bg-indigo-600 {
+  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.15) !important;
+}
+
+.tools-theme .bg-indigo-600:hover,
+.tools-theme .bg-indigo-600:focus-visible {
+  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%) !important;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35), 0 0 10px rgba(59, 130, 246, 0.2) !important;
+  transform: translateY(-1.5px) !important;
+}
+
+.tools-theme .bg-indigo-600:active {
+  transform: translateY(0.5px) !important;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2) !important;
+}
+
