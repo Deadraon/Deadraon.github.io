@@ -35,6 +35,7 @@ import {
   Sparkles,
   Link2,
   Mail,
+  Search,
   type LucideProps
 } from "lucide-react";
 
@@ -145,6 +146,7 @@ function ToolCard({ tool }: { tool: Tool }) {
 export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[] }) {
   const liveCount = toolsList.filter((t) => t.status === "live").length;
   
+  const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [toolName, setToolName] = useState("");
@@ -186,9 +188,19 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
     }
   };
 
+  const filteredTools = toolsList.filter((t) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+    return (
+      t.name.toLowerCase().includes(query) ||
+      t.tagline.toLowerCase().includes(query) ||
+      t.category.toLowerCase().includes(query)
+    );
+  });
+
   const grouped = CATEGORY_ORDER.map((c) => ({
     category: c,
-    items: toolsList.filter((t) => t.category === c),
+    items: filteredTools.filter((t) => t.category === c),
   })).filter((g) => g.items.length > 0);
 
   return (
@@ -228,7 +240,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
 
         {/* ===== MODULE GRID ===== */}
         <section id="tools" className="py-20 scroll-mt-32">
-          <div className="flex items-center justify-between mb-16 border-l-4 border-primary pl-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-l-4 border-primary pl-6">
             <div>
               <h2 className="text-3xl font-bold tracking-tight">
                 Available Instruments
@@ -237,31 +249,57 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                 Click on any card to initialize the module locally.
               </p>
             </div>
-            <div className="hidden lg:block text-right text-xs font-mono text-muted-foreground leading-normal">
-              <span>Filter: ALL_MODULES</span><br />
-              <span>Status: OPERATIONAL</span>
+            
+            {/* Search Bar */}
+            <div className="relative w-full md:w-80 group/search">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within/search:text-primary transition-colors">
+                <Search className="w-4 h-4" />
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search tools..."
+                className="w-full pl-10 pr-10 py-2.5 bg-white/[0.02] border border-white/10 hover:border-white/20 focus:border-primary/50 focus:bg-white/[0.04] rounded-xl text-xs font-semibold focus:outline-none transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors text-xs font-bold"
+                >
+                  ✕
+                </button>
+              )}
             </div>
           </div>
 
-          <div className="space-y-24">
-            {grouped.map((g) => (
-              <div key={g.category} className="relative">
-                <div className="flex items-center gap-4 mb-8">
-                  <h3 className="font-bold text-sm tracking-widest text-primary uppercase flex items-center gap-2">
-                    <span className="w-1.5 h-4.5 bg-gradient-to-b from-purple-600 to-blue-600 rounded-full" />
-                    {CATEGORY_LABELS[g.category]?.replace("_", " ") || g.category.toUpperCase()}
-                  </h3>
-                  <div className="flex-1 h-px bg-gradient-to-r from-primary/20 to-transparent" />
-                </div>
+          {grouped.length === 0 ? (
+            <div className="p-16 text-center text-muted-foreground border border-dashed border-white/10 rounded-3xl bg-white/[0.01]">
+              <Sparkles className="w-10 h-10 mx-auto mb-4 text-primary opacity-40 animate-pulse" />
+              <p className="text-sm font-semibold">No tools found matching &ldquo;{searchQuery}&rdquo;</p>
+              <p className="text-xs text-muted-foreground/60 mt-1">Try searching for other keywords or categories.</p>
+            </div>
+          ) : (
+            <div className="space-y-24">
+              {grouped.map((g) => (
+                <div key={g.category} className="relative">
+                  <div className="flex items-center gap-4 mb-8">
+                    <h3 className="font-bold text-sm tracking-widest text-primary uppercase flex items-center gap-2">
+                      <span className="w-1.5 h-4.5 bg-gradient-to-b from-purple-600 to-blue-600 rounded-full" />
+                      {CATEGORY_LABELS[g.category]?.replace("_", " ") || g.category.toUpperCase()}
+                    </h3>
+                    <div className="flex-1 h-px bg-gradient-to-r from-primary/20 to-transparent" />
+                  </div>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {g.items.map((tool) => (
-                    <ToolCard key={tool.slug} tool={tool} />
-                  ))}
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {g.items.map((tool) => (
+                      <ToolCard key={tool.slug} tool={tool} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* ===== REQUEST A TOOL WIDGET ===== */}
