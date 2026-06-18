@@ -14,7 +14,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/tools", label: "Tools" },
+  { href: "/tools", label: "ToolsOne" },
   { href: "/services", label: "Services and Pricing" },
   { href: "/contact", label: "Contact" },
   { href: "/pay", label: "Pay" },
@@ -67,9 +67,23 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            link.href.endsWith(".pdf") ? (
+        <div className="hidden md:flex items-center gap-1.5">
+          {navLinks.map((link) => {
+            if (link.href === "/tools") {
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "mx-2 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl hover:from-purple-500 hover:to-blue-500 active:border-b-[1px] active:translate-y-[2px] transition-all duration-100 shadow-md shadow-purple-500/10 hover:shadow-purple-500/30 flex items-center justify-center gap-1.5 h-[34px]"
+                  )}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  {link.label}
+                </Link>
+              );
+            }
+            return link.href.endsWith(".pdf") ? (
               <ResumeRequestModal key={link.href}>
                 <button
                   className={cn(
@@ -92,8 +106,8 @@ export function Navbar() {
               >
                 {link.label}
               </Link>
-            )
-          ))}
+            );
+          })}
         </div>
 
         {/* Right Actions */}
@@ -138,8 +152,23 @@ export function Navbar() {
       {isMobileOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-xl max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-border shadow-xl">
           <div className="px-4 py-4 space-y-1">
-            {navLinks.map((link) => (
-              link.href.endsWith(".pdf") ? (
+            {navLinks.map((link) => {
+              if (link.href === "/tools") {
+                return (
+                  <div key={link.href} className="px-4 py-2">
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMobileOpen(false)}
+                      className={cn(
+                        "block text-center py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl hover:from-purple-500 hover:to-blue-500 active:border-b-[1px] active:translate-y-[2px] transition-all duration-100 shadow-md shadow-purple-500/10 hover:shadow-purple-500/30 w-full"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </div>
+                );
+              }
+              return link.href.endsWith(".pdf") ? (
                 <ResumeRequestModal key={link.href}>
                   <button
                     onClick={() => setIsMobileOpen(false)}
@@ -164,8 +193,8 @@ export function Navbar() {
                 >
                   {link.label}
                 </Link>
-              )
-            ))}
+              );
+            })}
             <div className="pt-3 border-t border-border flex flex-col gap-2">
               {mounted ? (
                 isSignedIn ? (

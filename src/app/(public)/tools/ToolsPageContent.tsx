@@ -253,7 +253,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
               </a>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3 border border-primary/30 hover:border-primary/60 bg-primary/5 hover:bg-primary/10 rounded-xl transition-all font-semibold text-sm text-primary flex items-center gap-2"
+                className="px-6 py-3 border border-primary/30 border-b-4 border-b-primary/50 hover:bg-primary/10 rounded-xl transition-all duration-100 font-extrabold text-sm text-primary active:border-b-2 active:translate-y-[2px] flex items-center gap-2"
               >
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                 Request a Tool
@@ -347,7 +347,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
             <div className="relative z-10 shrink-0">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-extrabold rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:scale-[1.02] active:scale-95"
+                className="px-6 py-3.5 bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-4 border-b-blue-900 text-white text-sm font-extrabold rounded-xl transition-all duration-100 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/45 hover:from-purple-500 hover:to-blue-500 active:border-b-2 active:translate-y-[2px] cursor-pointer flex items-center justify-center gap-2"
               >
                 Request a Tool
               </button>
@@ -550,14 +550,14 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="flex-1 py-3 border border-white/5 bg-white/[0.02] hover:bg-white/5 text-xs text-white font-bold rounded-xl transition-all active:scale-95"
+                    className="flex-1 py-3 border border-white/10 border-b-4 border-b-white/20 bg-white/[0.02] hover:bg-white/5 text-xs text-white font-extrabold rounded-xl transition-all duration-100 active:border-b-2 active:translate-y-[2px]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 disabled:opacity-40 text-xs text-white font-extrabold rounded-xl transition-all shadow-md shadow-blue-500/10 hover:shadow-blue-500/30 active:scale-95 flex items-center justify-center gap-1.5"
+                    className="flex-1 py-3 bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-4 border-b-blue-900 disabled:opacity-40 text-xs text-white font-extrabold rounded-xl transition-all duration-100 shadow-md shadow-blue-500/15 hover:shadow-blue-500/30 hover:from-purple-500 hover:to-blue-500 active:border-b-2 active:translate-y-[2px] flex items-center justify-center gap-1.5"
                   >
                     {submitting ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
