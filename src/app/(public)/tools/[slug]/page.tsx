@@ -1,27 +1,29 @@
 import { notFound } from "next/navigation";
 import { getTool, tools, SITE_URL } from "@/lib/tools";
 import { ToolShell } from "@/components/ToolShell";
-import { ComingSoonTool } from "@/components/tools/ComingSoonTool";
-import { PdfMergeTool } from "@/components/tools/PdfMergeTool";
-import { PdfSplitTool } from "@/components/tools/PdfSplitTool";
-import { ImageCompressTool } from "@/components/tools/ImageCompressTool";
-import { QrGenerateTool } from "@/components/tools/QrGenerateTool";
-import { WordCountTool } from "@/components/tools/WordCountTool";
-import { ColorConvertTool } from "@/components/tools/ColorConvertTool";
-import { OnlineRulerTool } from "@/components/tools/OnlineRulerTool";
-import { ResumeBuilderTool } from "@/components/tools/ResumeBuilderTool";
-import { ImageOcrTool } from "@/components/tools/ImageOcrTool";
-import { BgRemoveTool } from "@/components/tools/BgRemoveTool";
-import { MediaDownloadTool } from "@/components/tools/MediaDownloadTool";
-import { JsonFormatterTool } from "@/components/tools/JsonFormatterTool";
-import { Base64Tool } from "@/components/tools/Base64Tool";
-import { HashGeneratorTool } from "@/components/tools/HashGeneratorTool";
-import { UuidGeneratorTool } from "@/components/tools/UuidGeneratorTool";
-import { LoremIpsumTool } from "@/components/tools/LoremIpsumTool";
-import { TimestampConverterTool } from "@/components/tools/TimestampConverterTool";
-import { UnitConverterTool } from "@/components/tools/UnitConverterTool";
-import { RegexTesterTool } from "@/components/tools/RegexTesterTool";
-import { MarkdownPreviewTool } from "@/components/tools/MarkdownPreviewTool";
+import dynamic from "next/dynamic";
+
+const ComingSoonTool = dynamic(() => import("@/components/tools/ComingSoonTool").then(mod => mod.ComingSoonTool), { ssr: false });
+const PdfMergeTool = dynamic(() => import("@/components/tools/PdfMergeTool").then(mod => mod.PdfMergeTool), { ssr: false });
+const PdfSplitTool = dynamic(() => import("@/components/tools/PdfSplitTool").then(mod => mod.PdfSplitTool), { ssr: false });
+const ImageCompressTool = dynamic(() => import("@/components/tools/ImageCompressTool").then(mod => mod.ImageCompressTool), { ssr: false });
+const QrGenerateTool = dynamic(() => import("@/components/tools/QrGenerateTool").then(mod => mod.QrGenerateTool), { ssr: false });
+const WordCountTool = dynamic(() => import("@/components/tools/WordCountTool").then(mod => mod.WordCountTool), { ssr: false });
+const ColorConvertTool = dynamic(() => import("@/components/tools/ColorConvertTool").then(mod => mod.ColorConvertTool), { ssr: false });
+const OnlineRulerTool = dynamic(() => import("@/components/tools/OnlineRulerTool").then(mod => mod.OnlineRulerTool), { ssr: false });
+const ResumeBuilderTool = dynamic(() => import("@/components/tools/ResumeBuilderTool").then(mod => mod.ResumeBuilderTool), { ssr: false });
+const ImageOcrTool = dynamic(() => import("@/components/tools/ImageOcrTool").then(mod => mod.ImageOcrTool), { ssr: false });
+const BgRemoveTool = dynamic(() => import("@/components/tools/BgRemoveTool").then(mod => mod.BgRemoveTool), { ssr: false });
+const MediaDownloadTool = dynamic(() => import("@/components/tools/MediaDownloadTool").then(mod => mod.MediaDownloadTool), { ssr: false });
+const JsonFormatterTool = dynamic(() => import("@/components/tools/JsonFormatterTool").then(mod => mod.JsonFormatterTool), { ssr: false });
+const Base64Tool = dynamic(() => import("@/components/tools/Base64Tool").then(mod => mod.Base64Tool), { ssr: false });
+const HashGeneratorTool = dynamic(() => import("@/components/tools/HashGeneratorTool").then(mod => mod.HashGeneratorTool), { ssr: false });
+const UuidGeneratorTool = dynamic(() => import("@/components/tools/UuidGeneratorTool").then(mod => mod.UuidGeneratorTool), { ssr: false });
+const LoremIpsumTool = dynamic(() => import("@/components/tools/LoremIpsumTool").then(mod => mod.LoremIpsumTool), { ssr: false });
+const TimestampConverterTool = dynamic(() => import("@/components/tools/TimestampConverterTool").then(mod => mod.TimestampConverterTool), { ssr: false });
+const UnitConverterTool = dynamic(() => import("@/components/tools/UnitConverterTool").then(mod => mod.UnitConverterTool), { ssr: false });
+const RegexTesterTool = dynamic(() => import("@/components/tools/RegexTesterTool").then(mod => mod.RegexTesterTool), { ssr: false });
+const MarkdownPreviewTool = dynamic(() => import("@/components/tools/MarkdownPreviewTool").then(mod => mod.MarkdownPreviewTool), { ssr: false });
 
 const implementations: Record<string, () => React.ReactNode> = {
   "pdf-merge": () => <PdfMergeTool />,
