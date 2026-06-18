@@ -192,13 +192,7 @@ export default function ToolsDashboard() {
           </div>
         </section>
 
-        {/* ===== TELEMETRY STATS ===== */}
-        <div className="grid grid-cols-2 md:grid-cols-4 border-b border-l border-r border-border/50 bg-card/25 backdrop-blur-md rounded-b-2xl shadow-xl shadow-black/10 overflow-hidden">
-          <StatBadge value={`${liveCount}`} label="Active Modules" />
-          <StatBadge value="100%" label="Local Processing" />
-          <StatBadge value="0.0kb" label="Egress Data" />
-          <StatBadge value="WASM" label="Engine" />
-        </div>
+
 
         {/* ===== MODULE GRID ===== */}
         <section id="tools" className="py-20 scroll-mt-32">

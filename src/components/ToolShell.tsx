@@ -26,7 +26,6 @@ export function ToolShell({ tool, children }: { tool: Tool; children: React.Reac
               <span className="text-[10px] font-bold text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                 {CATEGORY_LABEL[tool.category]}
               </span>
-              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">ID: {tool.slug}</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
@@ -69,12 +68,6 @@ export function ToolShell({ tool, children }: { tool: Tool; children: React.Reac
           <div className="p-6 md:p-10 bg-black/10">
             {children}
           </div>
-        </div>
-        
-        {/* Module Metadata */}
-        <div className="mt-6 flex justify-between items-center px-4">
-          <span className="text-[10px] font-mono text-muted-foreground/50 tracking-wider">COMPILED: WASM_STABLE</span>
-          <span className="text-[10px] font-mono text-muted-foreground/50 tracking-wider">INTEGRITY: SECURE</span>
         </div>
       </div>
     </div>
