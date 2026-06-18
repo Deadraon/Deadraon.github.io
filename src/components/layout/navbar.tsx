@@ -56,15 +56,24 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" id="navbar-logo" className="flex items-center gap-2 group transition-opacity duration-300">
-          <div className="relative w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
-            <Code2 className="w-4 h-4 text-white" />
-          </div>
-          <span className="font-bold text-xl tracking-tight">
-            <span className="gradient-text">Dead</span>
-            <span className="text-foreground">raon</span>
-          </span>
-        </Link>
+        <div className="flex items-center gap-2.5">
+          <Link href="/" id="navbar-logo" className="flex items-center gap-2 group transition-opacity duration-300">
+            <div className="relative w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
+              <Code2 className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-bold text-xl tracking-tight">
+              <span className="gradient-text">Dead</span>
+              <span className="text-foreground">raon</span>
+            </span>
+          </Link>
+          <Link
+            href="/tools"
+            className="flex md:hidden px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl active:border-b-[1px] active:translate-y-[2px] transition-all duration-100 shadow-md shadow-purple-500/10 items-center justify-center gap-1 h-[26px]"
+          >
+            <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
+            ToolsOne
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1.5">

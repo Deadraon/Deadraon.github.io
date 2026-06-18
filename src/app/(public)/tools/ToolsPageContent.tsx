@@ -239,7 +239,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
               <span className="text-xs text-primary font-semibold tracking-wider uppercase">System Core // Active</span>
             </div>
             
-            <h1 className="text-5xl lg:text-7xl font-black tracking-tight mb-8 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-8 leading-tight">
               Precision <span className="gradient-text">Developer Toolkit</span>
             </h1>
             
