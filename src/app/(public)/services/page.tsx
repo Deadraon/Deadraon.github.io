@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { GlassCard } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Zap, Globe, Smartphone, Palette, Plug, Wrench } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -87,47 +87,59 @@ export default function ServicesPage() {
       <section className="px-4 sm:px-6 lg:px-8 pb-20">
         <div className="max-w-7xl mx-auto space-y-8">
           {services.map((service, i) => (
-            <div id={service.id} key={service.id} className={`p-8 rounded-3xl border border-border ${service.gradient} hover:border-primary/30 transition-all duration-300`}>
+            <GlassCard key={service.id} rounded="rounded-3xl" className="p-8 group hover:scale-[1.01] transition-transform duration-300">
               <div className="grid lg:grid-cols-2 gap-8 items-start">
                 <div>
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 shadow-lg`}>
                     <service.icon className="w-7 h-7 text-white" />
                   </div>
                   <span className="text-sm text-primary font-medium">{service.tagline}</span>
-                  <h2 className="text-3xl font-bold mt-1 mb-4">{service.title}</h2>
-                  <p className="text-muted-foreground leading-relaxed mb-6">{service.description}</p>
+                  <h2 className="text-3xl font-bold mt-1 mb-4 text-white">{service.title}</h2>
+                  <p className="text-white/60 leading-relaxed mb-6">{service.description}</p>
                   <div className="flex items-center gap-4">
                     <div>
-                      <p className="text-xs text-muted-foreground">Starting at</p>
-                      <p className="text-2xl font-black gradient-text">{service.startingAt}</p>
+                       <p className="text-xs text-white/50">Starting at</p>
+                       <p className="text-2xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">{service.startingAt}</p>
                     </div>
-                    <Button asChild variant="gradient">
-                      <Link href={`/contact?service=${service.id}`}><Zap className="w-4 h-4" /> Get a Quote</Link>
-                    </Button>
+                      <Link
+                        href={`/contact?service=${service.id}`}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
+                        style={{
+                          transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, background-color 0.2s',
+                        }}
+                      >
+                        <Zap className="w-4 h-4" /> Get a Quote
+                      </Link>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {service.features.map((f) => (
-                    <div key={f} className="flex items-center gap-2.5 text-sm">
+                    <div key={f} className="flex items-center gap-2.5 text-sm text-white/70">
                       <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                       <span>{f}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-gradient-to-br from-purple-600/10 via-blue-600/10 to-cyan-500/10 border-y border-border">
+      <section className="section-padding">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Start? <span className="gradient-text">Let&apos;s Talk</span></h2>
-          <p className="text-muted-foreground mb-8">Tell me about your project and I&apos;ll get back to you within 24 hours with a custom quote.</p>
-          <Button asChild size="xl" variant="gradient">
-            <Link href="/contact"><ArrowRight className="w-5 h-5" /> Start a Project</Link>
-          </Button>
+          <h2 className="text-4xl font-bold mb-4 text-white">Ready to Start? <span className="gradient-text">Let&apos;s Talk</span></h2>
+          <p className="text-white/60 mb-8">Tell me about your project and I&apos;ll get back to you within 24 hours with a custom quote.</p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
+            style={{
+              transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, background-color 0.2s',
+            }}
+          >
+            <ArrowRight className="w-5 h-5" /> Start a Project
+          </Link>
         </div>
       </section>
     </div>

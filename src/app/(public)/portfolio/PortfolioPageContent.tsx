@@ -78,7 +78,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
   };
 
   return (
-    <div className="group flex flex-col rounded-2xl border border-border bg-card p-5 hover:border-primary/40 transition-all duration-300 card-hover">
+    <div className="group flex flex-col rounded-2xl border border-white/5 bg-black/30 backdrop-blur-md p-5 hover:border-primary/40 transition-all duration-300 card-hover shadow-xl">
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="flex items-center gap-2 min-w-0">
@@ -200,14 +200,14 @@ export default function PortfolioPageContent() {
 
       {/* ── Tabs ── */}
       <div className="flex justify-center mb-10 px-4">
-        <div className="flex bg-secondary rounded-2xl p-1.5 gap-1 border border-border">
+        <div className="flex bg-black/40 backdrop-blur-md rounded-2xl p-1.5 gap-1 border border-white/5 shadow-xl">
           <button
             onClick={() => setActiveTab("showcase")}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-medium transition-all ${activeTab === "showcase" ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" : "text-muted-foreground hover:text-foreground"}`}
           >
             <Layers className="w-4 h-4" />
             Showcase
-            <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === "showcase" ? "bg-white/20" : "bg-border"}`}>
+            <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === "showcase" ? "bg-white/20" : "bg-white/10"}`}>
               {portfolioProjects.length}
             </span>
           </button>
@@ -218,7 +218,7 @@ export default function PortfolioPageContent() {
             <Github className="w-4 h-4" />
             All GitHub Repos
             {!loadingGithub && (
-              <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === "github" ? "bg-white/20" : "bg-border"}`}>
+              <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === "github" ? "bg-white/20" : "bg-white/10"}`}>
                 {githubRepos.length}
               </span>
             )}
@@ -233,7 +233,7 @@ export default function PortfolioPageContent() {
           <div className="flex flex-wrap gap-3 justify-center mb-10 px-4">
             {PORTFOLIO_FILTERS.map((f) => (
               <button key={f} onClick={() => setActiveFilter(f)}
-                className={`px-5 py-2 rounded-full text-sm font-medium capitalize transition-all ${activeFilter === f ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" : "bg-secondary text-muted-foreground hover:text-foreground border border-border"}`}>
+                className={`px-5 py-2 rounded-full text-sm font-medium capitalize transition-all ${activeFilter === f ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25" : "bg-black/30 text-muted-foreground hover:text-foreground border border-white/5 backdrop-blur-sm"}`}>
                 {f}
               </button>
             ))}
@@ -252,7 +252,7 @@ export default function PortfolioPageContent() {
               ) : (
                 filteredPortfolio.map((project) => (
                   <div key={project._id}
-                    className="group relative rounded-2xl border border-border bg-card overflow-hidden card-hover cursor-pointer"
+                    className="group relative rounded-2xl border border-white/5 bg-black/30 backdrop-blur-md overflow-hidden card-hover cursor-pointer shadow-xl"
                     onClick={() => setSelected(project)}>
                     <div className="relative h-52 overflow-hidden">
                       {project.image ? (

@@ -4,14 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser, UserButton, SignInButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X, Code2, Zap } from "lucide-react";
-import { ResumeRequestModal } from "@/components/sections/resume-request-modal";
-
+import { Menu, X, Code2 } from "lucide-react";
+import { LiquidButton } from "@/components/ui/button";
 
 const navLinks = [
-  { href: "/tools", label: "ToolsOne" },
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
@@ -21,7 +18,6 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
@@ -29,9 +25,6 @@ export function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -46,199 +39,280 @@ export function Navbar() {
   }, [isMobileOpen]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        isScrolled || isMobileOpen
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-black/5"
-          : "bg-transparent"
-      )}
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5">
-          <Link href="/" id="navbar-logo" className="flex items-center gap-2 group transition-opacity duration-300">
-            <div className="relative w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
-              <Code2 className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-xl tracking-tight">
-              <span className="gradient-text">Dead</span>
-              <span className="text-foreground">raon</span>
-            </span>
-          </Link>
-          <Link
-            href="/tools"
-            className="flex md:hidden px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl active:border-b-[1px] active:translate-y-[2px] transition-all duration-100 shadow-md shadow-purple-500/10 items-center justify-center gap-1 h-[26px]"
-          >
-            <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
-            ToolsOne
-          </Link>
-        </div>
+    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 pt-3 pointer-events-none">
+      {/* Main pill navbar */}
+      <nav className="relative overflow-hidden w-full lg:w-fit flex items-center gap-2 lg:gap-4 rounded-2xl border border-white/20 pl-3 pr-2 py-2 shadow-lg shadow-black/5 pointer-events-auto">
+        {/* Liquid glass distortion layer */}
+        <div
+          className="absolute inset-0 -z-10 rounded-2xl overflow-hidden"
+          style={{
+            backdropFilter: 'url(#liquid-glass) blur(20px) brightness(1.06) saturate(1.2)',
+            background: 'rgba(255, 255, 255, 0.04)',
+          }}
+        />
+        {/* Glass rim — light top edge + subtle shadow */}
+        <div
+          className="absolute inset-0 pointer-events-none rounded-2xl"
+          style={{
+            background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 40%, rgba(255,255,255,0.04) 100%)",
+            boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.08)",
+          }}
+        />
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1.5">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-2 group transition-all duration-300 shrink-0 mr-1 z-10 hover:scale-[1.08] active:scale-[0.92]"
+          style={{
+            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          }}
+        >
+          <div className="relative w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
+            <Code2 className="w-4 h-4 text-white" />
+          </div>
+          <span className="font-bold text-lg tracking-tight text-white">
+            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Dead
+            </span>
+            <span>raon</span>
+          </span>
+        </Link>
+
+        {/* ToolsOne pill */}
+        <Link
+          href="/tools"
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-purple-500/20 hover:shadow-purple-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
+          style={{
+            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
+          }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          ToolsOne
+        </Link>
+
+        {/* Desktop Nav Links */}
+        <div className="relative z-10 hidden lg:flex items-center gap-1.5 mx-2 lg:mx-4">
           {navLinks.map((link) => {
-            if (link.href === "/tools") {
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "mx-2 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl hover:from-purple-500 hover:to-blue-500 active:border-b-[1px] active:translate-y-[2px] transition-all duration-100 shadow-md shadow-purple-500/10 hover:shadow-purple-500/30 flex items-center justify-center gap-1.5 h-[34px]"
-                  )}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  {link.label}
-                </Link>
-              );
-            }
-            return link.href.endsWith(".pdf") ? (
-              <ResumeRequestModal key={link.href}>
-                <button
-                  className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-accent"
-                  )}
-                >
-                  {link.label}
-                </button>
-              </ResumeRequestModal>
-            ) : (
+            const isActive = pathname === link.href;
+            return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                  pathname === link.href
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                  "relative text-sm font-medium px-3 py-1.5 rounded-full transition-all whitespace-nowrap overflow-hidden group outline-none focus:outline-none hover:scale-[1.08] active:scale-[0.92]",
+                  isActive
+                    ? "text-white font-semibold"
+                    : "text-white/70 hover:text-white"
                 )}
+                style={{
+                  transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s',
+                }}
               >
-                {link.label}
+                {/* Active selection background with liquid glass effect */}
+                {isActive && (
+                  <>
+                    <div
+                      className="absolute inset-0 -z-10 rounded-full overflow-hidden"
+                      style={{
+                        backdropFilter: 'url(#liquid-glass) blur(8px) brightness(1.08) saturate(1.15)',
+                        background: 'rgba(255, 255, 255, 0.08)',
+                      }}
+                    />
+                    <div
+                      className="absolute inset-0 pointer-events-none rounded-full"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 100%)",
+                        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.20), 0 2px 6px rgba(0,0,0,0.08)",
+                      }}
+                    />
+                  </>
+                )}
+
+
+
+                <span className="relative z-10">{link.label}</span>
               </Link>
             );
           })}
         </div>
 
         {/* Right Actions */}
-        <div className="hidden md:flex items-center gap-3 min-w-[100px] justify-end">
+        <div className="relative z-10 ml-auto lg:ml-4 flex items-center gap-2 shrink-0">
           {mounted ? (
             isSignedIn ? (
-              <div className="flex items-center gap-3">
-                <Button asChild size="sm" variant="outline">
-                  <Link href="/dashboard">Dashboard</Link>
-                </Button>
+              <>
+                <Link
+                  href="/dashboard"
+                  className="hidden sm:inline-flex bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-xl border border-white/20 transition-all cursor-pointer whitespace-nowrap hover:scale-[1.08] active:scale-[0.92]"
+                  style={{
+                    transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                  }}
+                >
+                  Dashboard
+                </Link>
                 <UserButton afterSignOutUrl="/" />
-              </div>
+              </>
             ) : (
-              <div className="flex items-center gap-2">
+              <>
                 <SignInButton mode="modal">
-                  <Button variant="ghost" size="sm">Client Login</Button>
+                  <button className="hidden sm:inline-flex text-white/80 hover:text-white transition-all cursor-pointer px-3 py-2 rounded-lg whitespace-nowrap hover:scale-[1.08] active:scale-[0.92]"
+                    style={{
+                      transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    }}
+                  >
+                    Client Login
+                  </button>
                 </SignInButton>
-                <Button asChild variant="gradient" size="sm">
-                  <Link href="/contact#contact-form">
-                    <Zap className="w-4 h-4" /> Hire Me
-                  </Link>
-                </Button>
-              </div>
+                <div 
+                  className="transition-all hover:scale-[1.08] active:scale-[0.92]"
+                  style={{
+                    transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                  }}
+                >
+                  <LiquidButton
+                    onClick={() => {
+                      const el = document.getElementById("contact-card");
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      else window.location.href = "/contact";
+                    }}
+                    size="sm"
+                    className="text-xs py-2 whitespace-nowrap"
+                  >
+                    Start a project
+                  </LiquidButton>
+                </div>
+              </>
             )
           ) : (
-            <div className="w-24 h-8 bg-muted/10 animate-pulse rounded-lg" />
+            <div className="w-24 h-8 bg-white/10 animate-pulse rounded-lg" />
           )}
-        </div>
 
-        {/* Mobile menu button */}
-        <div className="flex md:hidden items-center gap-2">
+          {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground"
+            className="lg:hidden w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors ml-1"
+            aria-label="Toggle menu"
           >
             {isMobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Drawer */}
       {isMobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-border shadow-xl">
-          <div className="px-4 py-4 space-y-1">
+        <div className="relative overflow-hidden lg:hidden mt-2 rounded-2xl border border-white/15 shadow-xl pointer-events-auto">
+          {/* Liquid glass distortion layer */}
+          <div
+            className="absolute inset-0 -z-10 rounded-2xl overflow-hidden"
+            style={{
+              backdropFilter: 'url(#liquid-glass) blur(20px) brightness(1.04) saturate(1.15)',
+              background: 'rgba(255, 255, 255, 0.04)',
+            }}
+          />
+          {/* Glass rim */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-2xl"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18), 0 12px 36px rgba(0,0,0,0.1)",
+            }}
+          />
+
+          <div className="px-3 py-3 space-y-1 relative z-10">
+            {/* ToolsOne pill in mobile */}
+            <Link
+              href="/tools"
+              onClick={() => setIsMobileOpen(false)}
+              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ToolsOne
+            </Link>
+
+            {/* Nav links */}
             {navLinks.map((link) => {
-              if (link.href === "/tools") {
-                return (
-                  <div key={link.href} className="px-4 py-2">
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsMobileOpen(false)}
-                      className={cn(
-                        "block text-center py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl hover:from-purple-500 hover:to-blue-500 active:border-b-[1px] active:translate-y-[2px] transition-all duration-100 shadow-md shadow-purple-500/10 hover:shadow-purple-500/30 w-full"
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </div>
-                );
-              }
-              return link.href.endsWith(".pdf") ? (
-                <ResumeRequestModal key={link.href}>
-                  <button
-                    onClick={() => setIsMobileOpen(false)}
-                    className={cn(
-                      "block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all text-muted-foreground hover:text-foreground hover:bg-accent"
-                    )}
-                  >
-                    {link.label}
-                  </button>
-                </ResumeRequestModal>
-              ) : (
+              const isActive = pathname === link.href;
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileOpen(false)}
                   className={cn(
-                    "block px-4 py-3 rounded-lg text-sm font-medium transition-all",
-                    pathname === link.href
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    "relative block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 overflow-hidden group",
+                    isActive
+                      ? "text-white font-semibold"
+                      : "text-white/70 hover:text-white"
                   )}
                 >
-                  {link.label}
+                  {/* Active selection background with liquid glass effect */}
+                  {isActive && (
+                    <>
+                      <div
+                        className="absolute inset-0 -z-10 rounded-xl overflow-hidden"
+                        style={{
+                          backdropFilter: 'url(#liquid-glass) blur(8px) brightness(1.08) saturate(1.15)',
+                          background: 'rgba(255, 255, 255, 0.08)',
+                        }}
+                      />
+                      <div
+                        className="absolute inset-0 pointer-events-none rounded-xl"
+                        style={{
+                          background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 100%)",
+                          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.22), 0 2px 4px rgba(0,0,0,0.08)",
+                        }}
+                      />
+                    </>
+                  )}
+
+
+                  
+                  <span className="relative z-10">{link.label}</span>
                 </Link>
               );
             })}
-            <div className="pt-3 border-t border-border flex flex-col gap-2">
-              {mounted ? (
-                isSignedIn ? (
-                  <div className="flex items-center justify-between gap-3 px-4 py-3 border border-border/50 rounded-xl bg-accent/20">
-                    <div className="flex items-center gap-3">
-                      <UserButton afterSignOutUrl="/" />
-                      <div className="text-left min-w-0">
-                        <p className="text-sm font-semibold text-foreground truncate">
-                          {user?.fullName || user?.username || "My Account"}
-                        </p>
-                        <p className="text-[10px] text-muted-foreground truncate">
-                          {user?.primaryEmailAddress?.emailAddress || "Signed in"}
-                        </p>
-                      </div>
+
+            {/* Auth */}
+            <div className="pt-2 border-t border-white/10 mt-2 space-y-2">
+              {mounted && isSignedIn ? (
+                <div className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center gap-3">
+                    <UserButton afterSignOutUrl="/" />
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">
+                        {user?.fullName || user?.username || "My Account"}
+                      </p>
+                      <p className="text-[10px] text-white/50 truncate">
+                        {user?.primaryEmailAddress?.emailAddress || "Signed in"}
+                      </p>
                     </div>
-                    <Button asChild size="sm" variant="outline" className="flex-shrink-0">
-                      <Link href="/dashboard" onClick={() => setIsMobileOpen(false)}>
-                        Dashboard
-                      </Link>
-                    </Button>
                   </div>
-                ) : (
-                  <>
-                    <SignInButton mode="modal">
-                      <Button variant="outline" className="w-full">Client Login</Button>
-                    </SignInButton>
-                    <Button asChild variant="gradient" className="w-full">
-                      <Link href="/contact#contact-form" onClick={() => setIsMobileOpen(false)}>
-                        <Zap className="w-4 h-4" /> Hire Me
-                      </Link>
-                    </Button>
-                  </>
-                )
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="text-xs font-semibold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg border border-white/15 transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                </div>
               ) : (
-                <div className="w-full h-10 bg-muted/10 animate-pulse rounded-lg" />
+                <>
+                  <SignInButton mode="modal">
+                    <button className="w-full text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 px-4 py-3 rounded-xl transition-colors text-left">
+                      Client Login
+                    </button>
+                  </SignInButton>
+                  <button
+                    onClick={() => {
+                      setIsMobileOpen(false);
+                      const el = document.getElementById("contact-card");
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      else window.location.href = "/contact";
+                    }}
+                    className="w-full bg-white text-black text-sm font-semibold py-3 rounded-xl hover:bg-white/95 transition-colors"
+                  >
+                    Start a project
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -247,3 +321,4 @@ export function Navbar() {
     </header>
   );
 }
+

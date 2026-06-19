@@ -2,11 +2,13 @@
 
 import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
+import { GlassCard } from "@/components/ui/button";
 
 const skillGroups = [
   {
     title: "Frontend",
-    color: "from-purple-500 to-blue-500",
+    color: "from-purple-400 to-blue-400",
+    barColor: "from-purple-500 to-blue-500",
     skills: [
       { name: "React / Next.js", level: 95 },
       { name: "TypeScript", level: 90 },
@@ -16,7 +18,8 @@ const skillGroups = [
   },
   {
     title: "Backend",
-    color: "from-blue-500 to-cyan-500",
+    color: "from-blue-400 to-cyan-400",
+    barColor: "from-blue-500 to-cyan-500",
     skills: [
       { name: "Node.js / Express", level: 90 },
       { name: "MongoDB", level: 85 },
@@ -26,7 +29,8 @@ const skillGroups = [
   },
   {
     title: "Mobile",
-    color: "from-cyan-500 to-emerald-500",
+    color: "from-cyan-400 to-emerald-400",
+    barColor: "from-cyan-500 to-emerald-500",
     skills: [
       { name: "Flutter / Dart", level: 90 },
       { name: "Firebase", level: 85 },
@@ -36,7 +40,8 @@ const skillGroups = [
   },
   {
     title: "Tools & DevOps",
-    color: "from-emerald-500 to-green-500",
+    color: "from-emerald-400 to-green-400",
+    barColor: "from-emerald-500 to-green-500",
     skills: [
       { name: "Git / GitHub", level: 95 },
       { name: "Docker", level: 75 },
@@ -66,42 +71,55 @@ export function SkillsSection() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {skillGroups.map((group, gi) => (
-            <div
+            <GlassCard
               key={group.title}
-              className={cn("p-6 rounded-2xl border border-border bg-card transition-all duration-700", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}
+              rounded="rounded-2xl"
+              className={cn("p-6 transition-all duration-700", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}
               style={{ transitionDelay: `${gi * 100}ms` }}
             >
-              <h3 className={cn("text-lg font-semibold mb-6 bg-gradient-to-r bg-clip-text text-transparent", group.color)}>{group.title}</h3>
+              {/* Gradient top accent */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                <div className={cn("absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r opacity-60", group.barColor)} />
+              </div>
+
+              <h3 className={cn("text-lg font-semibold mb-6 bg-gradient-to-r bg-clip-text text-transparent", group.color)}>
+                {group.title}
+              </h3>
               <div className="space-y-5">
                 {group.skills.map((skill, si) => (
                   <div key={skill.name}>
                     <div className="flex justify-between text-sm mb-1.5">
-                      <span className="font-medium">{skill.name}</span>
-                      <span className="text-muted-foreground">{skill.level}%</span>
+                      <span className="font-medium text-white/90">{skill.name}</span>
+                      <span className="text-white/50">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                       <div
-                        className={cn("h-full bg-gradient-to-r rounded-full transition-all duration-1000 ease-out", group.color)}
+                        className={cn("h-full bg-gradient-to-r rounded-full transition-all duration-1000 ease-out", group.barColor)}
                         style={{ width: inView ? `${skill.level}%` : "0%", transitionDelay: `${gi * 100 + si * 150}ms` }}
                       />
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
 
         {/* Tech bubbles */}
         <div className={cn("transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
-          <h3 className="text-center text-lg font-semibold mb-6 text-muted-foreground">Full Technology Stack</h3>
-          <div className="flex flex-wrap gap-3 justify-center">
+          <h3 className="text-center text-lg font-semibold mb-6 text-white/60">Full Technology Stack</h3>
+          <div className="flex flex-wrap gap-2.5 justify-center">
             {technologies.map((tech) => (
-              <span key={tech} className="px-4 py-2 rounded-full text-sm font-medium bg-secondary border border-border hover:border-primary/50 hover:text-primary hover:bg-primary/10 transition-all duration-200 cursor-default">
-                {tech}
-              </span>
+              <GlassCard
+                key={tech}
+                rounded="rounded-full"
+                hoverScale
+                className="px-4 py-2 cursor-default"
+              >
+                <span className="text-sm font-medium text-white/85 relative z-10">{tech}</span>
+              </GlassCard>
             ))}
           </div>
         </div>

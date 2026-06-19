@@ -3,7 +3,7 @@
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { GlassCard } from "@/components/ui/button";
 import { Globe, Smartphone, Palette, Plug, Wrench, ArrowRight } from "lucide-react";
 
 const services = [
@@ -60,53 +60,60 @@ export function ServicesSection() {
           <h2 className="text-4xl lg:text-5xl font-bold mt-2 mb-4">
             Services I <span className="gradient-text">Offer</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-white/60 max-w-2xl mx-auto">
             End-to-end digital product development — from design to deployment, I handle it all with precision and care.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => (
-            <div
+            <GlassCard
               key={service.title}
+              hoverScale
+              rounded="rounded-2xl"
               className={cn(
-                "group relative p-6 rounded-2xl border border-border bg-card hover:border-primary/30 transition-all duration-500 card-hover cursor-pointer",
+                "group p-6 cursor-pointer transition-all duration-700",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
                 i === 4 ? "md:col-span-2 lg:col-span-1" : ""
               )}
               style={{ transitionDelay: `${i * 100}ms` }}
             >
+              {/* Gradient top accent */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                <div className={cn("absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r opacity-60", service.color)} />
+              </div>
+
               {/* Icon */}
               <div className={cn("w-12 h-12 rounded-xl bg-gradient-to-br mb-4 flex items-center justify-center shadow-lg", service.color)}>
                 <service.icon className="w-6 h-6 text-white" />
               </div>
 
-              {/* Hover glow */}
-              <div className={cn("absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-500", service.color)} />
-
-              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{service.description}</p>
+              <h3 className="text-xl font-semibold mb-2 text-white">{service.title}</h3>
+              <p className="text-white/60 text-sm mb-4 leading-relaxed">{service.description}</p>
 
               <ul className="space-y-2 mb-6">
                 {service.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                  <li key={f} className="flex items-center gap-2 text-sm text-white/70">
+                    <div className="w-1.5 h-1.5 rounded-full bg-white/40 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
 
-              <Link href={service.href} className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+              <Link href={service.href} className="text-white/80 text-sm font-medium flex items-center gap-1 group-hover:gap-2 group-hover:text-white transition-all">
                 Learn more <ArrowRight className="w-3 h-3" />
               </Link>
-            </div>
+            </GlassCard>
           ))}
         </div>
 
         <div className={cn("text-center mt-12 transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
-          <Button asChild size="lg" variant="gradient">
-            <Link href="/services">View All Services & Pricing <ArrowRight className="w-4 h-4" /></Link>
-          </Button>
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-[1.03] active:scale-[0.97] transition-all duration-200"
+          >
+            View All Services & Pricing <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>
