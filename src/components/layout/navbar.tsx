@@ -39,25 +39,27 @@ export function Navbar() {
   }, [isMobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 pt-3 pointer-events-none">
-      {/* Main pill navbar */}
-      <nav className="relative overflow-hidden w-full lg:w-fit flex items-center gap-2 lg:gap-4 rounded-2xl border border-white/20 pl-3 pr-2 py-2 shadow-lg shadow-black/5 pointer-events-auto">
+    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+      {/* Main full-width navbar */}
+      <nav className="relative overflow-hidden w-full border-b border-white/10 py-3 shadow-md shadow-black/5 pointer-events-auto">
         {/* Glassmorphic backdrop blur layer */}
         <div
-          className="absolute inset-0 -z-10 rounded-2xl overflow-hidden"
+          className="absolute inset-0 -z-10 overflow-hidden"
           style={{
             backdropFilter: 'blur(20px) brightness(1.06) saturate(1.2)',
             background: 'rgba(255, 255, 255, 0.04)',
           }}
         />
-        {/* Glass rim — light top edge + subtle shadow */}
+        {/* Glass rim */}
         <div
-          className="absolute inset-0 pointer-events-none rounded-2xl"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 40%, rgba(255,255,255,0.04) 100%)",
-            boxShadow: "inset 0 1.5px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.08)",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)",
           }}
         />
+
+        {/* Centered content wrapper */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 lg:gap-4 w-full">
 
         {/* Logo */}
         <Link
@@ -196,14 +198,15 @@ export function Navbar() {
             {isMobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </nav>
+      </div>
+    </nav>
 
       {/* Mobile Menu Drawer */}
       {isMobileOpen && (
-        <div className="relative overflow-hidden lg:hidden mt-2 rounded-2xl border border-white/15 shadow-xl pointer-events-auto">
+        <div className="relative overflow-hidden lg:hidden border-b border-white/15 shadow-xl pointer-events-auto">
           {/* Glassmorphic backdrop blur layer */}
           <div
-            className="absolute inset-0 -z-10 rounded-2xl overflow-hidden"
+            className="absolute inset-0 -z-10 overflow-hidden"
             style={{
               backdropFilter: 'blur(20px) brightness(1.04) saturate(1.15)',
               background: 'rgba(255, 255, 255, 0.04)',
@@ -211,14 +214,13 @@ export function Navbar() {
           />
           {/* Glass rim */}
           <div
-            className="absolute inset-0 pointer-events-none rounded-2xl"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18), 0 12px 36px rgba(0,0,0,0.1)",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)",
             }}
           />
 
-          <div className="px-3 py-3 space-y-1 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 py-3 space-y-1 relative z-10">
             {/* ToolsOne pill in mobile */}
             <Link
               href="/tools"
