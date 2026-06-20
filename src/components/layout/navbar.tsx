@@ -59,7 +59,7 @@ export function Navbar() {
         />
 
         {/* Full-width content wrapper */}
-        <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center gap-2 lg:gap-4">
+        <div className="w-full px-4 flex items-center gap-2 lg:gap-4">
 
         {/* Logo */}
         <Link
@@ -220,7 +220,7 @@ export function Navbar() {
             }}
           />
 
-          <div className="max-w-7xl mx-auto px-4 py-3 space-y-1 relative z-10">
+          <div className="w-full px-4 py-3 space-y-1 relative z-10">
             {/* ToolsOne pill in mobile */}
             <Link
               href="/tools"
