@@ -42,11 +42,11 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 pt-3 pointer-events-none">
       {/* Main pill navbar */}
       <nav className="relative overflow-hidden w-full lg:w-fit flex items-center gap-2 lg:gap-4 rounded-2xl border border-white/20 pl-3 pr-2 py-2 shadow-lg shadow-black/5 pointer-events-auto">
-        {/* Liquid glass distortion layer */}
+        {/* Glassmorphic backdrop blur layer */}
         <div
           className="absolute inset-0 -z-10 rounded-2xl overflow-hidden"
           style={{
-            backdropFilter: 'url(#liquid-glass) blur(20px) brightness(1.06) saturate(1.2)',
+            backdropFilter: 'blur(20px) brightness(1.06) saturate(1.2)',
             background: 'rgba(255, 255, 255, 0.04)',
           }}
         />
@@ -114,7 +114,7 @@ export function Navbar() {
                     <div
                       className="absolute inset-0 -z-10 rounded-full overflow-hidden"
                       style={{
-                        backdropFilter: 'url(#liquid-glass) blur(8px) brightness(1.08) saturate(1.15)',
+                        backdropFilter: 'blur(8px) brightness(1.08) saturate(1.15)',
                         background: 'rgba(255, 255, 255, 0.08)',
                       }}
                     />
@@ -201,11 +201,11 @@ export function Navbar() {
       {/* Mobile Menu Drawer */}
       {isMobileOpen && (
         <div className="relative overflow-hidden lg:hidden mt-2 rounded-2xl border border-white/15 shadow-xl pointer-events-auto">
-          {/* Liquid glass distortion layer */}
+          {/* Glassmorphic backdrop blur layer */}
           <div
             className="absolute inset-0 -z-10 rounded-2xl overflow-hidden"
             style={{
-              backdropFilter: 'url(#liquid-glass) blur(20px) brightness(1.04) saturate(1.15)',
+              backdropFilter: 'blur(20px) brightness(1.04) saturate(1.15)',
               background: 'rgba(255, 255, 255, 0.04)',
             }}
           />
@@ -250,7 +250,7 @@ export function Navbar() {
                       <div
                         className="absolute inset-0 -z-10 rounded-xl overflow-hidden"
                         style={{
-                          backdropFilter: 'url(#liquid-glass) blur(8px) brightness(1.08) saturate(1.15)',
+                          backdropFilter: 'blur(8px) brightness(1.08) saturate(1.15)',
                           background: 'rgba(255, 255, 255, 0.08)',
                         }}
                       />

@@ -9,41 +9,6 @@ import { cn } from "@/lib/utils"
    SVG filter that creates the liquid-glass wavy distortion.
    Mount once per page (GlassCard includes it automatically).
 ───────────────────────────────────────────────────────────── */
-export function GlassFilter() {
-  return (
-    <svg className="hidden" aria-hidden="true">
-      <defs>
-        <filter
-          id="liquid-glass"
-          x="-10%"
-          y="-10%"
-          width="120%"
-          height="120%"
-          colorInterpolationFilters="sRGB"
-        >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.045 0.045"
-            numOctaves="1"
-            seed="2"
-            result="turbulence"
-          />
-          <feGaussianBlur in="turbulence" stdDeviation="1.5" result="blurredNoise" />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="blurredNoise"
-            scale="55"
-            xChannelSelector="R"
-            yChannelSelector="B"
-            result="displaced"
-          />
-          <feGaussianBlur in="displaced" stdDeviation="3" result="finalBlur" />
-          <feComposite in="finalBlur" in2="finalBlur" operator="over" />
-        </filter>
-      </defs>
-    </svg>
-  )
-}
 
 /* ─────────────────────────────────────────────────────────────
    GlassCard — liquid glass card wrapper for any content.
@@ -76,10 +41,10 @@ export function GlassCard({
       style={style}
       {...props}
     >
-      {/* Liquid glass distortion layer */}
+      {/* Glassmorphic backdrop blur layer */}
       <div
         className="absolute inset-0 -z-10"
-        style={{ backdropFilter: 'url(#liquid-glass) blur(12px) brightness(1.04) saturate(1.1)' }}
+        style={{ backdropFilter: 'blur(12px) brightness(1.04) saturate(1.1)' }}
       />
       {/* Glass rim — light top edge + subtle shadow */}
       <div
@@ -176,10 +141,10 @@ export function LiquidButton({
 
   return (
     <div className="relative inline-flex rounded-full p-[1px] bg-gradient-to-b from-white/15 to-white/3 shadow-[0_4px_16px_rgba(0,0,0,0.12)]">
-      {/* Glass distortion layer */}
+      {/* Glassmorphic backdrop blur layer */}
       <div
         className="absolute inset-0 rounded-full overflow-hidden -z-10"
-        style={{ backdropFilter: 'url(#liquid-glass) blur(10px) brightness(1.04) saturate(1.1)' }}
+        style={{ backdropFilter: 'blur(10px) brightness(1.04) saturate(1.1)' }}
       />
       {/* Rim light */}
       <div
