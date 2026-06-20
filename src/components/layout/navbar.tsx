@@ -58,8 +58,8 @@ export function Navbar() {
           }}
         />
 
-        {/* Centered content wrapper */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 lg:gap-4 w-full">
+        {/* Full-width content wrapper */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center gap-2 lg:gap-4">
 
         {/* Logo */}
         <Link
