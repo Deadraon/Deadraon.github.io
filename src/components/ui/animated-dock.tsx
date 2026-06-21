@@ -36,7 +36,7 @@ export const AnimatedDock = ({ className, items }: AnimatedDockProps) => {
       onMouseMove={(e) => mouseX.set(e.clientX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "animated-dock flex h-16 items-end gap-3 rounded-2xl bg-black/35 backdrop-blur-xl border border-white/10 shadow-lg px-4 pb-3 relative pointer-events-auto",
+        "animated-dock flex h-14 sm:h-16 items-end gap-2 sm:gap-3 rounded-2xl bg-black/35 backdrop-blur-xl border border-white/10 shadow-lg px-3 sm:px-4 pb-2.5 sm:pb-3 relative pointer-events-auto",
         className,
       )}
     >
@@ -78,14 +78,14 @@ export const DockItem = ({ mouseX, children, label }: DockItemProps) => {
     return val - bounds.x - bounds.width / 2;
   });
 
-  const widthSync = useTransform(distance, [-150, 0, 150], [40, 70, 40]);
+  const widthSync = useTransform(distance, [-150, 0, 150], [38, 68, 38]);
   const width = useSpring(widthSync, {
     mass: 0.1,
     stiffness: 150,
     damping: 12,
   });
 
-  const iconScale = useTransform(width, [40, 70], [1, 1.4]);
+  const iconScale = useTransform(width, [38, 68], [1, 1.4]);
   const iconSpring = useSpring(iconScale, {
     mass: 0.1,
     stiffness: 150,

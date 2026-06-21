@@ -45,8 +45,8 @@ export default function PublicLayout({
         {!isHome && <Footer />}
       </div>
 
-      {/* Floating Animated Dock at the bottom center for testing (desktop only) */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none hidden md:block">
+      {/* Floating Animated Dock at the bottom center (all viewports) */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
         <AnimatedDock items={dockItems} />
       </div>
     </div>

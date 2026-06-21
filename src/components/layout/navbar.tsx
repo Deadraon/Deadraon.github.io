@@ -92,51 +92,7 @@ export function Navbar() {
           ToolsOne
         </Link>
 
-        {/* Desktop Nav Links */}
-        <div className="relative z-10 hidden lg:flex items-center gap-1.5 mx-2 lg:mx-4">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "relative text-sm font-medium px-3 py-1.5 rounded-full transition-all whitespace-nowrap overflow-hidden group outline-none focus:outline-none hover:scale-[1.08] active:scale-[0.92]",
-                  isActive
-                    ? "text-white font-semibold"
-                    : "text-white/70 hover:text-white"
-                )}
-                style={{
-                  transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s',
-                }}
-              >
-                {/* Active selection background with liquid glass effect */}
-                {isActive && (
-                  <>
-                    <div
-                      className="absolute inset-0 -z-10 rounded-full overflow-hidden"
-                      style={{
-                        backdropFilter: 'blur(8px) brightness(1.08) saturate(1.15)',
-                        background: 'rgba(255, 255, 255, 0.08)',
-                      }}
-                    />
-                    <div
-                      className="absolute inset-0 pointer-events-none rounded-full"
-                      style={{
-                        background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 100%)",
-                        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.20), 0 2px 6px rgba(0,0,0,0.08)",
-                      }}
-                    />
-                  </>
-                )}
 
-
-
-                <span className="relative z-10">{link.label}</span>
-              </Link>
-            );
-          })}
-        </div>
 
         {/* Right Actions */}
         <div className="relative z-10 ml-auto flex items-center gap-2 shrink-0">
@@ -231,47 +187,7 @@ export function Navbar() {
               ToolsOne
             </Link>
 
-            {/* Nav links */}
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileOpen(false)}
-                  className={cn(
-                    "relative block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 overflow-hidden group",
-                    isActive
-                      ? "text-white font-semibold"
-                      : "text-white/70 hover:text-white"
-                  )}
-                >
-                  {/* Active selection background with liquid glass effect */}
-                  {isActive && (
-                    <>
-                      <div
-                        className="absolute inset-0 -z-10 rounded-xl overflow-hidden"
-                        style={{
-                          backdropFilter: 'blur(8px) brightness(1.08) saturate(1.15)',
-                          background: 'rgba(255, 255, 255, 0.08)',
-                        }}
-                      />
-                      <div
-                        className="absolute inset-0 pointer-events-none rounded-xl"
-                        style={{
-                          background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 100%)",
-                          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.22), 0 2px 4px rgba(0,0,0,0.08)",
-                        }}
-                      />
-                    </>
-                  )}
 
-
-                  
-                  <span className="relative z-10">{link.label}</span>
-                </Link>
-              );
-            })}
 
             {/* Auth */}
             <div className="pt-2 border-t border-white/10 mt-2 space-y-2">
