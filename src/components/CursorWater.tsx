@@ -129,6 +129,12 @@ export default function CursorWater() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.closest("header") || target.closest(".animated-dock"))) {
+        mouse.active = false;
+        return;
+      }
+
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
