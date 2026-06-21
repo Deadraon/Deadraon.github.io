@@ -12,6 +12,7 @@ import { SkillsSection } from "@/components/sections/skills";
 import { ProjectsSection } from "@/components/sections/projects";
 import { AdminRequestAlert } from "@/components/admin/AdminRequestAlert";
 import { Footer } from "@/components/layout/footer";
+import { HeroGeometricBackground } from "@/components/sections/HeroGeometric";
 
 const SERVICES = [
   "Web Development",
@@ -140,21 +141,12 @@ export default function HomePage() {
         className="relative w-full rounded-[32px] min-h-[calc(100vh-80px)] transition-all duration-300 overflow-hidden border border-white/[0.08] bg-black/25 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
       >
         
-        {/* Vibrant Ambient Gradient Glows */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute -top-[10%] -left-[10%] w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] rounded-full bg-[#8A2BE2]/20 blur-[80px] sm:blur-[120px] animate-pulse-glow" style={{ animationDuration: '8s' }} />
-          <div className="absolute -bottom-[10%] right-[10%] w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] rounded-full bg-[#0070F3]/20 blur-[90px] sm:blur-[130px] animate-pulse-glow" style={{ animationDuration: '10s', animationDelay: '2s' }} />
-          <div className="absolute top-[30%] -right-[5%] w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[#FF0080]/15 blur-[80px] sm:blur-[110px] animate-pulse-glow" style={{ animationDuration: '12s', animationDelay: '4s' }} />
-          
-          {/* Interactive Mouse Tracking Spotlight */}
-          <div 
-            className="absolute inset-0 transition-opacity duration-500 ease-out"
-            style={{
-              opacity: isHovered ? 1 : 0,
-              background: `radial-gradient(circle 500px at ${mousePos.x}px ${mousePos.y}px, ${glowColors.color1}, ${glowColors.color2}, transparent 80%)`,
-            }}
-          />
-        </div>
+        {/* Geometric Ambient Background & floating shapes */}
+        <HeroGeometricBackground
+          isHovered={isHovered}
+          mousePos={mousePos}
+          glowColors={glowColors}
+        />
         
         {/* Interactive Content Layer */}
         <div className="relative z-10 flex flex-col p-6 sm:p-8 lg:p-10 gap-6 min-h-[calc(100vh-80px)] justify-between">
