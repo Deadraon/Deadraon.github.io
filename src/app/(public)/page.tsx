@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent, ReactNode } from 'react';
+import { useState, useEffect, FormEvent, ReactNode } from 'react';
 import Link from 'next/link';
 import { Twitter, Github, MessageCircle } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
@@ -50,6 +50,37 @@ export default function HomePage() {
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+
+  // Typewriter effect state
+  const roles = [
+    "Full Stack Developer",
+    "React & Next.js Expert",
+    "Mobile App Developer",
+    "UI/UX Craftsman",
+    "API Architect"
+  ];
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = roles[roleIndex];
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setDisplayed(current.slice(0, displayed.length + 1));
+        if (displayed.length === current.length) {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        setDisplayed(current.slice(0, displayed.length - 1));
+        if (displayed.length === 0) {
+          setIsDeleting(false);
+          setRoleIndex((i) => (i + 1) % roles.length);
+        }
+      }
+    }, isDeleting ? 40 : 80);
+    return () => clearTimeout(timeout);
+  }, [displayed, isDeleting, roleIndex]);
 
   const { isSignedIn } = useUser();
 
@@ -158,7 +189,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-12 w-full mt-auto">
             
             {/* Headline */}
-            <div className="flex-1 mb-4">
+            <div className="flex-1 mb-4 flex flex-col gap-4">
               <h1 className="text-white text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-medium leading-[1.1] drop-shadow-2xl max-w-xl shrink-0">
                 I craft bold digital solutions
                 <br />
@@ -167,6 +198,15 @@ export default function HomePage() {
                   products
                 </span>
               </h1>
+              
+              {/* Typewriter role sub-headline */}
+              <div className="h-8 flex items-center justify-start">
+                <p className="text-base sm:text-lg md:text-xl font-light text-white/50 tracking-wide">
+                  <span>I'm a </span>
+                  <span className="text-white font-medium">{displayed}</span>
+                  <span className="typing-cursor">&nbsp;</span>
+                </p>
+              </div>
             </div>
 
             {/* Contact Form Card */}
