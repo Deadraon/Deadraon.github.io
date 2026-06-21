@@ -139,7 +139,7 @@ export function Navbar() {
         </div>
 
         {/* Right Actions */}
-        <div className="relative z-10 ml-auto lg:ml-4 flex items-center gap-2 shrink-0">
+        <div className="relative z-10 ml-auto flex items-center gap-2 shrink-0">
           {mounted ? (
             isSignedIn ? (
               <>
