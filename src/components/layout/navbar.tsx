@@ -39,7 +39,7 @@ export function Navbar() {
   }, [isMobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none">
       {/* Main full-width navbar */}
       <nav className="relative overflow-hidden w-full border-b border-white/10 py-3 shadow-md shadow-black/5 pointer-events-auto">
         {/* Glassmorphic backdrop blur layer */}
