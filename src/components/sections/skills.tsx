@@ -79,11 +79,6 @@ export function SkillsSection() {
               className={cn("p-6 transition-all duration-700", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}
               style={{ transitionDelay: `${gi * 100}ms` }}
             >
-              {/* Gradient top accent */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                <div className={cn("absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r opacity-60", group.barColor)} />
-              </div>
-
               <h3 className={cn("text-lg font-semibold mb-6 bg-gradient-to-r bg-clip-text text-transparent", group.color)}>
                 {group.title}
               </h3>

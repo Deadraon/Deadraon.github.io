@@ -78,11 +78,6 @@ export function ServicesSection() {
               )}
               style={{ transitionDelay: `${i * 100}ms` }}
             >
-              {/* Gradient top accent */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                <div className={cn("absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r opacity-60", service.color)} />
-              </div>
-
               {/* Icon */}
               <div className={cn("w-12 h-12 rounded-xl bg-gradient-to-br mb-4 flex items-center justify-center shadow-lg", service.color)}>
                 <service.icon className="w-6 h-6 text-white" />

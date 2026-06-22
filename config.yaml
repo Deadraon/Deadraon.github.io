@@ -1,0 +1,44 @@
+litellm_settings:
+  drop_params: true
+
+model_list:
+  - model_name: claude-3-5-sonnet-20241022
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: claude-3-7-sonnet-20250219
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: claude-3-5-haiku-20241022
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: claude-sonnet-4-6
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: claude-3-5-sonnet
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: claude-3-7-sonnet
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: qwen3-235b
+    litellm_params:
+      model: custom_openai/qwen3-235b
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
+  - model_name: codestral-latest
+    litellm_params:
+      model: custom_openai/codestral-latest
+      api_base: https://api.llm7.io/v1
+      api_key: Adrto4hBBgQm4kQDWQSE61nxqp89qh3/TfG5Xq1SZ1XliCn+FfJWbXuulcjJ/xHuiubWIIF8wgOYdbs+pr1cF6sshpOe18Rxp4BFzYGNwiFzQqdTx8XyaNSd+n2tCN9lN+b0qlOPHr3bzOeZDbElmRqZ
