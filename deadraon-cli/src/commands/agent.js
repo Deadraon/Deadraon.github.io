@@ -479,6 +479,7 @@ async function executeTool(toolCall) {
 
   // Restore raw mode and re-draw TUI
   process.stdin.setRawMode(true);
+  process.stdin.resume();
   isTuiInputActive = true;
   render();
   return toolOutput;
@@ -713,11 +714,19 @@ async function startChatSession(userPrompt) {
         if (reconfig && !p.isCancel(reconfig)) {
           const success = await runConfigWizard();
           process.stdin.setRawMode(true);
+          process.stdin.resume();
           isTuiInputActive = true;
           render();
-          if (success) continue;
+          if (success) {
+            // Remove the failed assistant message before retrying
+            if (tuiState.messages.length > 0 && tuiState.messages[tuiState.messages.length - 1].role === 'assistant') {
+              tuiState.messages.pop();
+            }
+            continue;
+          }
         } else {
           process.stdin.setRawMode(true);
+          process.stdin.resume();
           isTuiInputActive = true;
           render();
         }
@@ -745,6 +754,7 @@ export async function startAgentChat() {
   readline.emitKeypressEvents(process.stdin);
   if (process.stdin.isTTY) {
     process.stdin.setRawMode(true);
+    process.stdin.resume();
   }
 
   // Draw home screen initially
@@ -767,6 +777,7 @@ export async function startAgentChat() {
       process.stdin.setRawMode(false);
       await runConfigWizard();
       process.stdin.setRawMode(true);
+      process.stdin.resume();
       isTuiInputActive = true;
       render();
       return;
@@ -792,6 +803,7 @@ export async function startAgentChat() {
             process.stdin.setRawMode(false);
             await runConfigWizard();
             process.stdin.setRawMode(true);
+            process.stdin.resume();
             isTuiInputActive = true;
             render();
             return;
@@ -806,8 +818,22 @@ export async function startAgentChat() {
             await startChatSession('Please analyze the current project workspace and provide 3-5 structured recommendations for improving the code, styling, or architecture.');
             return;
           }
+          if (cmd === '/retry') {
+            const userMsgs = tuiState.messages.filter(m => m.role === 'user');
+            if (userMsgs.length > 0) {
+              const lastPrompt = userMsgs[userMsgs.length - 1].content;
+              while (tuiState.messages.length > 0 && tuiState.messages[tuiState.messages.length - 1].role !== 'user') {
+                tuiState.messages.pop();
+              }
+              await startChatSession(lastPrompt);
+            } else {
+              p.note('No user messages to retry.');
+              render();
+            }
+            return;
+          }
           if (cmd === '/help') {
-            p.note('Slash Commands: /config (edit keys), /clear (clear chat), /recommendation (get project tips), /help (this menu)');
+            p.note('Slash Commands: /config (edit keys), /clear (clear chat), /retry (retry last prompt), /recommendation (get project tips), /help (this menu)');
             render();
             return;
           }
