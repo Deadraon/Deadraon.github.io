@@ -72,6 +72,7 @@ IMPORTANT: All file paths must be relative to the current working directory.
 Wait for the user's tool results before suggesting the next step. If a tool fails, analyze the error and try to fix it.`;
 
 // Full-screen TUI state
+let isTuiInputActive = true;
 let tuiState = {
   screen: 'home', // 'home' or 'chat'
   input: '',
@@ -375,6 +376,7 @@ async function runConfigWizard() {
 }
 
 async function executeTool(toolCall) {
+  isTuiInputActive = false;
   // Suspend raw mode so that Clack confirm prompt gets clean stdin
   process.stdin.setRawMode(false);
   console.log();
@@ -447,6 +449,7 @@ async function executeTool(toolCall) {
 
   // Restore raw mode and re-draw TUI
   process.stdin.setRawMode(true);
+  isTuiInputActive = true;
   render();
   return toolOutput;
 }
@@ -651,10 +654,16 @@ async function startChatSession(userPrompt) {
         continueAgentLoop = false;
       }
     } catch (err) {
-      tuiState.messages.push({ role: 'assistant', content: `Error during LLM call: ${err.message}` });
+      const isAuthError = err.message.includes('401') || err.message.toLowerCase().includes('unauthorized') || err.message.toLowerCase().includes('invalid token');
+      const friendlyErrMsg = isAuthError 
+        ? `Error: API Key is invalid or expired (401). Please run /config to update your settings.`
+        : `Error during LLM call: ${err.message}`;
+
+      tuiState.messages.push({ role: 'assistant', content: friendlyErrMsg });
       render();
 
-      if (err.message.includes('401') || err.message.toLowerCase().includes('unauthorized') || err.message.toLowerCase().includes('invalid token')) {
+      if (isAuthError) {
+        isTuiInputActive = false;
         process.stdin.setRawMode(false);
         const reconfig = await p.confirm({
           message: 'Your API key seems invalid or expired. Configure now?',
@@ -664,10 +673,12 @@ async function startChatSession(userPrompt) {
         if (reconfig && !p.isCancel(reconfig)) {
           const success = await runConfigWizard();
           process.stdin.setRawMode(true);
+          isTuiInputActive = true;
           render();
           if (success) continue;
         } else {
           process.stdin.setRawMode(true);
+          isTuiInputActive = true;
           render();
         }
       }
@@ -700,6 +711,8 @@ export async function startAgentChat() {
   render();
 
   const handleKeypress = async (str, key) => {
+    if (!isTuiInputActive) return;
+
     // Escape check to exit
     if (key.ctrl && key.name === 'c') {
       process.stdin.setRawMode(false);
@@ -710,9 +723,11 @@ export async function startAgentChat() {
 
     // Config settings key trigger
     if (key.ctrl && key.name === 'p') {
+      isTuiInputActive = false;
       process.stdin.setRawMode(false);
       await runConfigWizard();
       process.stdin.setRawMode(true);
+      isTuiInputActive = true;
       render();
       return;
     }
@@ -733,9 +748,11 @@ export async function startAgentChat() {
           const cmd = args[0].toLowerCase();
           
           if (cmd === '/config' || cmd === '/settings') {
+            isTuiInputActive = false;
             process.stdin.setRawMode(false);
             await runConfigWizard();
             process.stdin.setRawMode(true);
+            isTuiInputActive = true;
             render();
             return;
           }
