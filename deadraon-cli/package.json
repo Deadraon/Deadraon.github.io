@@ -1,0 +1,18 @@
+{
+  "name": "deadraon",
+  "version": "1.0.0",
+  "description": "A beautiful, interactive command-line interface tool for Deadraon",
+  "type": "module",
+  "main": "bin/index.js",
+  "bin": {
+    "deadraon": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.8.2",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.1"
+  }
+}
