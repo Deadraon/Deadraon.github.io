@@ -9,14 +9,15 @@ import * as p from '@clack/prompts';
 let keys = getKeys();
 
 function getKeys() {
+  const userHome = process.env.USERPROFILE || process.env.HOME || '';
   const possiblePaths = [
-    path.join('C:', 'Users', 'chauh', '.fcc', '.env'),
-    path.join(process.env.USERPROFILE || '', '.fcc', '.env'),
+    path.join(userHome, '.deadraon', '.env'),
+    path.join(userHome, '.fcc', '.env'),
     path.join(process.cwd(), '.env.local'),
     path.join(process.cwd(), '.env'),
   ];
 
-  const env = {};
+  const env = { ...process.env };
   for (const pth of possiblePaths) {
     if (fs.existsSync(pth)) {
       try {
@@ -324,50 +325,73 @@ async function runConfigWizard() {
 
   if (p.isCancel(modelInput)) return false;
 
-  const envPath = path.join(process.cwd(), '.env.local');
-  let content = '';
-  if (fs.existsSync(envPath)) {
-    content = fs.readFileSync(envPath, 'utf8');
-  }
+  const userHome = process.env.USERPROFILE || process.env.HOME || '';
+  const globalEnvPath = path.join(userHome, '.deadraon', '.env');
+  const localEnvPath = path.join(process.cwd(), '.env.local');
 
-  const lines = content.split('\n');
-  const newLines = [];
-  const updatedKeys = new Set();
+  const saveToPath = (pth) => {
+    const parentDir = path.dirname(pth);
+    if (!fs.existsSync(parentDir)) {
+      fs.mkdirSync(parentDir, { recursive: true });
+    }
+    
+    let content = '';
+    if (fs.existsSync(pth)) {
+      content = fs.readFileSync(pth, 'utf8');
+    }
 
-  lines.forEach(line => {
-    const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
-    if (match) {
-      const key = match[1];
-      if (key === 'OPENROUTER_API_KEY') {
-        newLines.push(`OPENROUTER_API_KEY=${apiKeyInput}`);
-        updatedKeys.add('OPENROUTER_API_KEY');
-      } else if (key === 'AGENT_ROUTER_BASE_URL') {
-        newLines.push(`AGENT_ROUTER_BASE_URL=${baseUrlInput}`);
-        updatedKeys.add('AGENT_ROUTER_BASE_URL');
-      } else if (key === 'MODEL') {
-        newLines.push(`MODEL=${modelInput}`);
-        updatedKeys.add('MODEL');
+    const lines = content.split('\n');
+    const newLines = [];
+    const updatedKeys = new Set();
+
+    lines.forEach(line => {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        const key = match[1];
+        if (key === 'OPENROUTER_API_KEY') {
+          newLines.push(`OPENROUTER_API_KEY=${apiKeyInput}`);
+          updatedKeys.add('OPENROUTER_API_KEY');
+        } else if (key === 'AGENT_ROUTER_BASE_URL') {
+          newLines.push(`AGENT_ROUTER_BASE_URL=${baseUrlInput}`);
+          updatedKeys.add('AGENT_ROUTER_BASE_URL');
+        } else if (key === 'MODEL') {
+          newLines.push(`MODEL=${modelInput}`);
+          updatedKeys.add('MODEL');
+        } else {
+          newLines.push(line);
+        }
       } else {
         newLines.push(line);
       }
-    } else {
-      newLines.push(line);
-    }
-  });
+    });
 
-  if (!updatedKeys.has('OPENROUTER_API_KEY')) newLines.push(`OPENROUTER_API_KEY=${apiKeyInput}`);
-  if (!updatedKeys.has('AGENT_ROUTER_BASE_URL')) newLines.push(`AGENT_ROUTER_BASE_URL=${baseUrlInput}`);
-  if (!updatedKeys.has('MODEL')) newLines.push(`MODEL=${modelInput}`);
+    if (!updatedKeys.has('OPENROUTER_API_KEY')) newLines.push(`OPENROUTER_API_KEY=${apiKeyInput}`);
+    if (!updatedKeys.has('AGENT_ROUTER_BASE_URL')) newLines.push(`AGENT_ROUTER_BASE_URL=${baseUrlInput}`);
+    if (!updatedKeys.has('MODEL')) newLines.push(`MODEL=${modelInput}`);
+
+    let finalLines = newLines;
+    if (pth === globalEnvPath) {
+      finalLines = newLines.filter(line => !line.startsWith('AGENT_ROUTER_API_KEY='));
+    }
+
+    fs.writeFileSync(pth, finalLines.join('\n'), 'utf8');
+  };
 
   try {
-    fs.writeFileSync(envPath, newLines.join('\n'), 'utf8');
+    saveToPath(globalEnvPath);
+    if (fs.existsSync(path.join(process.cwd(), 'package.json')) || fs.existsSync(localEnvPath)) {
+      saveToPath(localEnvPath);
+      p.log.success('Configuration saved successfully to global config and .env.local!');
+    } else {
+      p.log.success('Configuration saved successfully to global config!');
+    }
+    
     keys = getKeys();
     keys.OPENROUTER_API_KEY = apiKeyInput;
     keys.AGENT_ROUTER_BASE_URL = baseUrlInput;
     keys.MODEL = modelInput;
     currentModel = modelInput;
     tuiState.model = modelInput;
-    p.log.success('Configuration saved successfully to .env.local!');
     return true;
   } catch (err) {
     p.log.error(`Failed to save configuration: ${err.message}`);
@@ -460,11 +484,15 @@ async function callLLMStream(messages, onToken, onToolCall) {
   keys = getKeys();
   let apiKey = keys.OPENROUTER_API_KEY;
 
-  if (keys.AGENT_ROUTER_API_KEY && keys.AGENT_ROUTER_BASE_URL) {
+  if (apiKey) {
+    if (apiKey.startsWith('sk-or-')) {
+      url = 'https://openrouter.ai/api/v1/chat/completions';
+    } else if (keys.AGENT_ROUTER_BASE_URL) {
+      url = `${keys.AGENT_ROUTER_BASE_URL}/chat/completions`;
+    }
+  } else if (keys.AGENT_ROUTER_API_KEY && keys.AGENT_ROUTER_BASE_URL) {
     url = `${keys.AGENT_ROUTER_BASE_URL}/chat/completions`;
     apiKey = keys.AGENT_ROUTER_API_KEY;
-  } else if (keys.AGENT_ROUTER_BASE_URL && keys.OPENROUTER_API_KEY) {
-    url = `${keys.AGENT_ROUTER_BASE_URL}/chat/completions`;
   }
 
   if (!apiKey) {
@@ -481,6 +509,7 @@ async function callLLMStream(messages, onToken, onToolCall) {
       model: currentModel,
       messages: messages,
       stream: true,
+      max_tokens: 4096,
     }),
   });
 
@@ -762,8 +791,12 @@ export async function startAgentChat() {
             render();
             return;
           }
+          if (cmd === '/recommendation' || cmd === '/recommend' || cmd === '/recormandetion') {
+            await startChatSession('Please analyze the current project workspace and provide 3-5 structured recommendations for improving the code, styling, or architecture.');
+            return;
+          }
           if (cmd === '/help') {
-            p.note('Slash Commands: /config (edit keys), /clear (clear chat), /help (this menu)');
+            p.note('Slash Commands: /config (edit keys), /clear (clear chat), /recommendation (get project tips), /help (this menu)');
             render();
             return;
           }
