@@ -299,8 +299,9 @@ async function runConfigWizard() {
   console.log();
   p.note('Let\'s configure your developer API key and endpoint.', 'Settings Wizard');
 
-  const apiKeyInput = await p.password({
+  const apiKeyInput = await p.text({
     message: 'Enter API Key (OpenRouter or AgentRouter):',
+    placeholder: 'Paste your API key here (sk-...)',
     validate: (val) => !val ? 'API Key cannot be empty' : undefined
   });
 
