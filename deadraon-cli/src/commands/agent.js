@@ -211,12 +211,13 @@ function renderChat() {
 
   let buffer = '';
 
-  // Chat Header Banner
-  buffer += pc.cyan('┌' + '─'.repeat(cols - 2) + '┐\n');
-  buffer += pc.cyan('│') + centerBoxLine(pc.bold(pc.green('deadraon TUI Session')), cols - 2) + pc.cyan('│\n');
-  buffer += pc.cyan('└' + '─'.repeat(cols - 2) + '┘\n');
+  // Chat Header Banner - ASCII Banner representation
+  for (const line of banner) {
+    buffer += pc.cyan(center(line, cols)) + '\n';
+  }
+  buffer += '\n';
 
-  const contentHeight = rows - 6; // Leave space for headers and prompt
+  const contentHeight = rows - 10; // Recalculate space: ASCII banner takes 7 lines, plus 3 lines for borders/prompt
   let chatLines = [];
 
   for (const msg of tuiState.messages) {
