@@ -39,7 +39,15 @@ function getKeys() {
   return env;
 }
 
-let currentModel = keys.MODEL || 'google/gemini-2.5-flash';
+function cleanModelId(modelId) {
+  if (!modelId) return 'google/gemini-2.5-flash';
+  if (modelId.startsWith('open_router/')) {
+    return modelId.replace('open_router/', '');
+  }
+  return modelId;
+}
+
+let currentModel = cleanModelId(keys.MODEL || 'google/gemini-2.5-flash');
 
 const SYSTEM_PROMPT = `You are "deadraon", a powerful agentic AI coding assistant designed to help developers build and manage their projects.
 You run inside a terminal, similar to Claude Code CLI.
@@ -213,13 +221,11 @@ function renderChat() {
 
   let buffer = '';
 
-  // Chat Header Banner - ASCII Banner representation
-  for (const line of banner) {
-    buffer += pc.cyan(center(line, cols)) + '\n';
-  }
-  buffer += '\n';
+  // Simple, elegant chat header instead of a massive ASCII banner
+  buffer += pc.cyan(pc.bold(' 💎 deadraon AI Agent ')) + pc.dim(' | ') + pc.cyan(tuiState.model) + '\n';
+  buffer += pc.cyan('─'.repeat(cols)) + '\n\n';
 
-  const contentHeight = rows - 10; // Recalculate space: ASCII banner takes 7 lines, plus 3 lines for borders/prompt
+  const contentHeight = rows - 5; // header + border takes 3 lines, input takes 2 lines
   let chatLines = [];
 
   for (const msg of tuiState.messages) {
@@ -688,7 +694,12 @@ async function startChatSession(userPrompt) {
         ? `Error: API Key is invalid or expired (401). Please run /config to update your settings.`
         : `Error during LLM call: ${err.message}`;
 
-      tuiState.messages.push({ role: 'assistant', content: friendlyErrMsg });
+      // Overwrite the last assistant message (which was empty/thinking) with the error message
+      if (tuiState.messages.length > 0 && tuiState.messages[tuiState.messages.length - 1].role === 'assistant') {
+        tuiState.messages[tuiState.messages.length - 1].content = friendlyErrMsg;
+      } else {
+        tuiState.messages.push({ role: 'assistant', content: friendlyErrMsg });
+      }
       render();
 
       if (isAuthError) {
