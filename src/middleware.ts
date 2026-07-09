@@ -20,6 +20,9 @@ const isPublicRoute = createRouteMatcher([
   "/twitter-image(.*)",
   "/sitemap.xml",
   "/robots.txt",
+  // Telegram Drive — uses its own iron-session auth
+  "/drive(.*)",
+  "/api/drive(.*)",
 ]);
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
