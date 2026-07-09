@@ -501,7 +501,7 @@ export default function DriveHomePage() {
               {filteredFiles.map((file) => (
                 <div
                   key={file.id}
-                  onDoubleClick={() => {
+                  onClick={() => {
                     if (file.mime_type === "folder") {
                       handleFolderClick(file);
                     } else {
