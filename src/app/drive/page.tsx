@@ -7,7 +7,8 @@ import { FaTelegramPlane } from "react-icons/fa";
 
 export default function DriveLoginPage() {
   const router = useRouter();
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
+  const [phoneBody, setPhoneBody] = useState("");
   const [code, setCode] = useState("");
   const [step, setStep] = useState(1); // 1 = Phone number, 2 = OTP
   const [loading, setLoading] = useState(false);
@@ -34,15 +35,17 @@ export default function DriveLoginPage() {
 
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phoneNumber) return;
+    if (!phoneBody) return;
     setLoading(true);
     setError("");
+
+    const fullPhoneNumber = `${countryCode.trim()}${phoneBody.trim()}`;
 
     try {
       const res = await fetch("/api/drive/send-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
       });
       const data = await res.json();
 
@@ -128,24 +131,35 @@ export default function DriveLoginPage() {
               <label htmlFor="phone" className="block text-sm font-medium text-gray-400 mb-2">
                 Phone Number
               </label>
-              <input
-                id="phone"
-                type="tel"
-                placeholder="+1234567890"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#24A1DE] focus:ring-1 focus:ring-[#24A1DE] transition-all font-mono"
-                required
-                disabled={loading}
-              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="+91"
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                  className="w-20 bg-white/[0.03] border border-white/10 rounded-xl px-3 py-3 text-white text-center focus:outline-none focus:border-[#24A1DE] focus:ring-1 focus:ring-[#24A1DE] transition-all font-mono"
+                  required
+                  disabled={loading}
+                />
+                <input
+                  id="phone"
+                  type="tel"
+                  placeholder="9876543210"
+                  value={phoneBody}
+                  onChange={(e) => setPhoneBody(e.target.value)}
+                  className="flex-1 bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#24A1DE] focus:ring-1 focus:ring-[#24A1DE] transition-all font-mono"
+                  required
+                  disabled={loading}
+                />
+              </div>
               <p className="text-xs text-gray-500 mt-2">
-                Include country code (e.g. +1 for US, +91 for India).
+                India (+91) is default. You can edit the country code if needed.
               </p>
             </div>
 
             <button
               type="submit"
-              disabled={loading || !phoneNumber}
+              disabled={loading || !phoneBody}
               className="w-full bg-[#24A1DE] hover:bg-[#24A1DE]/90 disabled:opacity-50 text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-[#24A1DE]/25 flex items-center justify-center gap-2 cursor-pointer"
             >
               {loading ? (
