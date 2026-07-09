@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
         {
           method: "POST",
           headers: { "Content-Type": contentType },
-          body: multipartBody,
+          body: new Uint8Array(multipartBody),
         }
       );
       telegramData = await telegramRes.json();
