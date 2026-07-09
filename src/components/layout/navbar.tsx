@@ -92,6 +92,18 @@ export function Navbar() {
           ToolsOne
         </Link>
 
+        {/* DriveOne pill */}
+        <Link
+          href="/drive"
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
+          style={{
+            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
+          }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          DriveOne
+        </Link>
+
 
 
         {/* Right Actions */}
@@ -185,6 +197,16 @@ export function Navbar() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               ToolsOne
+            </Link>
+
+            {/* DriveOne pill in mobile */}
+            <Link
+              href="/drive"
+              onClick={() => setIsMobileOpen(false)}
+              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              DriveOne
             </Link>
 
 
