@@ -4,12 +4,6 @@ import { createTelegramClient } from "@/lib/telegram";
 import { CustomFile } from "telegram/client/uploads";
 import connectDB from "@/lib/mongodb";
 import DriveFile from "@/models/DriveFile";
-import Busboy from "busboy";
-
-// Disable Next.js body parsing — we handle the stream ourselves
-export const runtime = "nodejs";
-
-const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2 GB (Telegram limit)
 
 function mapMongoToDriveFile(doc: any) {
   return {
@@ -31,70 +25,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const contentType = req.headers.get("content-type") || "";
-    if (!contentType.includes("multipart/form-data")) {
-      return NextResponse.json({ error: "Expected multipart/form-data" }, { status: 400 });
+    const formData = await req.formData();
+    const file = formData.get("file") as unknown as File;
+    const folderPath = (formData.get("folderPath") as string) || "/";
+
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Parse the multipart stream with Busboy
-    const { fileBuffer, fileName, mimeType, fileSize, folderPath } =
-      await new Promise<{
-        fileBuffer: Buffer;
-        fileName: string;
-        mimeType: string;
-        fileSize: number;
-        folderPath: string;
-      }>((resolve, reject) => {
-        const bb = Busboy({ headers: { "content-type": contentType } });
-        const chunks: Buffer[] = [];
-        let resolvedFileName = "unknown";
-        let resolvedMime = "application/octet-stream";
-        let resolvedFolder = "/";
-        let totalSize = 0;
+    const fileName = file.name || "unknown";
+    const fileSize = file.size || 0;
+    const mimeType = file.type || "application/octet-stream";
 
-        bb.on("file", (_field, stream, info) => {
-          resolvedFileName = info.filename || "unknown";
-          resolvedMime = info.mimeType || "application/octet-stream";
-
-          stream.on("data", (chunk: Buffer) => {
-            totalSize += chunk.length;
-            if (totalSize > MAX_FILE_SIZE) {
-              stream.destroy(new Error("File exceeds 2 GB limit"));
-              return;
-            }
-            chunks.push(chunk);
-          });
-          stream.on("end", () => {});
-          stream.on("error", reject);
-        });
-
-        bb.on("field", (name, value) => {
-          if (name === "folderPath") resolvedFolder = value;
-        });
-
-        bb.on("finish", () => {
-          resolve({
-            fileBuffer: Buffer.concat(chunks),
-            fileName: resolvedFileName,
-            mimeType: resolvedMime,
-            fileSize: totalSize,
-            folderPath: resolvedFolder,
-          });
-        });
-        bb.on("error", reject);
-
-        // Pipe the request body into busboy
-        req.body!.pipeTo(
-          new WritableStream({
-            write(chunk) {
-              bb.write(chunk);
-            },
-            close() {
-              bb.end();
-            },
-          })
-        );
-      });
+    // Convert Web File to Node Buffer
+    const arrayBuffer = await file.arrayBuffer();
+    const fileBuffer = Buffer.from(arrayBuffer);
 
     // Upload to Telegram Saved Messages
     const client = createTelegramClient(session.telegramSession);
@@ -118,7 +63,7 @@ export async function POST(req: NextRequest) {
       fileSize,
       mimeType,
       messageId,
-      folderPath: folderPath || "/",
+      folderPath,
     });
 
     return NextResponse.json({ success: true, file: mapMongoToDriveFile(doc) });
