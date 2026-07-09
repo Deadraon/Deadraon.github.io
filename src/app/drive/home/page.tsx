@@ -156,66 +156,114 @@ export default function DriveHomePage() {
     }
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Telegram file limit: 2GB
-    const MAX_SIZE = 2 * 1024 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
-      toast.error("File exceeds the 2 GB Telegram size limit.");
+    // Telegram Bot API limit: 50MB for uploads
+    const MAX_BOT_SIZE = 50 * 1024 * 1024;
+    if (file.size > MAX_BOT_SIZE) {
+      toast.error(`File too large (${(file.size / 1024 / 1024).toFixed(1)} MB). Telegram Bot API limit is 50 MB.`);
       return;
     }
 
     setUploading(true);
     setUploadProgress(0);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("folderPath", currentFolder);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/drive/upload");
-
-    // Track upload progress
-    xhr.upload.addEventListener("progress", (event) => {
-      if (event.lengthComputable) {
-        const percent = Math.round((event.loaded / event.total) * 100);
-        setUploadProgress(percent);
+    try {
+      // 1. Fetch Telegram Bot config
+      const configRes = await fetch("/api/drive/config");
+      if (!configRes.ok) {
+        throw new Error("Failed to load Telegram upload configuration.");
       }
-    });
+      const { botToken, chatId } = await configRes.json();
 
-    xhr.onload = () => {
+      if (!botToken || !chatId) {
+        throw new Error("Telegram Bot token or Chat ID is missing.");
+      }
+
+      // 2. Prepare FormData to send to Telegram Bot API directly from browser
+      const telegramFormData = new FormData();
+      telegramFormData.append("chat_id", chatId);
+      telegramFormData.append("caption", file.name);
+      telegramFormData.append("document", file, file.name);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.telegram.org/bot${botToken}/sendDocument`);
+
+      // Track upload progress
+      xhr.upload.addEventListener("progress", (event) => {
+        if (event.lengthComputable) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress(percent);
+        }
+      });
+
+      xhr.onload = async () => {
+        setUploading(false);
+        setUploadProgress(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const telegramData = JSON.parse(xhr.responseText);
+            if (!telegramData.ok) {
+              toast.error(telegramData.description || "Upload to Telegram failed.");
+              return;
+            }
+
+            const result = telegramData.result;
+            const messageId = result?.message_id ?? 0;
+            const telegramFileId = result?.document?.file_id ?? result?.video?.file_id ?? result?.audio?.file_id ?? "";
+
+            // 3. Save file metadata to MongoDB
+            const saveRes = await fetch("/api/drive/save-metadata", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                fileName: file.name,
+                fileSize: file.size,
+                mimeType: file.type || "application/octet-stream",
+                messageId,
+                telegramFileId,
+                folderPath: currentFolder,
+              }),
+            });
+
+            if (saveRes.ok) {
+              toast.success(`Successfully uploaded "${file.name}"`);
+              fetchFiles(currentFolder);
+            } else {
+              const saveErr = await saveRes.json();
+              toast.error(saveErr.error || "Failed to save file metadata.");
+            }
+          } catch (err) {
+            toast.error("Failed to parse Telegram server response.");
+          }
+        } else {
+          try {
+            const telegramData = JSON.parse(xhr.responseText);
+            toast.error(telegramData.description || "Upload to Telegram failed.");
+          } catch (err) {
+            toast.error("Upload failed.");
+          }
+        }
+      };
+
+      xhr.onerror = () => {
+        setUploading(false);
+        setUploadProgress(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        toast.error("An error occurred during upload.");
+      };
+
+      xhr.send(telegramFormData);
+    } catch (err: any) {
       setUploading(false);
       setUploadProgress(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
-
-      if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          const response = JSON.parse(xhr.responseText);
-          toast.success(`Successfully uploaded "${file.name}"`);
-          fetchFiles(currentFolder);
-        } catch (err) {
-          toast.error("Failed to parse server response.");
-        }
-      } else {
-        try {
-          const response = JSON.parse(xhr.responseText);
-          toast.error(response.error || "Upload failed.");
-        } catch (err) {
-          toast.error("Upload failed.");
-        }
-      }
-    };
-
-    xhr.onerror = () => {
-      setUploading(false);
-      setUploadProgress(null);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-      toast.error("An error occurred during upload.");
-    };
-
-    xhr.send(formData);
+      toast.error(err.message || "An unexpected error occurred.");
+    }
   };
 
   const handleDownload = async (file: DriveFile) => {
