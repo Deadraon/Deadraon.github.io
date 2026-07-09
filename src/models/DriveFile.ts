@@ -6,6 +6,7 @@ export interface IDriveFile extends mongoose.Document {
   fileSize: number;
   mimeType: string | null;
   messageId: number;
+  telegramFileId: string | null;
   folderPath: string;
   createdAt: Date;
   updatedAt: Date;
@@ -17,6 +18,7 @@ const driveFileSchema = new mongoose.Schema({
   fileSize: { type: Number, default: 0 },
   mimeType: { type: String, default: null },
   messageId: { type: Number, required: true },
+  telegramFileId: { type: String, default: null }, // Bot API file_id for fast downloads
   folderPath: { type: String, default: "/" },
 }, { timestamps: true });
 
