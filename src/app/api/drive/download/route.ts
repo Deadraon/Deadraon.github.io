@@ -38,11 +38,18 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Failed to download file" }, { status: 500 });
     }
 
+    const inline = searchParams.get("inline") === "true";
+    const mimeType = searchParams.get("mimeType") || "application/octet-stream";
+
     const safeFileName = encodeURIComponent(fileName);
+    const contentDisposition = inline
+      ? `inline; filename*=UTF-8''${safeFileName}`
+      : `attachment; filename*=UTF-8''${safeFileName}`;
+
     return new NextResponse(new Uint8Array(buffer), {
       headers: {
-        "Content-Disposition": `attachment; filename*=UTF-8''${safeFileName}`,
-        "Content-Type": "application/octet-stream",
+        "Content-Disposition": contentDisposition,
+        "Content-Type": mimeType,
         "Content-Length": buffer.length.toString(),
       },
     });

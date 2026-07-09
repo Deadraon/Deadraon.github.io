@@ -25,13 +25,16 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const folderPath = searchParams.get("folder") || "/";
+    const all = searchParams.get("all") === "true";
 
     await connectDB();
 
-    const docs = await DriveFile.find({
-      userId: session.userId,
-      folderPath: folderPath,
-    }).sort({ createdAt: -1 });
+    const query: any = { userId: session.userId };
+    if (!all) {
+      query.folderPath = folderPath;
+    }
+
+    const docs = await DriveFile.find(query).sort({ createdAt: -1 });
 
     const files = docs.map(mapMongoToDriveFile);
 

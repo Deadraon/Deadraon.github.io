@@ -5,6 +5,12 @@ import { CustomFile } from "telegram/client/uploads";
 import connectDB from "@/lib/mongodb";
 import DriveFile from "@/models/DriveFile";
 
+// CRITICAL: Force Node.js runtime so we can handle large binary buffers
+export const runtime = "nodejs";
+
+// Allow large file uploads (up to 2 GB — Telegram's limit)
+export const maxDuration = 300; // 5 minutes timeout for large files
+
 function mapMongoToDriveFile(doc: any) {
   return {
     id: doc._id.toString(),
@@ -19,39 +25,57 @@ function mapMongoToDriveFile(doc: any) {
 }
 
 export async function POST(req: NextRequest) {
+  let client;
   try {
     const session = await getSession();
     if (!session.telegramSession || !session.userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const formData = await req.formData();
-    const file = formData.get("file") as unknown as File;
+    // Parse formData — Next.js App Router handles multipart natively on Node runtime
+    let formData: FormData;
+    try {
+      formData = await req.formData();
+    } catch (e) {
+      console.error("[upload] Failed to parse formData:", e);
+      return NextResponse.json({ error: "Failed to parse form data. File may be too large." }, { status: 400 });
+    }
+
+    const file = formData.get("file") as File | null;
     const folderPath = (formData.get("folderPath") as string) || "/";
 
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    if (!file || typeof file === "string") {
+      return NextResponse.json({ error: "No file provided in the request." }, { status: 400 });
     }
 
     const fileName = file.name || "unknown";
     const fileSize = file.size || 0;
     const mimeType = file.type || "application/octet-stream";
 
-    // Convert Web File to Node Buffer
+    console.log(`[upload] Uploading: ${fileName} (${fileSize} bytes) to folder: ${folderPath}`);
+
+    // Convert Web File to Node.js Buffer
     const arrayBuffer = await file.arrayBuffer();
     const fileBuffer = Buffer.from(arrayBuffer);
 
-    // Upload to Telegram Saved Messages
-    const client = createTelegramClient(session.telegramSession);
+    // Upload to Telegram Saved Messages using GramJS
+    client = createTelegramClient(session.telegramSession);
     await client.connect();
 
+    console.log(`[upload] Connected to Telegram. Sending file...`);
+
     const message = await client.sendFile("me", {
-      file: new CustomFile(fileName, fileSize, fileName, fileBuffer),
+      file: new CustomFile(
+        fileName,   // display name
+        fileSize,   // file size in bytes
+        "",         // empty path — we're using a Buffer directly
+        fileBuffer  // actual file data
+      ),
       caption: fileName,
       forceDocument: true,
     });
 
-    await client.disconnect();
+    console.log(`[upload] File sent. Message ID: ${message.id}`);
 
     const messageId = Number(message.id);
 
@@ -66,19 +90,38 @@ export async function POST(req: NextRequest) {
       folderPath,
     });
 
+    console.log(`[upload] Metadata saved to MongoDB. Doc ID: ${doc._id}`);
+
     return NextResponse.json({ success: true, file: mapMongoToDriveFile(doc) });
   } catch (error: unknown) {
-    const err = error as { errorMessage?: string; seconds?: number; message?: string };
+    const err = error as { errorMessage?: string; seconds?: number; message?: string; code?: number };
+
     if (err.errorMessage === "FLOOD_WAIT") {
       return NextResponse.json(
-        { error: `Rate limited. Please wait ${err.seconds} seconds.` },
+        { error: `Telegram rate limit hit. Please wait ${err.seconds} seconds before retrying.` },
         { status: 429 }
       );
     }
-    console.error("[upload]", error);
+
+    // AUTH_KEY_UNREGISTERED or SESSION_REVOKED — session expired
+    if (err.errorMessage === "AUTH_KEY_UNREGISTERED" || err.errorMessage === "SESSION_REVOKED") {
+      return NextResponse.json(
+        { error: "Your Telegram session has expired. Please log in again." },
+        { status: 401 }
+      );
+    }
+
+    console.error("[upload] Error:", error);
     return NextResponse.json(
-      { error: err.message || "Upload failed" },
+      { error: (err.message as string) || "Upload failed due to a server error." },
       { status: 500 }
     );
+  } finally {
+    // Always disconnect to prevent dangling connections
+    if (client) {
+      try {
+        await client.disconnect();
+      } catch (_) {}
+    }
   }
 }

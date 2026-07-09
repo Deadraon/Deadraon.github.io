@@ -31,6 +31,11 @@ export default function DriveHomePage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentFolder, setCurrentFolder] = useState("/");
+  const [activeCategory, setActiveCategory] = useState<string>("all"); // 'all', 'images', 'videos', 'audio', 'documents', 'archives'
+
+  // Previews
+  const [previewVideoFile, setPreviewVideoFile] = useState<DriveFile | null>(null);
+  const [previewImageFile, setPreviewImageFile] = useState<DriveFile | null>(null);
   
   // Folder creation state
   const [showNewFolderModal, setShowNewFolderModal] = useState(false);
@@ -65,11 +70,14 @@ export default function DriveHomePage() {
     checkAuth();
   }, [router]);
 
-  // Fetch files in the current folder path
-  const fetchFiles = async (folder: string) => {
+  // Fetch files in the current folder path or all files for category sorting
+  const fetchFiles = async (folder: string, fetchAll = false) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/drive/list-files?folder=${encodeURIComponent(folder)}`);
+      const url = fetchAll
+        ? "/api/drive/list-files?all=true"
+        : `/api/drive/list-files?folder=${encodeURIComponent(folder)}`;
+      const res = await fetch(url);
       const data = await res.json();
       if (res.ok) {
         setFiles(data.files || []);
@@ -86,9 +94,9 @@ export default function DriveHomePage() {
 
   useEffect(() => {
     if (authenticated) {
-      fetchFiles(currentFolder);
+      fetchFiles(currentFolder, activeCategory !== "all");
     }
-  }, [authenticated, currentFolder]);
+  }, [authenticated, currentFolder, activeCategory]);
 
   // Close active dropdown if clicking outside
   useEffect(() => {
@@ -298,9 +306,45 @@ export default function DriveHomePage() {
   };
 
   // Client-side filtration
-  const filteredFiles = files.filter((file) =>
-    file.file_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredFiles = (() => {
+    const searchFiltered = files.filter((file) =>
+      file.file_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (activeCategory === "all") return searchFiltered;
+
+    // Filter by type for categories, ignoring folders
+    const filesOnly = searchFiltered.filter((file) => file.mime_type !== "folder");
+
+    if (activeCategory === "images") {
+      return filesOnly.filter((file) => file.mime_type?.startsWith("image/"));
+    }
+    if (activeCategory === "videos") {
+      return filesOnly.filter((file) => file.mime_type?.startsWith("video/"));
+    }
+    if (activeCategory === "audio") {
+      return filesOnly.filter((file) => file.mime_type?.startsWith("audio/"));
+    }
+    if (activeCategory === "documents") {
+      return filesOnly.filter((file) =>
+        file.mime_type?.includes("pdf") ||
+        file.mime_type?.includes("text") ||
+        file.mime_type?.includes("document") ||
+        file.mime_type?.includes("sheet") ||
+        file.mime_type?.includes("msword")
+      );
+    }
+    if (activeCategory === "archives") {
+      return filesOnly.filter((file) =>
+        file.mime_type?.includes("zip") ||
+        file.mime_type?.includes("tar") ||
+        file.mime_type?.includes("rar") ||
+        file.mime_type?.includes("7z") ||
+        file.mime_type?.includes("compressed")
+      );
+    }
+    return searchFiltered;
+  })();
 
   const breadcrumbs = currentFolder.split("/").filter(Boolean);
 
@@ -329,15 +373,78 @@ export default function DriveHomePage() {
 
           <nav className="space-y-1">
             <button
-              onClick={() => setCurrentFolder("/")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                currentFolder === "/"
+              onClick={() => {
+                setActiveCategory("all");
+                setCurrentFolder("/");
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                activeCategory === "all"
                   ? "bg-[#24A1DE]/10 text-[#24A1DE]"
                   : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <HardDrive className="h-4 w-4" />
               My Drive
+            </button>
+
+            <button
+              onClick={() => setActiveCategory("images")}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                activeCategory === "images"
+                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+              }`}
+            >
+              <Image className="h-4 w-4" />
+              Photos
+            </button>
+
+            <button
+              onClick={() => setActiveCategory("videos")}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                activeCategory === "videos"
+                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+              }`}
+            >
+              <FileVideo className="h-4 w-4" />
+              Videos
+            </button>
+
+            <button
+              onClick={() => setActiveCategory("audio")}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                activeCategory === "audio"
+                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+              }`}
+            >
+              <FileAudio className="h-4 w-4" />
+              Audio
+            </button>
+
+            <button
+              onClick={() => setActiveCategory("documents")}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                activeCategory === "documents"
+                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+              }`}
+            >
+              <FileText className="h-4 w-4" />
+              Documents
+            </button>
+
+            <button
+              onClick={() => setActiveCategory("archives")}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                activeCategory === "archives"
+                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
+                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+              }`}
+            >
+              <Archive className="h-4 w-4" />
+              Archives
             </button>
           </nav>
 
@@ -504,6 +611,10 @@ export default function DriveHomePage() {
                   onClick={() => {
                     if (file.mime_type === "folder") {
                       handleFolderClick(file);
+                    } else if (file.mime_type?.startsWith("video/")) {
+                      setPreviewVideoFile(file);
+                    } else if (file.mime_type?.startsWith("image/")) {
+                      setPreviewImageFile(file);
                     } else {
                       handleDownload(file);
                     }
@@ -622,6 +733,97 @@ export default function DriveHomePage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Video Preview Modal */}
+      {previewVideoFile && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="w-full max-w-3xl glass border border-white/[0.08] rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-md font-bold truncate pr-4 text-gray-200">{previewVideoFile.file_name}</h3>
+              <span className="text-xs font-mono text-[#24A1DE] font-semibold bg-[#24A1DE]/10 px-2.5 py-0.5 rounded-full">
+                Video Player
+              </span>
+            </div>
+
+            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/5">
+              <video
+                src={`/api/drive/download?messageId=${previewVideoFile.message_id}&fileName=${encodeURIComponent(previewVideoFile.file_name)}&inline=true&mimeType=${encodeURIComponent(previewVideoFile.mime_type || "video/mp4")}`}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="flex items-center justify-between mt-2">
+              <span className="text-xs text-gray-500 font-mono">
+                Size: {formatBytes(previewVideoFile.file_size)}
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleDownload(previewVideoFile)}
+                  className="px-4 py-2 bg-[#24A1DE] hover:bg-[#24A1DE]/90 text-white rounded-xl text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5"
+                >
+                  <Download className="h-3 w-3" />
+                  Download
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewVideoFile(null)}
+                  className="px-4 py-2 bg-transparent hover:bg-white/[0.05] border border-white/10 text-white rounded-xl text-xs font-medium transition-all cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Preview Modal */}
+      {previewImageFile && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="w-full max-w-2xl glass border border-white/[0.08] rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-md font-bold truncate pr-4 text-gray-200">{previewImageFile.file_name}</h3>
+              <span className="text-xs font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-0.5 rounded-full">
+                Image Preview
+              </span>
+            </div>
+
+            <div className="w-full max-h-[60vh] flex items-center justify-center rounded-xl overflow-hidden bg-black/30 border border-white/5 p-2">
+              <img
+                src={`/api/drive/download?messageId=${previewImageFile.message_id}&fileName=${encodeURIComponent(previewImageFile.file_name)}&inline=true&mimeType=${encodeURIComponent(previewImageFile.mime_type || "image/jpeg")}`}
+                alt={previewImageFile.file_name}
+                className="max-w-full max-h-[50vh] object-contain rounded-lg"
+              />
+            </div>
+
+            <div className="flex items-center justify-between mt-2">
+              <span className="text-xs text-gray-500 font-mono">
+                Size: {formatBytes(previewImageFile.file_size)}
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleDownload(previewImageFile)}
+                  className="px-4 py-2 bg-[#24A1DE] hover:bg-[#24A1DE]/90 text-white rounded-xl text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5"
+                >
+                  <Download className="h-3 w-3" />
+                  Download
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewImageFile(null)}
+                  className="px-4 py-2 bg-transparent hover:bg-white/[0.05] border border-white/10 text-white rounded-xl text-xs font-medium transition-all cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
