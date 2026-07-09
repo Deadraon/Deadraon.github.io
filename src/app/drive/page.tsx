@@ -14,6 +14,7 @@ export default function DriveLoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [checkingSession, setCheckingSession] = useState(true);
+  const [timer, setTimer] = useState(120); // 120 seconds = 2 minutes expiration timer
 
   // Check if session is already active
   useEffect(() => {
@@ -33,6 +34,21 @@ export default function DriveLoginPage() {
     checkSession();
   }, [router]);
 
+  // Countdown timer trigger
+  useEffect(() => {
+    if (step !== 2 || timer <= 0) return;
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [step, timer]);
+
+  const formatTimer = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  };
+
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneBody) return;
@@ -51,6 +67,7 @@ export default function DriveLoginPage() {
 
       if (res.ok) {
         toast.success("OTP sent to your Telegram app!");
+        setTimer(120); // Reset timer to 120 seconds
         setStep(2);
       } else {
         setError(data.error || "Failed to send code. Make sure you included country code (e.g. +1234567890)");
@@ -175,8 +192,17 @@ export default function DriveLoginPage() {
         ) : (
           <form onSubmit={handleVerifyCode} className="space-y-6">
             <div>
-              <label htmlFor="code" className="block text-sm font-medium text-gray-400 mb-2">
-                Verification Code
+              <label htmlFor="code" className="block text-sm font-medium text-gray-400 mb-2 flex items-center justify-between">
+                <span>Verification Code</span>
+                {timer > 0 ? (
+                  <span className="text-xs font-mono text-[#24A1DE] font-semibold bg-[#24A1DE]/10 px-2.5 py-0.5 rounded-full">
+                    Expires in {formatTimer(timer)}
+                  </span>
+                ) : (
+                  <span className="text-xs font-mono text-red-400 font-semibold bg-red-950/30 px-2.5 py-0.5 rounded-full border border-red-500/20">
+                    Expired
+                  </span>
+                )}
               </label>
               <input
                 id="code"
@@ -184,18 +210,20 @@ export default function DriveLoginPage() {
                 placeholder="Enter 5-digit code"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#24A1DE] focus:ring-1 focus:ring-[#24A1DE] transition-all font-mono text-center tracking-widest text-lg"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#24A1DE] focus:ring-1 focus:ring-[#24A1DE] transition-all font-mono text-center tracking-widest text-lg disabled:opacity-50"
                 required
-                disabled={loading}
+                disabled={loading || timer <= 0}
               />
               <p className="text-xs text-gray-500 mt-2 text-center">
-                Enter the code sent to your Telegram app.
+                {timer > 0 
+                  ? "Enter the code sent to your Telegram app." 
+                  : "The code request session has expired. Please go back to request a new code."}
               </p>
             </div>
 
             <button
               type="submit"
-              disabled={loading || !code}
+              disabled={loading || !code || timer <= 0}
               className="w-full bg-[#24A1DE] hover:bg-[#24A1DE]/90 disabled:opacity-50 text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-[#24A1DE]/25 flex items-center justify-center gap-2 cursor-pointer"
             >
               {loading ? (
@@ -214,11 +242,12 @@ export default function DriveLoginPage() {
                 setStep(1);
                 setCode("");
                 setError("");
+                setTimer(120);
               }}
               disabled={loading}
               className="w-full bg-transparent hover:bg-white/[0.02] border border-white/10 text-white/70 font-medium py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              Back to Phone Number
+              {timer <= 0 ? "Request New Code" : "Back to Phone Number"}
             </button>
           </form>
         )}
