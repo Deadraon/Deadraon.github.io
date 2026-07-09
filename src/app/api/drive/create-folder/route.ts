@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/drive-session";
-import { supabase } from "@/lib/supabase";
+import connectDB from "@/lib/mongodb";
+import DriveFile from "@/models/DriveFile";
+
+function mapMongoToDriveFile(doc: any) {
+  return {
+    id: doc._id.toString(),
+    user_id: doc.userId,
+    file_name: doc.fileName,
+    file_size: doc.fileSize,
+    mime_type: doc.mimeType,
+    message_id: doc.messageId,
+    folder_path: doc.folderPath,
+    uploaded_at: doc.createdAt ? doc.createdAt.toISOString() : new Date().toISOString(),
+  };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,40 +31,31 @@ export async function POST(req: NextRequest) {
     const safeParent = (parentPath || "/").replace(/\/+$/, "") || "/";
     const folderPath = safeParent === "/" ? `/${folderName}` : `${safeParent}/${folderName}`;
 
+    await connectDB();
+
     // Check if folder already exists
-    const { data: existing } = await supabase
-      .from("drive_files")
-      .select("id")
-      .eq("user_id", session.userId)
-      .eq("file_name", folderName)
-      .eq("folder_path", safeParent)
-      .eq("mime_type", "folder")
-      .single();
+    const existing = await DriveFile.findOne({
+      userId: session.userId,
+      fileName: folderName,
+      folderPath: safeParent,
+      mimeType: "folder",
+    });
 
     if (existing) {
       return NextResponse.json({ error: "A folder with this name already exists" }, { status: 409 });
     }
 
-    // Insert a virtual folder record (message_id = 0 for folders)
-    const { data, error } = await supabase
-      .from("drive_files")
-      .insert({
-        user_id: session.userId,
-        file_name: folderName,
-        file_size: 0,
-        mime_type: "folder",
-        message_id: 0,
-        folder_path: safeParent,
-      })
-      .select()
-      .single();
+    // Insert a virtual folder record (messageId = 0 for folders)
+    const doc = await DriveFile.create({
+      userId: session.userId,
+      fileName: folderName,
+      fileSize: 0,
+      mimeType: "folder",
+      messageId: 0,
+      folderPath: safeParent,
+    });
 
-    if (error) {
-      console.error("[create-folder]", error);
-      return NextResponse.json({ error: `Failed to create folder: ${error.message}` }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, folder: data, folderPath });
+    return NextResponse.json({ success: true, folder: mapMongoToDriveFile(doc), folderPath });
   } catch (error) {
     console.error("[create-folder]", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

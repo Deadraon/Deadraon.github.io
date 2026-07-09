@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/drive-session";
 import { createTelegramClient } from "@/lib/telegram";
-import { supabase } from "@/lib/supabase";
+import connectDB from "@/lib/mongodb";
+import DriveFile from "@/models/DriveFile";
 
 export async function DELETE(req: NextRequest) {
   try {
@@ -18,13 +19,13 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
+    await connectDB();
+
     // Verify the file belongs to this user before deleting
-    const { data: existingFile } = await supabase
-      .from("drive_files")
-      .select("id")
-      .eq("id", fileId)
-      .eq("user_id", session.userId)
-      .single();
+    const existingFile = await DriveFile.findOne({
+      _id: fileId,
+      userId: session.userId,
+    });
 
     if (!existingFile) {
       return NextResponse.json({ error: "File not found or access denied" }, { status: 404 });
@@ -36,20 +37,11 @@ export async function DELETE(req: NextRequest) {
     await client.deleteMessages("me", [Number(messageId)], { revoke: true });
     await client.disconnect();
 
-    // Delete metadata from Supabase
-    const { error } = await supabase
-      .from("drive_files")
-      .delete()
-      .eq("id", fileId)
-      .eq("user_id", session.userId);
-
-    if (error) {
-      console.error("[delete] Supabase delete error", error);
-      return NextResponse.json(
-        { error: "File deleted from Telegram but failed to remove metadata" },
-        { status: 500 }
-      );
-    }
+    // Delete metadata from MongoDB
+    await DriveFile.deleteOne({
+      _id: fileId,
+      userId: session.userId,
+    });
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

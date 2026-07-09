@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/drive-session";
-import { supabase } from "@/lib/supabase";
+import connectDB from "@/lib/mongodb";
+import DriveFile from "@/models/DriveFile";
+
+function mapMongoToDriveFile(doc: any) {
+  return {
+    id: doc._id.toString(),
+    user_id: doc.userId,
+    file_name: doc.fileName,
+    file_size: doc.fileSize,
+    mime_type: doc.mimeType,
+    message_id: doc.messageId,
+    folder_path: doc.folderPath,
+    uploaded_at: doc.createdAt ? doc.createdAt.toISOString() : new Date().toISOString(),
+  };
+}
 
 export async function GET(req: NextRequest) {
   try {
@@ -12,19 +26,16 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const folderPath = searchParams.get("folder") || "/";
 
-    const { data, error } = await supabase
-      .from("drive_files")
-      .select("*")
-      .eq("user_id", session.userId)
-      .eq("folder_path", folderPath)
-      .order("uploaded_at", { ascending: false });
+    await connectDB();
 
-    if (error) {
-      console.error("[list-files]", error);
-      return NextResponse.json({ error: "Failed to fetch files" }, { status: 500 });
-    }
+    const docs = await DriveFile.find({
+      userId: session.userId,
+      folderPath: folderPath,
+    }).sort({ createdAt: -1 });
 
-    return NextResponse.json({ files: data });
+    const files = docs.map(mapMongoToDriveFile);
+
+    return NextResponse.json({ files });
   } catch (error) {
     console.error("[list-files]", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

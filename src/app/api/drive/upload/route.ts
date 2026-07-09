@@ -1,13 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/drive-session";
 import { createTelegramClient } from "@/lib/telegram";
-import { supabase } from "@/lib/supabase";
+import connectDB from "@/lib/mongodb";
+import DriveFile from "@/models/DriveFile";
 import Busboy from "busboy";
 
 // Disable Next.js body parsing — we handle the stream ourselves
 export const runtime = "nodejs";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2 GB (Telegram limit)
+
+function mapMongoToDriveFile(doc: any) {
+  return {
+    id: doc._id.toString(),
+    user_id: doc.userId,
+    file_name: doc.fileName,
+    file_size: doc.fileSize,
+    mime_type: doc.mimeType,
+    message_id: doc.messageId,
+    folder_path: doc.folderPath,
+    uploaded_at: doc.createdAt ? doc.createdAt.toISOString() : new Date().toISOString(),
+  };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -95,26 +109,18 @@ export async function POST(req: NextRequest) {
 
     const messageId = Number(message.id);
 
-    // Store metadata in Supabase
-    const { data, error } = await supabase
-      .from("drive_files")
-      .insert({
-        user_id: session.userId,
-        file_name: fileName,
-        file_size: fileSize,
-        mime_type: mimeType,
-        message_id: messageId,
-        folder_path: folderPath || "/",
-      })
-      .select()
-      .single();
+    // Store metadata in MongoDB
+    await connectDB();
+    const doc = await DriveFile.create({
+      userId: session.userId,
+      fileName,
+      fileSize,
+      mimeType,
+      messageId,
+      folderPath: folderPath || "/",
+    });
 
-    if (error) {
-      console.error("[upload] Supabase insert error", error);
-      return NextResponse.json({ error: `Failed to save file metadata: ${error.message}` }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, file: data });
+    return NextResponse.json({ success: true, file: mapMongoToDriveFile(doc) });
   } catch (error: unknown) {
     const err = error as { errorMessage?: string; seconds?: number; message?: string };
     if (err.errorMessage === "FLOOD_WAIT") {
