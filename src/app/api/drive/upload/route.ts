@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/drive-session";
 import { createTelegramClient } from "@/lib/telegram";
+import { CustomFile } from "telegram/client/uploads";
 import connectDB from "@/lib/mongodb";
 import DriveFile from "@/models/DriveFile";
 import Busboy from "busboy";
@@ -100,7 +101,7 @@ export async function POST(req: NextRequest) {
     await client.connect();
 
     const message = await client.sendFile("me", {
-      file: fileBuffer,
+      file: new CustomFile(fileName, fileSize, fileName, fileBuffer),
       caption: fileName,
       forceDocument: true,
     });
