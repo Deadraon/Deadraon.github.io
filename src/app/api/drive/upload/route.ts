@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       console.error("[upload] Supabase insert error", error);
-      return NextResponse.json({ error: "Failed to save file metadata" }, { status: 500 });
+      return NextResponse.json({ error: `Failed to save file metadata: ${error.message}` }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, file: data });
