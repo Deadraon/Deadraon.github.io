@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     }
 
     const session = await getSession();
-    const { phoneNumber, phoneCodeHash } = session;
+    const { phoneNumber, phoneCodeHash, telegramSession } = session;
 
     if (!phoneNumber || !phoneCodeHash) {
       return NextResponse.json(
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const client = createTelegramClient();
+    const client = createTelegramClient(telegramSession);
     await client.connect();
 
     const signInResult = await client.invoke(

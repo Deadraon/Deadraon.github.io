@@ -20,11 +20,13 @@ export async function POST(req: NextRequest) {
       phoneNumber
     );
 
+    const sessionString = client.session.save() as unknown as string;
     await client.disconnect();
 
     const session = await getSession();
     session.phoneNumber = phoneNumber;
     session.phoneCodeHash = result.phoneCodeHash;
+    session.telegramSession = sessionString;
     await session.save();
 
     return NextResponse.json({ success: true });
