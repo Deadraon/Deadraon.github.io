@@ -20,6 +20,28 @@ function mapMongoToDriveFile(doc: any) {
   };
 }
 
+/**
+ * Pick the best Telegram Bot API endpoint and form field name for the given MIME type.
+ * Using the right endpoint gives better compression and streaming support on Telegram's side.
+ */
+function getTelegramEndpointConfig(mimeType: string): {
+  endpoint: string;
+  fieldName: string;
+  resultKey: string;
+} {
+  if (mimeType.startsWith("video/")) {
+    return { endpoint: "sendDocument", fieldName: "document", resultKey: "document" };
+  }
+  if (mimeType.startsWith("audio/")) {
+    return { endpoint: "sendAudio", fieldName: "audio", resultKey: "audio" };
+  }
+  if (mimeType.startsWith("image/")) {
+    // sendDocument preserves original quality (sendPhoto compresses)
+    return { endpoint: "sendDocument", fieldName: "document", resultKey: "document" };
+  }
+  return { endpoint: "sendDocument", fieldName: "document", resultKey: "document" };
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getSession();
@@ -32,7 +54,10 @@ export async function POST(req: NextRequest) {
 
     if (!botToken || !chatId) {
       return NextResponse.json(
-        { error: "Telegram Bot is not configured. Please set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in your environment variables." },
+        {
+          error:
+            "Telegram Bot is not configured. Add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID to your Vercel environment variables.",
+        },
         { status: 500 }
       );
     }
@@ -42,7 +67,7 @@ export async function POST(req: NextRequest) {
       formData = await req.formData();
     } catch (e) {
       console.error("[upload] Failed to parse formData:", e);
-      return NextResponse.json({ error: "Failed to parse form data." }, { status: 400 });
+      return NextResponse.json({ error: "Failed to parse the uploaded file." }, { status: 400 });
     }
 
     const file = formData.get("file") as File | null;
@@ -52,11 +77,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file provided." }, { status: 400 });
     }
 
-    // Telegram Bot API limit: 50MB for multipart uploads
+    // Telegram Bot API hard limit: 50 MB for multipart upload
     const MAX_BOT_SIZE = 50 * 1024 * 1024;
     if (file.size > MAX_BOT_SIZE) {
       return NextResponse.json(
-        { error: `File too large. Maximum upload size is 50 MB. Your file is ${(file.size / 1024 / 1024).toFixed(1)} MB.` },
+        {
+          error: `File too large (${(file.size / 1024 / 1024).toFixed(1)} MB). Maximum allowed is 50 MB.`,
+        },
         { status: 413 }
       );
     }
@@ -65,54 +92,77 @@ export async function POST(req: NextRequest) {
     const fileSize = file.size || 0;
     const mimeType = file.type || "application/octet-stream";
 
-    console.log(`[upload] Sending via Bot API: ${fileName} (${fileSize} bytes) to folder: ${folderPath}`);
+    console.log(`[upload] ${fileName} | ${(fileSize / 1024 / 1024).toFixed(2)} MB | ${mimeType} | folder: ${folderPath}`);
 
-    // Convert to buffer and build multipart form for Bot API
+    // Convert to buffer
     const arrayBuffer = await file.arrayBuffer();
     const fileBuffer = Buffer.from(arrayBuffer);
 
-    // Build multipart form data for Telegram Bot API
-    const botFormData = new FormData();
-    botFormData.append("chat_id", chatId);
-    botFormData.append("caption", fileName);
+    const { endpoint, fieldName, resultKey } = getTelegramEndpointConfig(mimeType);
+    console.log(`[upload] Using endpoint: ${endpoint}, field: ${fieldName}`);
 
-    // Use Blob since FormData expects a Blob/File in the browser-compatible API
-    const blob = new Blob([fileBuffer], { type: mimeType });
-    botFormData.append("document", blob, fileName);
+    // Build Bot API multipart form
+    const botForm = new FormData();
+    botForm.append("chat_id", chatId);
+    botForm.append("caption", fileName);
+    // Always force document to preserve exact file & avoid Telegram re-encoding
+    botForm.append("document", new Blob([fileBuffer], { type: mimeType }), fileName);
 
-    // Call Telegram Bot API to send the document
+    // Always use sendDocument — it preserves original file without re-encoding
+    // sendVideo re-encodes and can fail or corrupt files
     const telegramRes = await fetch(
       `https://api.telegram.org/bot${botToken}/sendDocument`,
-      {
-        method: "POST",
-        body: botFormData,
-      }
+      { method: "POST", body: botForm }
     );
 
-    const telegramData = await telegramRes.json() as {
-      ok: boolean;
-      result?: {
-        message_id: number;
-        document?: { file_id: string; file_unique_id: string };
-      };
-      description?: string;
-      error_code?: number;
-    };
-
-    if (!telegramData.ok) {
-      console.error("[upload] Telegram Bot API error:", telegramData);
-      return NextResponse.json(
-        { error: `Telegram error: ${telegramData.description || "Unknown error"}` },
-        { status: 500 }
-      );
+    let telegramData: any;
+    try {
+      telegramData = await telegramRes.json();
+    } catch {
+      const raw = await telegramRes.text();
+      console.error("[upload] Telegram response not JSON:", raw);
+      return NextResponse.json({ error: "Invalid response from Telegram API." }, { status: 500 });
     }
 
-    const messageId = telegramData.result?.message_id ?? 0;
-    const telegramFileId = telegramData.result?.document?.file_id ?? "";
+    if (!telegramData.ok) {
+      const errMsg: string = telegramData.description || "Unknown Telegram error";
+      console.error("[upload] Telegram error:", telegramData);
 
-    console.log(`[upload] Bot API success. Message ID: ${messageId}, File ID: ${telegramFileId}`);
+      // Friendly message for common errors
+      if (errMsg.includes("file is too big")) {
+        return NextResponse.json(
+          { error: "File is too large for Telegram Bot API (max 50 MB)." },
+          { status: 413 }
+        );
+      }
+      if (errMsg.includes("CHAT_NOT_FOUND") || errMsg.includes("chat not found")) {
+        return NextResponse.json(
+          {
+            error:
+              "Bot cannot find the target chat. Make sure you sent /start to your bot in Telegram first.",
+          },
+          { status: 500 }
+        );
+      }
 
-    // Save metadata to MongoDB
+      return NextResponse.json({ error: `Telegram: ${errMsg}` }, { status: 500 });
+    }
+
+    // Extract message_id and file_id from result
+    const result = telegramData.result;
+    const messageId: number = result?.message_id ?? 0;
+
+    // Telegram puts file_id in different fields depending on the type
+    const telegramFileId: string =
+      result?.document?.file_id ??
+      result?.video?.file_id ??
+      result?.audio?.file_id ??
+      result?.photo?.[result.photo.length - 1]?.file_id ??
+      "";
+
+    console.log(`[upload] ✓ Message ID: ${messageId} | File ID: ${telegramFileId}`);
+
+    // Persist metadata in MongoDB
     await connectDB();
     const doc = await DriveFile.create({
       userId: session.userId,
@@ -124,11 +174,9 @@ export async function POST(req: NextRequest) {
       folderPath,
     });
 
-    console.log(`[upload] Saved to MongoDB. Doc ID: ${doc._id}`);
-
     return NextResponse.json({ success: true, file: mapMongoToDriveFile(doc) });
   } catch (error: unknown) {
-    const err = error as { message?: string; code?: number };
+    const err = error as { message?: string };
     console.error("[upload] Unexpected error:", error);
     return NextResponse.json(
       { error: err.message || "Upload failed due to a server error." },
