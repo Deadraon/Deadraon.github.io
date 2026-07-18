@@ -4,10 +4,8 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { ExpandableTabs } from "@/components/ui/expandable-tabs";
 import { SlideToMessage } from "@/components/ui/slide-to-message";
 import { QuickMessageModal } from "@/components/ui/quick-message-modal";
-import { Home, User, Briefcase, Wrench, Terminal, HardDrive, Mail, CreditCard } from "lucide-react";
  
 export default function PublicLayout({
   children,
@@ -17,18 +15,6 @@ export default function PublicLayout({
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [isModalOpen, setIsModalOpen] = useState(false);
- 
-  const tabs = [
-    { title: "Home", icon: Home, href: "/" },
-    { title: "About", icon: User, href: "/about" },
-    { title: "Portfolio", icon: Briefcase, href: "/portfolio" },
-    { title: "Services", icon: Wrench, href: "/services" },
-    { title: "Tools", icon: Terminal, href: "/tools" },
-    { title: "Drive", icon: HardDrive, href: "/drive" },
-    { type: "separator" as const },
-    { title: "Contact", icon: Mail, href: "/contact" },
-    { title: "Pay", icon: CreditCard, href: "/pay" },
-  ];
  
   return (
     <div className="relative min-h-screen bg-[#030308] bg-[radial-gradient(circle_at_top_right,_rgba(124,58,237,0.06),_transparent_45%),_radial-gradient(circle_at_bottom_left,_rgba(59,130,246,0.06),_transparent_45%)] text-foreground font-sans antialiased selection:bg-primary/30 overflow-x-hidden flex flex-col">
@@ -44,13 +30,12 @@ export default function PublicLayout({
         {!isHome && <Footer />}
       </div>
 
-      {/* Floating Bottom Navigation & Mobile Slide-to-Message */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-3">
+      {/* Mobile Slide-to-Message */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
         <SlideToMessage
           onSlideComplete={() => setIsModalOpen(true)}
-          className="md:hidden"
+          className="md:hidden shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
         />
-        <ExpandableTabs tabs={tabs} activeColor="text-purple-400" />
       </div>
 
       {/* Quick Message Dialog Form */}

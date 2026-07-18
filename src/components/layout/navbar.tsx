@@ -5,8 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser, UserButton, SignInButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X, Code2, Home, User, Briefcase, Wrench, Mail, CreditCard } from "lucide-react";
 import { LiquidButton } from "@/components/ui/button";
+import { ExpandableTabs } from "@/components/ui/expandable-tabs";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,6 +23,15 @@ export function Navbar() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { user, isSignedIn } = useUser();
+
+  const tabs = [
+    { title: "Home", icon: Home, href: "/" },
+    { title: "About", icon: User, href: "/about" },
+    { title: "Portfolio", icon: Briefcase, href: "/portfolio" },
+    { title: "Services", icon: Wrench, href: "/services" },
+    { title: "Contact", icon: Mail, href: "/contact" },
+    { title: "Pay", icon: CreditCard, href: "/pay" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -101,10 +111,16 @@ export function Navbar() {
           }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          DriveOne
         </Link>
 
-
+        {/* Center menu bar (Desktop only) */}
+        <div className="hidden lg:flex items-center justify-center flex-1 mx-4">
+          <ExpandableTabs
+            tabs={tabs}
+            activeColor="text-purple-400"
+            className="border-0 bg-transparent backdrop-blur-none p-0 shadow-none gap-1"
+          />
+        </div>
 
         {/* Right Actions */}
         <div className="relative z-10 ml-auto flex items-center gap-2 shrink-0">
@@ -206,10 +222,29 @@ export function Navbar() {
               className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              DriveOne
             </Link>
 
-
+            {/* Main navigation links in mobile drawer */}
+            <div className="py-2 space-y-1">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={cn(
+                      "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200",
+                      isActive
+                        ? "bg-white/10 text-purple-400 font-semibold"
+                        : "text-white/70 hover:bg-white/5 hover:text-white"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
 
             {/* Auth */}
             <div className="pt-2 border-t border-white/10 mt-2 space-y-2">
