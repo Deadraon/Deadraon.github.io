@@ -1,10 +1,13 @@
 "use client";
  
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { AnimatedDock, DockItemData } from "@/components/ui/animated-dock";
-import { Home, User, Briefcase, Wrench, Mail, CreditCard } from "lucide-react";
+import { ExpandableTabs } from "@/components/ui/expandable-tabs";
+import { SlideToMessage } from "@/components/ui/slide-to-message";
+import { QuickMessageModal } from "@/components/ui/quick-message-modal";
+import { Home, User, Briefcase, Wrench, Terminal, HardDrive, Mail, CreditCard } from "lucide-react";
  
 export default function PublicLayout({
   children,
@@ -13,14 +16,18 @@ export default function PublicLayout({
 }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const [isModalOpen, setIsModalOpen] = useState(false);
  
-  const dockItems: DockItemData[] = [
-    { link: "/", Icon: <Home className="w-5 h-5" />, label: "Home" },
-    { link: "/about", Icon: <User className="w-5 h-5" />, label: "About" },
-    { link: "/portfolio", Icon: <Briefcase className="w-5 h-5" />, label: "Portfolio" },
-    { link: "/services", Icon: <Wrench className="w-5 h-5" />, label: "Services" },
-    { link: "/contact", Icon: <Mail className="w-5 h-5" />, label: "Contact" },
-    { link: "/pay", Icon: <CreditCard className="w-5 h-5" />, label: "Pay" },
+  const tabs = [
+    { title: "Home", icon: Home, href: "/" },
+    { title: "About", icon: User, href: "/about" },
+    { title: "Portfolio", icon: Briefcase, href: "/portfolio" },
+    { title: "Services", icon: Wrench, href: "/services" },
+    { title: "Tools", icon: Terminal, href: "/tools" },
+    { title: "Drive", icon: HardDrive, href: "/drive" },
+    { type: "separator" as const },
+    { title: "Contact", icon: Mail, href: "/contact" },
+    { title: "Pay", icon: CreditCard, href: "/pay" },
   ];
  
   return (
@@ -37,10 +44,17 @@ export default function PublicLayout({
         {!isHome && <Footer />}
       </div>
 
-      {/* Floating Animated Dock at the bottom center (all viewports) */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-        <AnimatedDock items={dockItems} />
+      {/* Floating Bottom Navigation & Mobile Slide-to-Message */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-3">
+        <SlideToMessage
+          onSlideComplete={() => setIsModalOpen(true)}
+          className="md:hidden"
+        />
+        <ExpandableTabs tabs={tabs} activeColor="text-purple-400" />
       </div>
+
+      {/* Quick Message Dialog Form */}
+      <QuickMessageModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }

@@ -130,7 +130,7 @@ export default function CursorWater() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
-      if (target && (target.closest("header") || target.closest(".animated-dock"))) {
+      if (target && (target.closest("header") || target.closest(".expandable-tabs"))) {
         mouse.active = false;
         return;
       }
