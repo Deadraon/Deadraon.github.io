@@ -82,6 +82,55 @@ function PaymentForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    try {
+      const res = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          note: formData.note,
+          amount: formData.amount,
+          projectId: formData.projectId,
+          gateway: gateway, // "mymobpay" or "cashfree"
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to create payment session.");
+      }
+
+      if (data.isCashfree) {
+        // Initialize Cashfree SDK using the globally loaded script
+        // @ts-ignore
+        if (typeof window !== "undefined" && window.Cashfree) {
+          // @ts-ignore
+          const cashfree = window.Cashfree({
+            mode: process.env.NEXT_PUBLIC_CASHFREE_MODE || "sandbox",
+          });
+          
+          await cashfree.checkout({
+            paymentSessionId: data.paymentSessionId,
+            redirectTarget: "_self", // Redirects to Cashfree hosted checkout page
+          });
+        } else {
+          throw new Error("Cashfree SDK failed to load. Please refresh and try again.");
+        }
+      } else if (data.paymentUrl) {
+        // Redirect to MyMobPay checkout page
+        window.location.href = data.paymentUrl;
+      } else {
+        throw new Error("Invalid response from payment server.");
+      }
+    } catch (err: any) {
+      console.error("Payment submission error:", err);
+      toast.error(err.message || "Something went wrong. Please try again.");
+      setLoading(false);
+    }
   };
 
   const handlePresetClick = (amountValue: number) => {
