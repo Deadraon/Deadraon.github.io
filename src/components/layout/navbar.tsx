@@ -111,10 +111,11 @@ export function Navbar() {
           }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          DriveOne
         </Link>
-
-        {/* Center menu bar (Desktop only) */}
-        <div className="hidden lg:flex items-center justify-center flex-1 mx-4">
+ 
+        {/* Menu bar next to logo/pills (Desktop only) */}
+        <div className="hidden lg:flex items-center ml-8">
           <ExpandableTabs
             tabs={tabs}
             activeColor="text-purple-400"
