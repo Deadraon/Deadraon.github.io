@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
 
     const messageId = parseInt(messageIdStr, 10);
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const telegramApiUrl = process.env.TELEGRAM_API_URL || "https://api.telegram.org";
 
     // ── Strategy 1: Use Bot API file_id if available (fast, no MTProto) ──────
     if (botToken) {
@@ -41,7 +42,7 @@ export async function GET(req: NextRequest) {
 
           // Get the file path from Telegram
           const fileInfoRes = await fetch(
-            `https://api.telegram.org/bot${botToken}/getFile?file_id=${dbFile.telegramFileId}`
+            `${telegramApiUrl}/bot${botToken}/getFile?file_id=${dbFile.telegramFileId}`
           );
           const fileInfo = await fileInfoRes.json() as {
             ok: boolean;
@@ -54,28 +55,59 @@ export async function GET(req: NextRequest) {
           }
 
           // Download directly from Telegram CDN
-          const fileUrl = `https://api.telegram.org/file/bot${botToken}/${fileInfo.result.file_path}`;
-          const fileRes = await fetch(fileUrl);
+          const fileUrl = `${telegramApiUrl}/file/bot${botToken}/${fileInfo.result.file_path}`;
+          
+          // Get the range header from the incoming request to support video scrubbing/seeking
+          const rangeHeader = req.headers.get("range");
+          const fetchHeaders: HeadersInit = {};
+          if (rangeHeader) {
+            fetchHeaders["Range"] = rangeHeader;
+          }
 
-          if (!fileRes.ok) {
+          console.log(`[download] Fetching Telegram CDN: ${fileUrl} with range: ${rangeHeader || 'none'}`);
+          const fileRes = await fetch(fileUrl, {
+            headers: fetchHeaders,
+          });
+
+          if (!fileRes.ok && fileRes.status !== 206) {
             throw new Error(`Telegram CDN returned ${fileRes.status}`);
           }
 
-          const buffer = Buffer.from(await fileRes.arrayBuffer());
+          if (!fileRes.body) {
+            throw new Error("No readable stream body in Telegram CDN response");
+          }
+
+          const responseHeaders = new Headers();
+          responseHeaders.set("Content-Type", fileRes.headers.get("content-type") || mimeType);
+          responseHeaders.set("Accept-Ranges", "bytes");
+
+          const contentRange = fileRes.headers.get("content-range");
+          if (contentRange) {
+            responseHeaders.set("Content-Range", contentRange);
+          }
+          const contentLength = fileRes.headers.get("content-length");
+          if (contentLength) {
+            responseHeaders.set("Content-Length", contentLength);
+          }
+
+          const cacheControl = fileRes.headers.get("cache-control");
+          if (cacheControl) {
+            responseHeaders.set("Cache-Control", cacheControl);
+          } else {
+            responseHeaders.set("Cache-Control", "private, max-age=3600");
+          }
+
           const safeFileName = encodeURIComponent(fileName);
           const contentDisposition = inline
             ? `inline; filename*=UTF-8''${safeFileName}`
             : `attachment; filename*=UTF-8''${safeFileName}`;
+          responseHeaders.set("Content-Disposition", contentDisposition);
 
-          console.log(`[download] Bot API download success. Size: ${buffer.length} bytes`);
+          console.log(`[download] Bot API streaming success. Status: ${fileRes.status}, Content-Length: ${contentLength}, Content-Range: ${contentRange}`);
 
-          return new NextResponse(new Uint8Array(buffer), {
-            headers: {
-              "Content-Disposition": contentDisposition,
-              "Content-Type": mimeType,
-              "Content-Length": buffer.length.toString(),
-              "Cache-Control": "private, max-age=3600",
-            },
+          return new NextResponse(fileRes.body, {
+            status: fileRes.status,
+            headers: responseHeaders,
           });
         } catch (botErr) {
           console.warn("[download] Bot API download failed, falling back to GramJS:", botErr);

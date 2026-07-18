@@ -176,7 +176,7 @@ export default function DriveHomePage() {
       if (!configRes.ok) {
         throw new Error("Failed to load Telegram upload configuration.");
       }
-      const { botToken, chatId } = await configRes.json();
+      const { botToken, chatId, telegramApiUrl } = await configRes.json();
 
       if (!botToken || !chatId) {
         throw new Error("Telegram Bot token or Chat ID is missing.");
@@ -189,7 +189,8 @@ export default function DriveHomePage() {
       telegramFormData.append("document", file, file.name);
 
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", `https://api.telegram.org/bot${botToken}/sendDocument`);
+      const baseUrl = telegramApiUrl || "https://api.telegram.org";
+      xhr.open("POST", `${baseUrl}/bot${botToken}/sendDocument`);
 
       // Track upload progress
       xhr.upload.addEventListener("progress", (event) => {
@@ -398,24 +399,28 @@ export default function DriveHomePage() {
 
   if (authenticated === null) {
     return (
-      <div className="min-h-screen bg-[#0f0f0f] text-white flex items-center justify-center">
-        <Loader2 className="h-8 w-8 text-[#24A1DE] animate-spin" />
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(128,90,213,0.05)_0%,transparent_50%)] pointer-events-none" />
+        <Loader2 className="h-8 w-8 text-primary animate-spin relative z-10" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white flex overflow-hidden font-sans">
+    <div className="min-h-screen bg-background text-foreground flex overflow-hidden font-sans relative">
+      {/* Background decoration elements (mesh glow) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#8A2BE2]/5 blur-[120px] pointer-events-none -z-10" />
       {/* Sidebar */}
-      <aside className="w-64 border-r border-white/[0.05] bg-[#0c0c0c] flex flex-col justify-between shrink-0 hidden md:flex">
+      <aside className="w-64 border-r border-white/[0.06] bg-black/20 backdrop-blur-xl flex flex-col justify-between shrink-0 hidden md:flex relative z-10">
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
-            <div className="h-10 w-10 rounded-xl bg-[#24A1DE]/15 flex items-center justify-center text-[#24A1DE]">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 border border-purple-400/20 text-white flex items-center justify-center shadow-md shadow-purple-500/10">
               <HardDrive className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="font-bold text-sm leading-none">Deadraon Drive</h2>
-              <span className="text-[10px] text-gray-500 font-mono">Telegram Storage</span>
+              <h2 className="font-bold text-sm leading-none bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Deadraon Drive</h2>
+              <span className="text-[10px] text-muted-foreground font-mono">Telegram Storage</span>
             </div>
           </div>
 
@@ -425,10 +430,10 @@ export default function DriveHomePage() {
                 setActiveCategory("all");
                 setCurrentFolder("/");
               }}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeCategory === "all"
-                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
-                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+                  ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-white border-purple-500/25 shadow-[0_0_15px_rgba(138,43,226,0.05)]"
+                  : "text-muted-foreground border-transparent hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <HardDrive className="h-4 w-4" />
@@ -437,10 +442,10 @@ export default function DriveHomePage() {
 
             <button
               onClick={() => setActiveCategory("images")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeCategory === "images"
-                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
-                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+                  ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-white border-purple-500/25 shadow-[0_0_15px_rgba(138,43,226,0.05)]"
+                  : "text-muted-foreground border-transparent hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <Image className="h-4 w-4" />
@@ -449,10 +454,10 @@ export default function DriveHomePage() {
 
             <button
               onClick={() => setActiveCategory("videos")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeCategory === "videos"
-                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
-                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+                  ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-white border-purple-500/25 shadow-[0_0_15px_rgba(138,43,226,0.05)]"
+                  : "text-muted-foreground border-transparent hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <FileVideo className="h-4 w-4" />
@@ -461,10 +466,10 @@ export default function DriveHomePage() {
 
             <button
               onClick={() => setActiveCategory("audio")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeCategory === "audio"
-                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
-                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+                  ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-white border-purple-500/25 shadow-[0_0_15px_rgba(138,43,226,0.05)]"
+                  : "text-muted-foreground border-transparent hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <FileAudio className="h-4 w-4" />
@@ -473,10 +478,10 @@ export default function DriveHomePage() {
 
             <button
               onClick={() => setActiveCategory("documents")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeCategory === "documents"
-                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
-                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+                  ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-white border-purple-500/25 shadow-[0_0_15px_rgba(138,43,226,0.05)]"
+                  : "text-muted-foreground border-transparent hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <FileText className="h-4 w-4" />
@@ -485,10 +490,10 @@ export default function DriveHomePage() {
 
             <button
               onClick={() => setActiveCategory("archives")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeCategory === "archives"
-                  ? "bg-[#24A1DE]/10 text-[#24A1DE]"
-                  : "text-gray-400 hover:text-white hover:bg-white/[0.02]"
+                  ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 text-white border-purple-500/25 shadow-[0_0_15px_rgba(138,43,226,0.05)]"
+                  : "text-muted-foreground border-transparent hover:text-white hover:bg-white/[0.02]"
               }`}
             >
               <Archive className="h-4 w-4" />
@@ -503,7 +508,7 @@ export default function DriveHomePage() {
                 fileInputRef.current?.click();
               }}
               disabled={uploading}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#24A1DE] hover:bg-[#24A1DE]/90 disabled:opacity-50 text-white font-medium text-sm rounded-xl transition-all cursor-pointer shadow-lg shadow-[#24A1DE]/15"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-all duration-300 cursor-pointer shadow-lg shadow-purple-500/15"
             >
               <Upload className="h-4 w-4" />
               Upload File
@@ -511,7 +516,7 @@ export default function DriveHomePage() {
 
             <button
               onClick={() => setShowNewFolderModal(true)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 text-white font-medium text-sm rounded-xl transition-all cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 text-white/95 font-medium text-sm rounded-xl transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
               <Plus className="h-4 w-4" />
               New Folder
@@ -519,10 +524,10 @@ export default function DriveHomePage() {
           </div>
         </div>
 
-        <div className="p-6 border-t border-white/[0.05]">
+        <div className="p-6 border-t border-white/[0.06] bg-black/10">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all cursor-pointer"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-red-400 hover:bg-red-500/10 transition-all duration-300 cursor-pointer"
           >
             <LogOut className="h-4 w-4" />
             Logout
@@ -533,15 +538,15 @@ export default function DriveHomePage() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Topbar */}
-        <header className="h-16 border-b border-white/[0.05] bg-[#0c0c0c]/80 backdrop-blur-md px-6 flex items-center justify-between gap-4 sticky top-0 z-30">
+        <header className="h-16 border-b border-white/[0.06] bg-black/15 backdrop-blur-xl px-6 flex items-center justify-between gap-4 sticky top-0 z-30 relative">
           <div className="flex-1 max-w-md relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search files by name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/5 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#24A1DE]/50 focus:ring-1 focus:ring-[#24A1DE]/50 transition-all"
+              className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
             />
           </div>
 
@@ -550,21 +555,21 @@ export default function DriveHomePage() {
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="p-2.5 bg-[#24A1DE] text-white rounded-xl hover:bg-[#24A1DE]/90 disabled:opacity-50 transition-all"
+              className="p-2.5 bg-gradient-to-br from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl disabled:opacity-50 transition-all duration-300 shadow-md shadow-purple-500/15"
               title="Upload File"
             >
               <Upload className="h-4 w-4" />
             </button>
             <button
               onClick={() => setShowNewFolderModal(true)}
-              className="p-2.5 bg-white/[0.03] border border-white/10 text-white rounded-xl hover:bg-white/[0.06] transition-all"
+              className="p-2.5 bg-white/[0.02] border border-white/10 text-white rounded-xl hover:bg-white/[0.04] transition-all duration-300"
               title="New Folder"
             >
               <Plus className="h-4 w-4" />
             </button>
             <button
               onClick={handleLogout}
-              className="p-2.5 bg-transparent text-red-400 rounded-xl hover:bg-red-500/10 transition-all"
+              className="p-2.5 bg-transparent text-red-400 rounded-xl hover:bg-red-500/10 transition-all duration-300"
               title="Logout"
             >
               <LogOut className="h-4 w-4" />
@@ -582,19 +587,19 @@ export default function DriveHomePage() {
 
         {/* File upload progress indicator banner */}
         {uploading && (
-          <div className="bg-[#24A1DE]/10 border-b border-[#24A1DE]/25 px-6 py-3 flex items-center justify-between text-xs font-mono">
+          <div className="bg-primary/10 border-b border-primary/25 px-6 py-3 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center gap-3 min-w-0">
-              <Loader2 className="h-4 w-4 text-[#24A1DE] animate-spin shrink-0" />
+              <Loader2 className="h-4 w-4 text-primary animate-spin shrink-0" />
               <span className="truncate">Uploading file to Telegram Saved Messages...</span>
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <div className="w-32 bg-white/10 rounded-full h-1.5 overflow-hidden hidden sm:block">
                 <div
-                  className="bg-[#24A1DE] h-1.5 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 h-1.5 rounded-full transition-all duration-300"
                   style={{ width: `${uploadProgress || 0}%` }}
                 />
               </div>
-              <span className="font-bold text-[#24A1DE]">{uploadProgress ?? 0}%</span>
+              <span className="font-bold text-primary">{uploadProgress ?? 0}%</span>
             </div>
           </div>
         )}
@@ -667,7 +672,7 @@ export default function DriveHomePage() {
                       handleDownload(file);
                     }
                   }}
-                  className="glass border border-white/[0.05] rounded-2xl p-4 flex items-center gap-4 relative transition-all duration-200 hover:border-white/10 hover:bg-white/[0.03] group select-none cursor-pointer"
+                  className="glass border border-white/[0.05] rounded-2xl p-4 flex items-center gap-4 relative card-hover group select-none cursor-pointer"
                 >
                   {/* File Icon */}
                   <div className="h-12 w-12 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center shrink-0">
@@ -700,7 +705,7 @@ export default function DriveHomePage() {
                     </button>
 
                     {activeMenuId === file.id && (
-                      <div className="absolute right-0 mt-1 w-40 bg-[#121212] border border-white/[0.08] rounded-xl shadow-2xl z-40 py-1.5 overflow-hidden">
+                      <div className="absolute right-0 mt-1 w-40 bg-card border border-white/10 rounded-xl shadow-2xl z-40 py-1.5 overflow-hidden">
                         {file.mime_type === "folder" ? (
                           <button
                             onClick={(e) => {
@@ -748,7 +753,7 @@ export default function DriveHomePage() {
       {/* New Folder Modal */}
       {showNewFolderModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="w-full max-w-sm glass border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
+          <div className="w-full max-w-sm glass-dark border border-white/[0.08] rounded-2xl p-6 shadow-2xl glow-purple">
             <h3 className="text-lg font-bold mb-4">Create New Folder</h3>
             <form onSubmit={handleCreateFolder}>
               <input
@@ -756,7 +761,7 @@ export default function DriveHomePage() {
                 placeholder="Folder Name"
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#24A1DE] focus:ring-1 focus:ring-[#24A1DE] transition-all mb-6"
+                className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all mb-6"
                 required
                 autoFocus
               />
@@ -768,14 +773,14 @@ export default function DriveHomePage() {
                     setShowNewFolderModal(false);
                     setNewFolderName("");
                   }}
-                  className="px-4 py-2 bg-transparent hover:bg-white/[0.02] border border-white/10 text-white rounded-xl text-sm font-medium transition-all cursor-pointer"
+                  className="px-4 py-2 bg-transparent hover:bg-white/[0.04] border border-white/10 text-white rounded-xl text-sm font-medium transition-all duration-300 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creatingFolder || !newFolderName.trim()}
-                  className="px-4 py-2 bg-[#24A1DE] hover:bg-[#24A1DE]/90 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all cursor-pointer"
+                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer shadow-lg shadow-purple-500/15"
                 >
                   {creatingFolder ? "Creating..." : "Create"}
                 </button>
@@ -788,32 +793,34 @@ export default function DriveHomePage() {
       {/* Video Preview Modal */}
       {previewVideoFile && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="w-full max-w-3xl glass border border-white/[0.08] rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+          <div className="w-full max-w-3xl glass-dark border border-white/[0.08] rounded-2xl p-6 shadow-2xl flex flex-col gap-4 glow-purple">
             <div className="flex items-center justify-between">
               <h3 className="text-md font-bold truncate pr-4 text-gray-200">{previewVideoFile.file_name}</h3>
-              <span className="text-xs font-mono text-[#24A1DE] font-semibold bg-[#24A1DE]/10 px-2.5 py-0.5 rounded-full">
+              <span className="text-xs font-mono text-primary font-semibold bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-full">
                 Video Player
               </span>
             </div>
 
-            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/5">
+            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/5 shadow-inner">
               <video
                 src={`/api/drive/download?messageId=${previewVideoFile.message_id}&fileName=${encodeURIComponent(previewVideoFile.file_name)}&inline=true&mimeType=${encodeURIComponent(previewVideoFile.mime_type || "video/mp4")}`}
                 controls
                 autoPlay
+                preload="auto"
+                playsInline
                 className="w-full h-full object-contain"
               />
             </div>
 
             <div className="flex items-center justify-between mt-2">
-              <span className="text-xs text-gray-500 font-mono">
+              <span className="text-xs text-muted-foreground font-mono">
                 Size: {formatBytes(previewVideoFile.file_size)}
               </span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleDownload(previewVideoFile)}
-                  className="px-4 py-2 bg-[#24A1DE] hover:bg-[#24A1DE]/90 text-white rounded-xl text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Download className="h-3 w-3" />
                   Download
@@ -821,7 +828,7 @@ export default function DriveHomePage() {
                 <button
                   type="button"
                   onClick={() => setPreviewVideoFile(null)}
-                  className="px-4 py-2 bg-transparent hover:bg-white/[0.05] border border-white/10 text-white rounded-xl text-xs font-medium transition-all cursor-pointer"
+                  className="px-4 py-2 bg-transparent hover:bg-white/[0.04] border border-white/10 text-white rounded-xl text-xs font-medium transition-all duration-300 cursor-pointer"
                 >
                   Close
                 </button>
@@ -834,10 +841,10 @@ export default function DriveHomePage() {
       {/* Image Preview Modal */}
       {previewImageFile && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="w-full max-w-2xl glass border border-white/[0.08] rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+          <div className="w-full max-w-2xl glass-dark border border-white/[0.08] rounded-2xl p-6 shadow-2xl flex flex-col gap-4 glow-blue">
             <div className="flex items-center justify-between">
               <h3 className="text-md font-bold truncate pr-4 text-gray-200">{previewImageFile.file_name}</h3>
-              <span className="text-xs font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-0.5 rounded-full">
+              <span className="text-xs font-mono text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
                 Image Preview
               </span>
             </div>
@@ -846,19 +853,19 @@ export default function DriveHomePage() {
               <img
                 src={`/api/drive/download?messageId=${previewImageFile.message_id}&fileName=${encodeURIComponent(previewImageFile.file_name)}&inline=true&mimeType=${encodeURIComponent(previewImageFile.mime_type || "image/jpeg")}`}
                 alt={previewImageFile.file_name}
-                className="max-w-full max-h-[50vh] object-contain rounded-lg"
+                className="max-w-full max-h-[50vh] object-contain rounded-lg shadow-inner"
               />
             </div>
 
             <div className="flex items-center justify-between mt-2">
-              <span className="text-xs text-gray-500 font-mono">
+              <span className="text-xs text-muted-foreground font-mono">
                 Size: {formatBytes(previewImageFile.file_size)}
               </span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleDownload(previewImageFile)}
-                  className="px-4 py-2 bg-[#24A1DE] hover:bg-[#24A1DE]/90 text-white rounded-xl text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Download className="h-3 w-3" />
                   Download
@@ -866,7 +873,7 @@ export default function DriveHomePage() {
                 <button
                   type="button"
                   onClick={() => setPreviewImageFile(null)}
-                  className="px-4 py-2 bg-transparent hover:bg-white/[0.05] border border-white/10 text-white rounded-xl text-xs font-medium transition-all cursor-pointer"
+                  className="px-4 py-2 bg-transparent hover:bg-white/[0.04] border border-white/10 text-white rounded-xl text-xs font-medium transition-all duration-300 cursor-pointer"
                 >
                   Close
                 </button>

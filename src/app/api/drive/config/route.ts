@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
 
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
+    const telegramApiUrl = process.env.TELEGRAM_API_URL || "https://api.telegram.org";
 
     if (!botToken || !chatId) {
       return NextResponse.json(
@@ -23,6 +24,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       botToken,
       chatId,
+      telegramApiUrl,
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

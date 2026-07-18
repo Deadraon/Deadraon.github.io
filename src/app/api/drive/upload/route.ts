@@ -83,6 +83,7 @@ export async function POST(req: NextRequest) {
     // Step 2: Env check
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
+    const telegramApiUrl = process.env.TELEGRAM_API_URL || "https://api.telegram.org";
     if (!botToken || !chatId) {
       console.log("[upload] ❌ Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID");
       return NextResponse.json(
@@ -146,7 +147,7 @@ export async function POST(req: NextRequest) {
     let telegramData: any;
     try {
       const telegramRes = await fetch(
-        `https://api.telegram.org/bot${botToken}/sendDocument`,
+        `${telegramApiUrl}/bot${botToken}/sendDocument`,
         {
           method: "POST",
           headers: { "Content-Type": contentType },

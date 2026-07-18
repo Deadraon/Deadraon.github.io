@@ -12,12 +12,14 @@ export async function GET() {
     bot_token_prefix: botToken ? botToken.substring(0, 10) + "..." : "MISSING",
     chat_id: chatId || "MISSING",
     node_env: process.env.NODE_ENV,
+    telegram_api_url: process.env.TELEGRAM_API_URL || "https://api.telegram.org",
   };
+  const telegramApiUrl = process.env.TELEGRAM_API_URL || "https://api.telegram.org";
 
   // Try calling Telegram getMe
   if (botToken) {
     try {
-      const res = await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
+      const res = await fetch(`${telegramApiUrl}/bot${botToken}/getMe`);
       const data = await res.json() as any;
       result.telegram_bot_ok = data.ok;
       result.telegram_bot_name = data.result?.first_name;
@@ -29,7 +31,7 @@ export async function GET() {
     // Try sending a test message
     if (chatId) {
       try {
-        const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        const res = await fetch(`${telegramApiUrl}/bot${botToken}/sendMessage`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ chat_id: chatId, text: "Debug test from Vercel ✅" }),
