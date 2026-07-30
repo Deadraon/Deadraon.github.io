@@ -18,7 +18,7 @@ export default function PublicLayout({
   const [isModalOpen, setIsModalOpen] = useState(false);
  
   return (
-    <div className="relative min-h-screen text-foreground font-sans antialiased selection:bg-primary/30 overflow-x-hidden flex flex-col bg-[#070814]">
+    <div className="relative min-h-screen text-foreground font-sans antialiased selection:bg-primary/30 overflow-x-hidden flex flex-col bg-[#090b12]">
       {/* State-of-the-Art Interactive Canvas & Particle Mesh Background */}
       <InteractiveBackground />
 

@@ -6,31 +6,31 @@
 
 @layer base {
   :root, .dark {
-    --background: 242 30% 5.5%;
-    --foreground: 0 0% 98%;
-    --card: 240 24% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 24% 7%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 217 100% 60%;
+    --background: 228 24% 6%;
+    --foreground: 210 20% 98%;
+    --card: 228 20% 9.5%;
+    --card-foreground: 210 20% 98%;
+    --popover: 228 20% 8.5%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 214 92% 58%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 20% 14%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 18% 12%;
-    --muted-foreground: 240 12% 70%;
-    --accent: 265 90% 64%;
+    --secondary: 228 16% 14%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 228 14% 13%;
+    --muted-foreground: 215 16% 65%;
+    --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 15% 16%;
-    --input: 240 15% 16%;
-    --ring: 217 100% 60%;
+    --border: 228 14% 16%;
+    --input: 228 14% 16%;
+    --ring: 214 92% 58%;
     --radius: 1.25rem;
     
-    --brand-purple: 265 100% 67%;
-    --brand-blue: 217 100% 60%;
-    --brand-cyan: 188 100% 52%;
-    --brand-pink: 330 100% 62%;
+    --brand-purple: 224 76% 60%;
+    --brand-blue: 214 92% 58%;
+    --brand-cyan: 199 89% 48%;
+    --brand-pink: 172 80% 40%;
   }
 }
 
@@ -42,9 +42,9 @@
     @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30;
     font-feature-settings: "rlig" 1, "calt" 1;
     background-image: 
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.15), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 60%, rgba(59, 130, 246, 0.12), transparent),
-      radial-gradient(ellipse 50% 50% at 0% 80%, rgba(236, 72, 153, 0.08), transparent);
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.1), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 60%, rgba(14, 165, 233, 0.07), transparent),
+      radial-gradient(ellipse 50% 50% at 0% 80%, rgba(16, 185, 129, 0.05), transparent);
   }
   html {
     scroll-behavior: smooth;
@@ -53,31 +53,31 @@
 }
 
 @layer components {
-  /* Premium SaaS AI Glassmorphism */
+  /* Premium Enterprise Glassmorphism */
   .glass {
-    @apply bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+    @apply bg-white/[0.025] backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)];
   }
   
   .glass-dark {
-    @apply bg-black/[0.45] backdrop-blur-3xl border border-white/[0.1] shadow-[0_8px_32px_rgba(0,0,0,0.6)];
+    @apply bg-[#0b0d14]/75 backdrop-blur-3xl border border-white/[0.09] shadow-[0_8px_32px_rgba(0,0,0,0.7)];
   }
   
-  /* Electric Gradient text */
+  /* Executive Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-white via-[#80C0FF] to-[#0070F3] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,112,243,0.3)];
+    @apply bg-gradient-to-r from-white via-[#cbd5e1] to-[#60a5fa] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(59,130,246,0.2)];
   }
   
   .gradient-text-pink {
-    @apply bg-gradient-to-r from-[#FF5722] to-[#FF0080] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,87,34,0.3)];
+    @apply bg-gradient-to-r from-[#38bdf8] to-[#3b82f6] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(14,165,233,0.2)];
   }
   
   /* Refined glowing effects */
   .glow-purple {
-    box-shadow: 0 0 50px -10px rgba(138, 43, 226, 0.4);
+    box-shadow: 0 0 45px -10px rgba(59, 130, 246, 0.25);
   }
   
   .glow-blue {
-    box-shadow: 0 0 50px -10px rgba(0, 112, 243, 0.4);
+    box-shadow: 0 0 45px -10px rgba(14, 165, 233, 0.25);
   }
   
   /* Minimal Dark Scrollbar */
