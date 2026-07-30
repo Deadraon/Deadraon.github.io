@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SlideToMessage } from "@/components/ui/slide-to-message";
 import { QuickMessageModal } from "@/components/ui/quick-message-modal";
+import { InteractiveBackground } from "@/components/ui/InteractiveBackground";
  
 export default function PublicLayout({
   children,
@@ -17,11 +18,10 @@ export default function PublicLayout({
   const [isModalOpen, setIsModalOpen] = useState(false);
  
   return (
-    <div className="relative min-h-screen bg-[#030308] bg-[radial-gradient(circle_at_top_right,_rgba(124,58,237,0.06),_transparent_45%),_radial-gradient(circle_at_bottom_left,_rgba(59,130,246,0.06),_transparent_45%)] text-foreground font-sans antialiased selection:bg-primary/30 overflow-x-hidden flex flex-col">
+    <div className="relative min-h-screen text-foreground font-sans antialiased selection:bg-primary/30 overflow-x-hidden flex flex-col bg-[#070814]">
+      {/* State-of-the-Art Interactive Canvas & Particle Mesh Background */}
+      <InteractiveBackground />
 
-      {/* Soft Ambient Overlay with Gradient Glows */}
-      <div className="fixed inset-0 bg-black/25 bg-[radial-gradient(circle_at_20%_30%,rgba(124,58,237,0.08),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(59,130,246,0.08),transparent_50%)] z-5 pointer-events-none" />
- 
       {/* Fixed Navbar — always visible on all pages */}
       <Navbar />
  
