@@ -77,7 +77,7 @@ export function HashGeneratorTool() {
             className={`${inputClass} flex-1 resize-y`}
             spellCheck={false}
           />
-          <button onClick={processText} disabled={!input.trim()} className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2.5 transition-all duration-200 h-fit self-end">
+          <button onClick={processText} disabled={!input.trim()} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2.5 transition-all duration-200 h-fit self-end">
             Hash
           </button>
         </div>

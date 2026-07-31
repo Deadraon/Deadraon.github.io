@@ -7,8 +7,8 @@ import { GlassCard } from "@/components/ui/button";
 const skillGroups = [
   {
     title: "Frontend",
-    color: "from-purple-400 to-blue-400",
-    barColor: "from-purple-500 to-blue-500",
+    color: "from-blue-400 to-sky-400",
+    barColor: "from-blue-600 to-sky-500",
     skills: [
       { name: "React / Next.js", level: 95 },
       { name: "TypeScript", level: 90 },

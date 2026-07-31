@@ -18,8 +18,8 @@ const services = [
     description: "I build modern, scalable web applications using the latest technologies. From landing pages to complex SaaS platforms, every project is engineered for performance, SEO, and conversion.",
     features: ["Next.js / React SPA & SSR", "RESTful & GraphQL APIs", "Database design & optimization", "Authentication & Authorization", "Payment gateway integration", "Real-time features with WebSockets", "SEO optimization", "CI/CD & deployment"],
     startingAt: "₹11,999",
-    color: "from-purple-500 to-blue-500",
-    gradient: "bg-gradient-to-br from-purple-500/10 to-blue-500/10",
+    color: "from-blue-600 to-sky-600",
+    gradient: "bg-gradient-to-br from-blue-600/10 to-sky-600/10",
   },
   {
     id: "app",
@@ -29,8 +29,8 @@ const services = [
     description: "Beautiful, high-performance mobile apps using Flutter — one codebase for iOS and Android. From MVP to production-ready apps with complex features and smooth animations.",
     features: ["Flutter / Dart development", "iOS & Android deployment", "Offline-first architecture", "Push notifications", "In-app purchases", "Camera, maps, sensors", "App Store optimization", "Firebase & cloud backend"],
     startingAt: "₹19,999",
-    color: "from-blue-500 to-cyan-500",
-    gradient: "bg-gradient-to-br from-blue-500/10 to-cyan-500/10",
+    color: "from-sky-600 to-blue-600",
+    gradient: "bg-gradient-to-br from-sky-600/10 to-blue-600/10",
   },
   {
     id: "ui",
@@ -40,8 +40,8 @@ const services = [
     description: "Pixel-perfect designs built in Figma, then implemented with precision. I focus on usability, accessibility, and visual hierarchy that guides users toward your business goals.",
     features: ["Figma wireframes & prototypes", "Design systems & component libraries", "Responsive & mobile-first", "Micro-animations & interactions", "Brand identity alignment", "Accessibility (WCAG 2.1)", "Dark & light mode", "Handoff-ready assets"],
     startingAt: "₹6,499",
-    color: "from-cyan-500 to-teal-500",
-    gradient: "bg-gradient-to-br from-cyan-500/10 to-teal-500/10",
+    color: "from-blue-500 to-indigo-600",
+    gradient: "bg-gradient-to-br from-blue-500/10 to-indigo-600/10",
   },
   {
     id: "api",
@@ -51,8 +51,8 @@ const services = [
     description: "Integrate your application with any third-party service — payment processors, CRMs, analytics tools, AI services, or custom APIs. Clean, documented, and maintainable code.",
     features: ["Stripe, PayPal payments", "Google, Apple OAuth", "Twilio SMS & WhatsApp", "SendGrid email automation", "OpenAI / Gemini AI", "Mapbox / Google Maps", "Webhook systems", "API documentation"],
     startingAt: "₹3,999",
-    color: "from-teal-500 to-emerald-500",
-    gradient: "bg-gradient-to-br from-teal-500/10 to-emerald-500/10",
+    color: "from-indigo-600 to-sky-600",
+    gradient: "bg-gradient-to-br from-indigo-600/10 to-sky-600/10",
   },
   {
     id: "maintenance",
@@ -60,10 +60,10 @@ const services = [
     title: "Maintenance & Support",
     tagline: "Keep Your App Running Flawlessly",
     description: "Monthly retainer plans to keep your application up-to-date, secure, and performing at its best. Bug fixes, performance optimization, security patches, and minor feature additions.",
-    features: ["Bug fixes & patches", "Performance optimization", "Security audits & updates", "Dependency upgrades", "Database maintenance", "Uptime monitoring", "Monthly reports", "Priority support"],
+    features: ["Bug fixes & patches", "Performance audit", "Security audits & updates", "Dependency upgrades", "Database maintenance", "Uptime monitoring", "Monthly reports", "Priority support"],
     startingAt: "₹2,499/mo",
-    color: "from-emerald-500 to-green-500",
-    gradient: "bg-gradient-to-br from-emerald-500/10 to-green-500/10",
+    color: "from-sky-500 to-blue-600",
+    gradient: "bg-gradient-to-br from-sky-500/10 to-blue-600/10",
   },
 ];
 
@@ -99,11 +99,11 @@ export default function ServicesPage() {
                   <div className="flex items-center gap-4">
                     <div>
                        <p className="text-xs text-white/50">Starting at</p>
-                       <p className="text-2xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">{service.startingAt}</p>
+                       <p className="text-2xl font-black bg-gradient-to-r from-blue-400 to-sky-300 bg-clip-text text-transparent">{service.startingAt}</p>
                     </div>
                       <Link
                         href={`/contact?service=${service.id}`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:shadow-lg hover:shadow-blue-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
                         style={{
                           transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, background-color 0.2s',
                         }}
@@ -133,7 +133,7 @@ export default function ServicesPage() {
           <p className="text-white/60 mb-8">Tell me about your project and I&apos;ll get back to you within 24 hours with a custom quote.</p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
             style={{
               transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, background-color 0.2s',
             }}

@@ -124,14 +124,14 @@ export default function DriveLoginPage() {
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center relative overflow-hidden px-4">
       {/* Background decoration elements (mesh glow) */}
       <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-primary/8 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-[#8A2BE2]/8 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-[#2563EB]/8 blur-[130px] pointer-events-none" />
 
       <div className="w-full max-w-md glass border border-white/[0.06] rounded-2xl p-8 relative z-10 shadow-2xl hover:border-white/10 transition-all duration-300">
         <div className="flex flex-col items-center mb-8">
-          <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 border border-purple-400/20 shadow-lg shadow-purple-500/20 flex items-center justify-center mb-4 text-white hover:scale-105 active:scale-95 transition-all duration-300">
+          <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 border border-blue-400/20 shadow-lg shadow-blue-500/20 flex items-center justify-center mb-4 text-white hover:scale-105 active:scale-95 transition-all duration-300">
             <FaTelegramPlane className="h-9 w-9 text-white" />
           </div>
-          <h1 className="text-2.5xl font-extrabold tracking-tight bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,112,243,0.2)]">
+          <h1 className="text-2.5xl font-extrabold tracking-tight bg-gradient-to-r from-white via-sky-200 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,112,243,0.2)]">
             Deadraon Drive
           </h1>
           <p className="text-sm text-muted-foreground mt-2 text-center">
@@ -180,7 +180,7 @@ export default function DriveLoginPage() {
             <button
               type="submit"
               disabled={loading || !phoneBody}
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               {loading ? (
                 <>
@@ -227,7 +227,7 @@ export default function DriveLoginPage() {
             <button
               type="submit"
               disabled={loading || !code || timer <= 0}
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               {loading ? (
                 <>

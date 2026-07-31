@@ -26,7 +26,7 @@ export function DashboardSidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-border">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 rounded-lg flex items-center justify-center">
             <Code2 className="w-4 h-4 text-white" />
           </div>
           <div>

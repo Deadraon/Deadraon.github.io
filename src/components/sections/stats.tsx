@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { GlassCard } from "@/components/ui/button";
 
 const stats = [
-  { value: "50+", label: "Projects Delivered", color: "from-purple-400 to-blue-400" },
+  { value: "50+", label: "Projects Delivered", color: "from-blue-400 to-sky-400" },
   { value: "30+", label: "Happy Clients", color: "from-blue-400 to-cyan-400" },
   { value: "2+", label: "Years Experience", color: "from-cyan-400 to-emerald-400" },
   { value: "99%", label: "Client Satisfaction", color: "from-emerald-400 to-green-400" },

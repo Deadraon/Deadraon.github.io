@@ -166,7 +166,7 @@ export function PdfMergeTool() {
       <button
         onClick={merge}
         disabled={files.length < 2 || busy}
-        className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-3.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20"
+        className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-3.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
       >
         {busy ? (
           <>

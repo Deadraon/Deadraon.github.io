@@ -79,11 +79,11 @@ export function Navbar() {
             transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
           }}
         >
-          <div className="relative w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
+          <div className="relative w-8 h-8 bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-blue-500/30 transition-all duration-300">
             <Code2 className="w-4 h-4 text-white" />
           </div>
           <span className="font-bold text-lg tracking-tight text-white">
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 to-sky-300 bg-clip-text text-transparent">
               Dead
             </span>
             <span>raon</span>
@@ -93,24 +93,18 @@ export function Navbar() {
         {/* ToolsOne pill */}
         <Link
           href="/tools"
-          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-purple-500/20 hover:shadow-purple-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
-          style={{
-            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
-          }}
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 text-sky-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl transition-all duration-200 shadow-sm hover:border-sky-500/50 hover:text-sky-300 shrink-0 hover:scale-[1.05] active:scale-[0.95]"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
           ToolsOne
         </Link>
 
         {/* DriveOne pill */}
         <Link
           href="/drive"
-          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
-          style={{
-            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
-          }}
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 text-blue-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl transition-all duration-200 shadow-sm hover:border-blue-500/50 hover:text-blue-300 shrink-0 hover:scale-[1.05] active:scale-[0.95]"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
           DriveOne
         </Link>
  
@@ -118,7 +112,7 @@ export function Navbar() {
         <div className="hidden lg:flex items-center ml-8">
           <ExpandableTabs
             tabs={tabs}
-            activeColor="text-purple-400"
+            activeColor="text-sky-400"
             className="border-0 bg-transparent backdrop-blur-none p-0 shadow-none gap-1"
           />
         </div>
@@ -210,9 +204,9 @@ export function Navbar() {
             <Link
               href="/tools"
               onClick={() => setIsMobileOpen(false)}
-              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
+              className="flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider text-sky-400 bg-slate-900 border border-slate-700 rounded-xl transition-all shadow-sm w-full mb-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
               ToolsOne
             </Link>
 
@@ -220,9 +214,10 @@ export function Navbar() {
             <Link
               href="/drive"
               onClick={() => setIsMobileOpen(false)}
-              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
+              className="flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider text-blue-400 bg-slate-900 border border-slate-700 rounded-xl transition-all shadow-sm w-full mb-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              DriveOne
             </Link>
 
             {/* Main navigation links in mobile drawer */}
@@ -237,7 +232,7 @@ export function Navbar() {
                     className={cn(
                       "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200",
                       isActive
-                        ? "bg-white/10 text-purple-400 font-semibold"
+                        ? "bg-white/10 text-sky-400 font-semibold"
                         : "text-white/70 hover:bg-white/5 hover:text-white"
                     )}
                   >

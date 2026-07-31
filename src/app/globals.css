@@ -6,31 +6,31 @@
 
 @layer base {
   :root, .dark {
-    --background: 228 24% 6%;
-    --foreground: 210 20% 98%;
-    --card: 228 20% 9.5%;
-    --card-foreground: 210 20% 98%;
-    --popover: 228 20% 8.5%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 214 92% 58%;
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --card: 222 36% 9.5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 36% 8.5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 228 16% 14%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 228 14% 13%;
-    --muted-foreground: 215 16% 65%;
+    --secondary: 217 19% 14%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 19% 13%;
+    --muted-foreground: 215 20% 65%;
     --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 228 14% 16%;
-    --input: 228 14% 16%;
-    --ring: 214 92% 58%;
+    --border: 217 19% 16%;
+    --input: 217 19% 16%;
+    --ring: 217 91% 60%;
     --radius: 1.25rem;
     
-    --brand-purple: 224 76% 60%;
-    --brand-blue: 214 92% 58%;
+    --brand-purple: 221 83% 53%;
+    --brand-blue: 217 91% 60%;
     --brand-cyan: 199 89% 48%;
-    --brand-pink: 172 80% 40%;
+    --brand-pink: 213 94% 68%;
   }
 }
 
@@ -38,17 +38,36 @@
   * {
     @apply border-border;
   }
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
   body {
     @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30;
     font-feature-settings: "rlig" 1, "calt" 1;
     background-image: 
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.1), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 60%, rgba(14, 165, 233, 0.07), transparent),
-      radial-gradient(ellipse 50% 50% at 0% 80%, rgba(16, 185, 129, 0.05), transparent);
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 60%, rgba(14, 165, 233, 0.06), transparent),
+      radial-gradient(ellipse 50% 50% at 0% 80%, rgba(59, 130, 246, 0.05), transparent);
   }
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
+  }
+
+  /* Prevent iOS input zoom glitch when font-size < 16px */
+  @media (max-width: 640px) {
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="search"],
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
   }
 }
 
@@ -64,16 +83,16 @@
   
   /* Executive Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-white via-[#cbd5e1] to-[#60a5fa] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(59,130,246,0.2)];
+    @apply bg-gradient-to-r from-white via-slate-200 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(37,99,235,0.2)];
   }
   
   .gradient-text-pink {
-    @apply bg-gradient-to-r from-[#38bdf8] to-[#3b82f6] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(14,165,233,0.2)];
+    @apply bg-gradient-to-r from-sky-300 via-blue-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(14,165,233,0.2)];
   }
   
   /* Refined glowing effects */
   .glow-purple {
-    box-shadow: 0 0 45px -10px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 45px -10px rgba(37, 99, 235, 0.25);
   }
   
   .glow-blue {
@@ -100,7 +119,7 @@
   
   /* Magnetic Card hover */
   .card-hover {
-    @apply transition-all duration-500 hover:shadow-[0_0_30px_rgba(0,112,243,0.15)] hover:-translate-y-1 hover:border-white/10 hover:bg-white/[0.04];
+    @apply transition-all duration-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.15)] hover:-translate-y-1 hover:border-white/10 hover:bg-white/[0.04];
   }
   
   /* Section padding */
@@ -128,17 +147,17 @@
   }
   
   /* AI Status badges */
-  .status-pending { @apply bg-[#FF9800]/10 text-[#FFB74D] border border-[#FF9800]/20; }
-  .status-in-progress { @apply bg-[#00D0FF]/10 text-[#64D8FF] border border-[#00D0FF]/20; }
-  .status-review { @apply bg-[#9C27B0]/10 text-[#CE93D8] border border-[#9C27B0]/20; }
-  .status-delivered { @apply bg-[#4CAF50]/10 text-[#81C784] border border-[#4CAF50]/20; }
-  .status-on-hold { @apply bg-[#F44336]/10 text-[#E57373] border border-[#F44336]/20; }
+  .status-pending { @apply bg-amber-500/10 text-amber-400 border border-amber-500/20; }
+  .status-in-progress { @apply bg-sky-500/10 text-sky-400 border border-sky-500/20; }
+  .status-review { @apply bg-indigo-500/10 text-indigo-300 border border-indigo-500/20; }
+  .status-delivered { @apply bg-emerald-500/10 text-emerald-400 border border-emerald-500/20; }
+  .status-on-hold { @apply bg-rose-500/10 text-rose-400 border border-rose-500/20; }
   
   /* Soft Hero Mesh */
   .hero-mesh {
-    background: radial-gradient(circle at 50% 0%, rgba(0, 112, 243, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 20% 80%, rgba(255, 87, 34, 0.05) 0%, transparent 40%);
+    background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
   }
 }
 
@@ -179,7 +198,7 @@
 
 :root {
   --color-accent: hsl(var(--accent));
-  --color-accent-dim: rgba(251, 146, 60, 0.1);
+  --color-accent-dim: rgba(59, 130, 246, 0.1);
 }
 
 .tools-theme {
@@ -196,18 +215,18 @@
   --color-ink-faint: rgba(255, 255, 255, 0.15);
 
   /* Accents */
-  --color-accent: hsl(var(--primary)); /* Sleek Violet/Blue Accent */
-  --color-accent-dim: rgba(59, 130, 246, 0.1);
-  --color-success: #10B981; /* SIGNAL Green -> Emerald */
-  --color-warning: #F59E0B; /* Caution Amber -> Amber */
+  --color-accent: hsl(var(--primary)); /* Sleek Slate/Blue Accent */
+  --color-accent-dim: rgba(37, 99, 235, 0.1);
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
   
   /* Tool categories */
-  --color-pdf: #EF4444;
-  --color-image: #8B5CF6;
-  --color-text: #3B82F6;
+  --color-pdf: #3B82F6;
+  --color-image: #0EA5E9;
+  --color-text: #2563EB;
   --color-convert: #F59E0B;
   --color-generate: #10B981;
-  --color-media: #EF4444;
+  --color-media: #6366F1;
 
   /* Typography */
   --font-display: var(--font-inter), "Inter", sans-serif;
@@ -249,7 +268,7 @@
 
 /* === CUSTOM UI === */
 .btn-primary {
-  @apply bg-gradient-to-b from-purple-600 to-blue-600 text-white font-extrabold px-6 py-3 border border-purple-500 border-b-4 border-b-blue-900 rounded-xl hover:from-purple-500 hover:to-blue-500 active:border-b-2 active:translate-y-[2px] transition-all duration-100 cursor-pointer shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 flex items-center justify-center gap-2;
+  @apply bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold px-6 py-3 border border-blue-500/30 rounded-xl hover:from-blue-500 hover:to-sky-500 active:translate-y-[1px] transition-all duration-200 cursor-pointer shadow-lg shadow-blue-600/20 hover:shadow-blue-600/35 flex items-center justify-center gap-2;
 }
 
 .glass-card {
@@ -268,22 +287,22 @@
 
 /* === INTERACTIVE GRADIENT BUTTON POPUP FOR TOOLS === */
 .tools-theme .bg-indigo-600 {
-  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.15) !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2) !important;
 }
 
 .tools-theme .bg-indigo-600:hover,
 .tools-theme .bg-indigo-600:focus-visible {
-  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%) !important;
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35), 0 0 10px rgba(59, 130, 246, 0.2) !important;
+  background: linear-gradient(135deg, #3b82f6 0%, #38bdf8 100%) !important;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 10px rgba(56, 189, 248, 0.2) !important;
   transform: translateY(-1.5px) !important;
 }
 
 .tools-theme .bg-indigo-600:active {
   transform: translateY(0.5px) !important;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2) !important;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2) !important;
 }
 
 /* Serif italic custom utility */

@@ -147,7 +147,7 @@ export function ImageCompressTool() {
                   <a
                     href={r.url}
                     download={r.name}
-                    className="text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 transition-colors shrink-0"
+                    className="text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 transition-colors shrink-0"
                   >
                     Download
                   </a>

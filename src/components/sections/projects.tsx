@@ -82,7 +82,7 @@ export function ProjectsSection() {
               className={cn(
                 "px-5 py-2 rounded-full text-sm font-medium capitalize transition-all duration-200",
                 activeFilter === f
-                  ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25"
+                  ? "bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-lg shadow-blue-500/25"
                   : "text-white/70 hover:text-white"
               )}
               style={activeFilter !== f ? {
@@ -127,7 +127,7 @@ export function ProjectsSection() {
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-sky-600/20 flex items-center justify-center">
                       <span className="text-4xl font-black text-white/20">{project.title.charAt(0)}</span>
                     </div>
                   )}
@@ -143,7 +143,7 @@ export function ProjectsSection() {
                     )}
                     {project.live && (
                       <a href={project.live} target="_blank" rel="noopener noreferrer"
-                        className="p-2.5 rounded-xl text-white hover:scale-110 transition-transform bg-gradient-to-r from-purple-600 to-blue-600">
+                        className="p-2.5 rounded-xl text-white hover:scale-110 transition-transform bg-gradient-to-r from-blue-600 to-sky-600">
                         <ExternalLink className="w-5 h-5" />
                       </a>
                     )}

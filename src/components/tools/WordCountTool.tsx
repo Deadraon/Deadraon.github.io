@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const inputClass = "w-full rounded-xl border border-border bg-ink/5 text-ink px-4 py-2.5 text-sm placeholder-ink-faint focus:border-indigo-500/50 focus:bg-ink/10 outline-none transition-all";
+const inputClass = "w-full rounded-xl border border-border bg-ink/5 text-ink px-4 py-2.5 text-sm placeholder-ink-faint focus:border-blue-500/50 focus:bg-ink/10 outline-none transition-all";
 const labelClass = "block text-xs font-semibold text-ink-soft uppercase tracking-wider mb-2";
 
 export function WordCountTool() {
@@ -54,7 +54,7 @@ export function WordCountTool() {
           </div>
           <div className="h-1.5 rounded-full bg-ink/10 overflow-hidden">
             <div
-              className="h-full bg-indigo-500 rounded-full transition-all duration-500"
+              className="h-full bg-blue-500 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(100, (words / 500) * 100)}%` }}
             />
           </div>

@@ -1,13 +1,38 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Download, Film, Music, Loader2, Link2, AlertCircle } from "lucide-react";
+import { Download, Film, Music, Loader2, Link2, AlertCircle, Clipboard, Check } from "lucide-react";
 
 interface MediaInfo {
   title: string;
   duration: string;
   author: string;
   thumbnail: string;
+  platform?: string;
+}
+
+const SUPPORTED_PLATFORMS = [
+  { name: "YouTube", key: "youtube", icon: "🔴", color: "border-red-500/30 bg-red-500/10 text-red-400" },
+  { name: "Instagram", key: "instagram", icon: "📸", color: "border-pink-500/30 bg-pink-500/10 text-pink-400" },
+  { name: "TikTok", key: "tiktok", icon: "🎵", color: "border-sky-500/30 bg-sky-500/10 text-sky-400" },
+  { name: "Twitter / X", key: "twitter", icon: "𝕏", color: "border-slate-500/30 bg-slate-500/10 text-slate-300" },
+  { name: "Facebook", key: "facebook", icon: "📘", color: "border-blue-500/30 bg-blue-500/10 text-blue-400" },
+  { name: "Pinterest", key: "pinterest", icon: "📌", color: "border-rose-500/30 bg-rose-500/10 text-rose-400" },
+  { name: "Reddit", key: "reddit", icon: "🤖", color: "border-orange-500/30 bg-orange-500/10 text-orange-400" },
+  { name: "Vimeo", key: "vimeo", icon: "🎬", color: "border-cyan-500/30 bg-cyan-500/10 text-cyan-400" },
+];
+
+function detectPlatform(targetUrl: string) {
+  const lower = targetUrl.toLowerCase();
+  if (lower.includes("youtube.com") || lower.includes("youtu.be")) return "YouTube";
+  if (lower.includes("instagram.com")) return "Instagram";
+  if (lower.includes("tiktok.com")) return "TikTok";
+  if (lower.includes("twitter.com") || lower.includes("x.com")) return "Twitter / X";
+  if (lower.includes("facebook.com") || lower.includes("fb.watch")) return "Facebook";
+  if (lower.includes("pinterest.com") || lower.includes("pin.it")) return "Pinterest";
+  if (lower.includes("reddit.com")) return "Reddit";
+  if (lower.includes("vimeo.com")) return "Vimeo";
+  return "Universal Media";
 }
 
 export function MediaDownloadTool() {
@@ -19,6 +44,7 @@ export function MediaDownloadTool() {
   const [error, setError] = useState<string | null>(null);
   const [formatType, setFormatType] = useState<"video" | "audio">("video");
   const [selectedQuality, setSelectedQuality] = useState("best");
+  const [copied, setCopied] = useState(false);
 
   // Auto-analyze URL when it changes (debounced)
   useEffect(() => {
@@ -28,16 +54,28 @@ export function MediaDownloadTool() {
       return;
     }
 
-    // Basic URL validation before running analysis
     const isUrl = url.startsWith("http://") || url.startsWith("https://");
     if (!isUrl) return;
 
     const timer = setTimeout(() => {
       handleAnalyze(url);
-    }, 600);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [url]);
+
+  const handlePasteClipboard = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && (text.startsWith("http://") || text.startsWith("https://"))) {
+        setUrl(text.trim());
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // Permission denied or unreadable
+    }
+  };
 
   async function handleAnalyze(targetUrl: string) {
     setError(null);
@@ -45,10 +83,11 @@ export function MediaDownloadTool() {
     setProgress(15);
 
     try {
-      let extractedTitle = "Online Video File";
+      const detectedPlatform = detectPlatform(targetUrl);
+      let extractedTitle = `${detectedPlatform} Media File`;
       let author = "Content Creator";
       let thumbnail = "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=225&fit=crop";
-      let duration = "Video Stream";
+      let duration = "Media Stream";
 
       try {
         if (targetUrl.includes("youtube.com") || targetUrl.includes("youtu.be")) {
@@ -72,13 +111,16 @@ export function MediaDownloadTool() {
           }
         } else {
           const u = new URL(targetUrl);
-          extractedTitle = u.pathname.split("/").pop() || u.hostname;
+          const parts = u.pathname.split("/").filter(Boolean);
+          if (parts.length > 0) {
+            extractedTitle = `${detectedPlatform} Post (${parts[parts.length - 1].slice(0, 16)})`;
+          }
         }
       } catch (err) {
-        console.warn("oEmbed fetch skipped or failed:", err);
+        console.warn("oEmbed fetch skipped:", err);
       }
 
-      setMediaInfo({ title: extractedTitle, duration, author, thumbnail });
+      setMediaInfo({ title: extractedTitle, duration, author, thumbnail, platform: detectedPlatform });
     } catch (e) {
       console.error(e);
     } finally {
@@ -95,7 +137,7 @@ export function MediaDownloadTool() {
     setProgress(20);
 
     try {
-      // 1. Try the primary server proxy
+      // 1. Try server proxy API
       setProgress(40);
       let downloadUrl = "";
       try {
@@ -110,33 +152,33 @@ export function MediaDownloadTool() {
           if (data.url) {
             downloadUrl = data.url;
           } else if (data.error) {
-            console.warn("Primary API proxy returned error response:", data.error);
+            console.warn("Primary API proxy returned error:", data.error);
           }
         }
       } catch (err) {
-        console.warn("Primary API proxy failed, falling back to direct client-side requests...", err);
+        console.warn("Primary API proxy failed, executing client fallbacks...", err);
       }
 
-      // 2. Dual-layer fallback: Direct browser requests to Cobalt instances
+      // 2. Client-side Fallbacks: Direct browser requests to verified Cobalt v10 instances
       if (!downloadUrl) {
-        setStatus("Retrying directly from browser...");
+        setStatus("Retrying via secondary downloader nodes...");
         setProgress(60);
         
         const COBALT_CLIENT_INSTANCES = [
+          "https://api.cobalt.tools/",
+          "https://co.wuk.sh/",
+          "https://cobalt.smalldev.tools/",
+          "https://cobalt.kwiatekm.tokyo/",
+          "https://cobalt.api.scrim.cloud/",
+          "https://api.v2.cobalt.tools/",
           "https://lime.clxxped.lol/",
-          "https://grapefruit.clxxped.lol/",
-          "https://nuko-c.meowing.de/",
-          "https://cobaltapi.kittycat.boo/",
-          "https://apicobalt.mgytr.top/",
-          "https://cobaltapi.squair.xyz/"
         ];
 
         const isAudioOnly = formatType === "audio";
         let videoQuality = "720";
         if (selectedQuality === "1080p") videoQuality = "1080";
-        if (selectedQuality === "720p") videoQuality = "720";
         if (selectedQuality === "480p") videoQuality = "480";
-        if (selectedQuality === "best") videoQuality = "1080";
+        if (selectedQuality === "best") videoQuality = "max";
 
         const payload = {
           url: url,
@@ -159,9 +201,9 @@ export function MediaDownloadTool() {
             });
             if (res.ok) {
               const data = await res.json();
-              if (data.url) {
-                downloadUrl = data.url;
-                break;
+              if (data && (data.url || data.picker)) {
+                downloadUrl = data.url || (data.picker && data.picker[0] ? data.picker[0].url : "");
+                if (downloadUrl) break;
               }
             } else {
               const errData = await res.json().catch(() => ({}));
@@ -173,16 +215,17 @@ export function MediaDownloadTool() {
         }
 
         if (!downloadUrl) {
-          throw new Error(lastError || "Could not generate download link. All downloader nodes are currently offline or blocking the request.");
+          throw new Error(lastError || "Could not generate download link. Please make sure the link is public or try again.");
         }
       }
 
       setProgress(90);
       
-      // Open in a new tab/window to trigger direct browser file stream download
+      // Trigger file download
       const a = document.createElement("a");
       a.href = downloadUrl;
       a.target = "_blank";
+      a.rel = "noopener noreferrer";
       a.click();
       
       setProgress(100);
@@ -197,6 +240,24 @@ export function MediaDownloadTool() {
 
   return (
     <div className="space-y-8 max-w-2xl mx-auto">
+      {/* Supported Platforms Pills */}
+      <div className="space-y-2">
+        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block">
+          Universal Supported Platforms
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {SUPPORTED_PLATFORMS.map((p) => (
+            <span
+              key={p.name}
+              className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${p.color} flex items-center gap-1.5`}
+            >
+              <span>{p.icon}</span>
+              <span>{p.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Search Input Bar */}
       <div className="space-y-3">
         <div className="flex justify-between items-center">
@@ -204,22 +265,33 @@ export function MediaDownloadTool() {
             <Link2 className="w-3.5 h-3.5" />
             Media Link
           </label>
-          {status && (
-            <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-              <Loader2 className="w-3 h-3 animate-spin text-primary" />
-              {status}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handlePasteClipboard}
+              className="text-xs text-primary hover:text-white bg-primary/10 border border-primary/20 hover:bg-primary/20 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 cursor-pointer"
+            >
+              {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Clipboard className="w-3 h-3" />}
+              <span>{copied ? "Pasted!" : "Paste"}</span>
+            </button>
+            {status && (
+              <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+                <Loader2 className="w-3 h-3 animate-spin text-primary" />
+                {status}
+              </span>
+            )}
+          </div>
         </div>
+
         <div className="relative group/input">
           <input
             id="media-url"
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="Paste YouTube, Vimeo, TikTok, Instagram, Twitter link..."
+            placeholder="Paste YouTube, Instagram Reels, TikTok, Twitter/X, Pinterest link..."
             disabled={busy}
-            className="w-full rounded-2xl border border-white/10 bg-white/[0.02] text-foreground pl-5 pr-14 py-4 text-sm placeholder-white/20 focus:border-primary/50 focus:bg-white/[0.04] outline-none transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.02] text-foreground pl-5 pr-12 py-3.5 text-sm placeholder-white/20 focus:border-primary/50 focus:bg-white/[0.04] outline-none transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
             {url.trim() && (
@@ -234,7 +306,7 @@ export function MediaDownloadTool() {
           </div>
         </div>
         <p className="text-[11px] text-muted-foreground/60 leading-relaxed pl-1">
-          Supports video/audio extraction from major platforms. Media is analyzed automatically in the background.
+          Supports video/audio download from YouTube Shorts, Instagram Reels, TikTok (no watermark), Twitter/X, Facebook, Pinterest & Reddit.
         </p>
       </div>
 
@@ -249,7 +321,7 @@ export function MediaDownloadTool() {
             <span className="font-mono text-primary">{progress}%</span>
           </div>
           <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/[0.02]">
-            <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
+            <div className="bg-gradient-to-r from-blue-600 to-sky-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
         </div>
       )}
@@ -300,7 +372,7 @@ export function MediaDownloadTool() {
                     onClick={() => setFormatType("video")}
                     className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
                       formatType === "video"
-                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-blue-500/10"
+                        ? "bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-lg shadow-blue-500/10"
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -311,7 +383,7 @@ export function MediaDownloadTool() {
                     onClick={() => setFormatType("audio")}
                     className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
                       formatType === "audio"
-                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-blue-500/10"
+                        ? "bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-lg shadow-blue-500/10"
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -350,7 +422,7 @@ export function MediaDownloadTool() {
             <button
               onClick={handleDownload}
               disabled={busy}
-              className="w-full rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 disabled:opacity-40 text-white font-bold px-6 py-4 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:scale-[1.01]"
+              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 disabled:opacity-40 text-white font-bold px-6 py-4 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:scale-[1.01]"
             >
               <Download className="w-4 h-4" />
               {busy ? "Generating download..." : "Download Media"}

@@ -328,7 +328,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
 
         {/* ===== REQUEST A TOOL WIDGET ===== */}
         <section className="py-16 border-t border-border/50 border-dashed">
-          <div className="relative rounded-3xl border border-white/10 bg-gradient-to-r from-purple-900/20 via-blue-900/10 to-[#be38f3]/5 p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div className="relative rounded-3xl border border-white/10 bg-gradient-to-r from-blue-950/40 via-slate-900/30 to-sky-950/20 p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div className="absolute inset-0 bg-grid-white/[0.02] pointer-events-none" />
             <div className="absolute -right-24 -top-24 w-72 h-72 bg-primary/10 rounded-full blur-[100px] pointer-events-none animate-pulse-glow" />
             
@@ -347,7 +347,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
             <div className="relative z-10 shrink-0">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3.5 bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-4 border-b-blue-900 text-white text-sm font-extrabold rounded-xl transition-all duration-100 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/45 hover:from-purple-500 hover:to-blue-500 active:border-b-2 active:translate-y-[2px] cursor-pointer flex items-center justify-center gap-2"
+                className="px-6 py-3.5 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white text-sm font-extrabold rounded-xl transition-all duration-200 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
               >
                 Request a Tool
               </button>
@@ -473,11 +473,11 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
             className="bg-[#080810]/90 border border-white/10 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#be38f3] to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent" />
             
             <div className="p-6 sm:p-8 space-y-6">
               <div className="space-y-2 text-center">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 flex items-center justify-center mx-auto mb-4">
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white">Request a Tool</h3>
@@ -489,7 +489,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
               <form onSubmit={handleRequestSubmit} className="space-y-4">
                 <div className="space-y-1.5">
                   <label htmlFor="req-tool-name" className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-1">
-                    Tool Name <span className="text-[#be38f3]">*</span>
+                    Tool Name <span className="text-sky-400">*</span>
                   </label>
                   <div className="relative">
                     <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/20">
@@ -502,14 +502,14 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                       value={toolName}
                       onChange={(e) => setToolName(e.target.value)}
                       required
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all placeholder:text-white/15"
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-white text-xs focus:outline-none focus:border-sky-400/50 focus:ring-1 focus:ring-sky-400/25 transition-all placeholder:text-white/15"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <label htmlFor="req-tool-desc" className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-1">
-                    Function Description <span className="text-[#be38f3]">*</span>
+                    Function Description <span className="text-sky-400">*</span>
                   </label>
                   <div className="relative">
                     <span className="absolute left-3.5 top-3 text-white/20">
@@ -522,7 +522,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                       value={toolDesc}
                       onChange={(e) => setToolDesc(e.target.value)}
                       required
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all resize-none placeholder:text-white/15"
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-white text-xs focus:outline-none focus:border-sky-400/50 focus:ring-1 focus:ring-sky-400/25 transition-all resize-none placeholder:text-white/15"
                     />
                   </div>
                 </div>
@@ -541,7 +541,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                       placeholder="you@example.com"
                       value={userEmail}
                       onChange={(e) => setUserEmail(e.target.value)}
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-white text-xs focus:outline-none focus:border-[#be38f3]/50 focus:ring-1 focus:ring-[#be38f3]/25 transition-all placeholder:text-white/15"
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-white text-xs focus:outline-none focus:border-sky-400/50 focus:ring-1 focus:ring-sky-400/25 transition-all placeholder:text-white/15"
                     />
                   </div>
                 </div>
@@ -557,7 +557,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex-1 py-3 bg-gradient-to-b from-purple-600 to-blue-600 border border-purple-500 border-b-4 border-b-blue-900 disabled:opacity-40 text-xs text-white font-extrabold rounded-xl transition-all duration-100 shadow-md shadow-blue-500/15 hover:shadow-blue-500/30 hover:from-purple-500 hover:to-blue-500 active:border-b-2 active:translate-y-[2px] flex items-center justify-center gap-1.5"
+                    className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-xs text-white font-extrabold rounded-xl transition-all duration-200 shadow-md shadow-blue-500/15 hover:shadow-blue-500/30 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     {submitting ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />

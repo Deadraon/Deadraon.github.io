@@ -304,7 +304,7 @@ export function ResumeBuilderTool() {
               onClick={() => setTemplate(t)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize border transition-all ${
                 template === t
-                  ? "bg-indigo-600 text-white border-transparent shadow-lg shadow-indigo-600/20"
+                  ? "bg-blue-600 text-white border-transparent shadow-lg shadow-blue-600/20"
                   : "bg-ink/5 border-border text-ink-soft hover:text-ink hover:border-border-hover"
               }`}
             >
@@ -314,7 +314,7 @@ export function ResumeBuilderTool() {
         </div>
         <button
           onClick={handlePrint}
-          className="rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 text-sm font-semibold transition-colors flex items-center gap-1.5 shadow-lg shadow-indigo-600/20"
+          className="rounded-xl bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 text-sm font-semibold transition-colors flex items-center gap-1.5 shadow-lg shadow-blue-600/20"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
           Download PDF

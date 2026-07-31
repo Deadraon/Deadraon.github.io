@@ -13,7 +13,7 @@ const testimonials = [
     content: "Deadraon delivered our SaaS dashboard 2 weeks ahead of schedule. The code quality and UI design exceeded our expectations. Absolutely recommend!",
     rating: 5,
     project: "SaaS Dashboard",
-    color: "from-purple-500 to-blue-500",
+    color: "from-blue-600 to-sky-600",
   },
   {
     name: "Ahmed Al-Rashid",
@@ -53,7 +53,7 @@ const testimonials = [
     content: "Transformed our Figma designs into a pixel-perfect e-commerce site. Mobile performance is exceptional. Our conversions increased by 40%!",
     rating: 5,
     project: "E-Commerce",
-    color: "from-pink-500 to-purple-500",
+    color: "from-sky-500 to-blue-600",
   },
   {
     name: "Daniel Foster",
@@ -63,7 +63,7 @@ const testimonials = [
     content: "Complex real estate platform delivered flawlessly. Admin dashboard, client portal, and analytics — all working perfectly. Outstanding work.",
     rating: 5,
     project: "Real Estate Platform",
-    color: "from-indigo-500 to-purple-500",
+    color: "from-indigo-600 to-sky-600",
   },
 ];
 

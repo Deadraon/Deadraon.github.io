@@ -284,7 +284,7 @@ export function OnlineRulerTool() {
             <button
               onClick={() => setUnit("cm")}
               className={`rounded-lg px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all ${
-                unit === "cm" ? "bg-indigo-600 text-white shadow" : "text-ink-soft hover:text-ink"
+                unit === "cm" ? "bg-blue-600 text-white shadow" : "text-ink-soft hover:text-ink"
               }`}
             >
               cm / mm
@@ -292,7 +292,7 @@ export function OnlineRulerTool() {
             <button
               onClick={() => setUnit("inch")}
               className={`rounded-lg px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all ${
-                unit === "inch" ? "bg-indigo-600 text-white shadow" : "text-ink-soft hover:text-ink"
+                unit === "inch" ? "bg-blue-600 text-white shadow" : "text-ink-soft hover:text-ink"
               }`}
             >
               inches
@@ -327,7 +327,7 @@ export function OnlineRulerTool() {
           {/* Add guide */}
           <button
             onClick={addGuide}
-            className="rounded-xl border border-indigo-500/25 bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500/20 px-4 py-2 text-xs font-semibold transition-colors"
+            className="rounded-xl border border-blue-500/25 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 px-4 py-2 text-xs font-semibold transition-colors"
           >
             ➕ Guideline
           </button>
@@ -527,7 +527,7 @@ export function OnlineRulerTool() {
             <div 
               className={`absolute ${
                 isVertical ? "h-[1.5px] left-0 right-0 top-[8px]" : "w-[1.5px] top-0 bottom-0 left-[8px]"
-              } bg-indigo-500 transition-colors shadow-glow`} 
+              } bg-blue-500 transition-colors shadow-glow`} 
             />
             {/* Grab handle badge */}
             <div
@@ -535,7 +535,7 @@ export function OnlineRulerTool() {
                 isVertical
                   ? "left-4 top-0 translate-y-[2px]"
                   : "top-4 left-0 -translate-x-[4px]"
-              } rounded bg-indigo-600 px-1.5 py-0.5 text-[9px] font-mono text-white/90 shadow opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5`}
+              } rounded bg-blue-600 px-1.5 py-0.5 text-[9px] font-mono text-white/90 shadow opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5`}
             >
               <span>#{idx + 1}</span>
               <button 
@@ -554,10 +554,10 @@ export function OnlineRulerTool() {
 
       {/* Guidelines measurement stats panel */}
       {distance && (
-        <div className="p-4 rounded-xl border border-indigo-500/15 bg-indigo-500/[0.02] flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="p-4 rounded-xl border border-blue-500/15 bg-blue-500/[0.02] flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-            <span className="text-xs font-semibold text-indigo-500 dark:text-indigo-300 uppercase tracking-wider">Interval Measurements</span>
+            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <span className="text-xs font-semibold text-blue-400 dark:text-blue-300 uppercase tracking-wider">Interval Measurements</span>
             <span className="text-xs text-ink-soft">Between outer guidelines</span>
           </div>
 

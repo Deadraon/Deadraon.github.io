@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-const inputClass = "w-full rounded-xl border border-border bg-ink/5 text-ink px-4 py-2.5 text-sm placeholder-ink-faint focus:border-indigo-500/50 focus:bg-ink/10 outline-none transition-all font-mono";
+const inputClass = "w-full rounded-xl border border-border bg-ink/5 text-ink px-4 py-2.5 text-sm placeholder-ink-faint focus:border-blue-500/50 focus:bg-ink/10 outline-none transition-all font-mono";
 const labelClass = "block text-xs font-semibold text-ink-soft uppercase tracking-wider mb-2";
-const buttonClass = "inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2.5 transition-all duration-200";
+const buttonClass = "inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2.5 transition-all duration-200";
 
 export function JsonFormatterTool() {
   const [input, setInput] = useState("");
@@ -44,7 +44,7 @@ export function JsonFormatterTool() {
             onClick={() => setMode("format")}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               mode === "format"
-                ? "bg-indigo-600 text-white"
+                ? "bg-blue-600 text-white"
                 : "text-ink-soft hover:text-ink hover:bg-ink/5"
             }`}
           >
@@ -54,7 +54,7 @@ export function JsonFormatterTool() {
             onClick={() => setMode("minify")}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               mode === "minify"
-                ? "bg-indigo-600 text-white"
+                ? "bg-blue-600 text-white"
                 : "text-ink-soft hover:text-ink hover:bg-ink/5"
             }`}
           >

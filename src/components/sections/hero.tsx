@@ -39,9 +39,9 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[#030308] pointer-events-none" />
       <div className="absolute inset-0 overflow-hidden pointer-events-none flex justify-center items-center">
         {/* Massive soft glowing orbs */}
-        <div className="absolute top-[20%] w-[800px] h-[600px] bg-[#0070F3]/10 rounded-full blur-[120px] animate-pulse-glow" />
-        <div className="absolute top-[40%] right-[10%] w-[600px] h-[500px] bg-[#8A2BE2]/10 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
-        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#FF5722]/5 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "1s" }} />
+        <div className="absolute top-[20%] w-[800px] h-[600px] bg-[#2563EB]/10 rounded-full blur-[120px] animate-pulse-glow" />
+        <div className="absolute top-[40%] right-[10%] w-[600px] h-[500px] bg-[#38BDF8]/10 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#0EA5E9]/5 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "1s" }} />
         {/* Subtle geometric grid */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)]" />
       </div>
@@ -57,39 +57,39 @@ export function HeroSection() {
         </div>
 
         {/* Headline */}
-        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+        <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black tracking-tight mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
           <span className="block text-white mb-2">Build faster with</span>
           <span className="block gradient-text drop-shadow-2xl">Deadraon</span>
         </h1>
 
         {/* Typing role */}
-        <div className="h-12 flex items-center justify-center mb-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-          <p className="text-xl sm:text-2xl lg:text-3xl font-medium text-white/60">
+        <div className="h-12 flex items-center justify-center mb-6 sm:mb-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+          <p className="text-lg sm:text-2xl lg:text-3xl font-medium text-white/60">
             {displayed}
             <span className="typing-cursor">&nbsp;</span>
           </p>
         </div>
 
         {/* Sub-headline */}
-        <p className="max-w-2xl mx-auto text-lg sm:text-xl text-white/50 mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+        <p className="max-w-2xl mx-auto text-base sm:text-xl text-white/50 mb-8 sm:mb-10 leading-relaxed animate-fade-in-up px-2" style={{ animationDelay: "0.3s" }}>
           I architect and build <strong className="text-white/90 font-medium">premium software solutions</strong>. From high-performance web applications to scalable infrastructure, delivering excellence at every layer.
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-24 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-          <Button asChild size="xl" className="h-14 px-8 rounded-full bg-white text-black hover:bg-white/90 font-semibold text-lg hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-sm sm:max-w-none mb-16 sm:mb-24 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+          <Button asChild size="xl" className="w-full sm:w-auto h-12 sm:h-14 px-8 rounded-full bg-white text-black hover:bg-white/90 font-semibold text-base sm:text-lg hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)]">
             <Link href="/contact">
               Start a Project
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </Button>
-          <Button asChild size="xl" variant="outline" className="h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-lg transition-all">
+          <Button asChild size="xl" variant="outline" className="w-full sm:w-auto h-12 sm:h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-base sm:text-lg transition-all">
             <Link href="/portfolio">
               Explore Work
             </Link>
           </Button>
           <ResumeRequestModal>
-            <Button size="xl" variant="outline" className="h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-lg transition-all">
+            <Button size="xl" variant="outline" className="w-full sm:w-auto h-12 sm:h-14 px-8 rounded-full border-white/10 bg-white/[0.03] backdrop-blur-md text-white hover:bg-white/10 font-medium text-base sm:text-lg transition-all">
               <FileText className="w-5 h-5 mr-2" />
               Resume
             </Button>
@@ -97,12 +97,12 @@ export function HeroSection() {
         </div>
 
         {/* Floating UI Elements (SaaS Mockup Vibe) */}
-        <div className="w-full max-w-5xl relative mx-auto h-[300px] sm:h-[400px] animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
+        <div className="w-full max-w-5xl relative mx-auto h-[260px] sm:h-[400px] animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
           {/* Main Mockup Window */}
-          <div className="absolute inset-x-4 sm:inset-x-12 top-0 bottom-0 glass-dark rounded-t-3xl border-b-0 overflow-hidden flex flex-col items-center justify-start pt-8 shadow-[0_-20px_80px_rgba(0,112,243,0.15)]">
-            <div className="w-3/4 h-2 rounded-full bg-white/5 mb-8" />
+          <div className="absolute inset-x-2 sm:inset-x-12 top-0 bottom-0 glass-dark rounded-t-3xl border-b-0 overflow-hidden flex flex-col items-center justify-start pt-6 sm:pt-8 shadow-[0_-20px_80px_rgba(0,112,243,0.15)]">
+            <div className="w-3/4 h-2 rounded-full bg-white/5 mb-6 sm:mb-8" />
             
-            <div className="flex gap-4 sm:gap-8 justify-center w-full px-8">
+            <div className="flex gap-2 sm:gap-8 justify-center w-full px-4 sm:px-8">
               <div className="w-1/3 h-32 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-4 flex flex-col justify-between">
                 <Code className="w-6 h-6 text-[#0070F3]" />
                 <div className="w-2/3 h-2 rounded-full bg-white/10" />
@@ -115,7 +115,7 @@ export function HeroSection() {
                 </div>
               </div>
               <div className="w-1/3 h-32 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-4 flex flex-col justify-between">
-                <Database className="w-6 h-6 text-[#8A2BE2]" />
+                <Database className="w-6 h-6 text-[#38BDF8]" />
                 <div className="w-1/2 h-2 rounded-full bg-white/10" />
               </div>
             </div>
