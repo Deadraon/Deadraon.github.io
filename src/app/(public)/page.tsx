@@ -211,24 +211,24 @@ export default function HomePage() {
 
             {/* Contact Form Card */}
             <div id="contact-card" className="w-full max-w-md md:max-w-none md:w-[380px] lg:w-[440px] shrink-0 self-center md:self-auto transition-all select-text">
-              <div className="bg-white rounded-[32px] shadow-2xl p-6 flex flex-col gap-5">
+              <div className="glass-dark rounded-[32px] border border-white/12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-6 flex flex-col gap-5 backdrop-blur-2xl">
                 
                 {/* Heading */}
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-2xl font-bold text-black tracking-tight flex items-center gap-2">
+                  <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
                     Say hello! <span className="animate-bounce">👋</span>
                   </h2>
                 </div>
 
                 {/* Email + Socials row */}
-                <div className="flex flex-row items-center justify-between gap-3 bg-gray-50 rounded-2xl px-4 py-3 min-w-0">
+                <div className="flex flex-row items-center justify-between gap-3 bg-white/[0.03] border border-white/10 rounded-2xl px-4 py-3 min-w-0">
                   <div className="flex flex-col min-w-0">
-                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-0.5">
+                    <span className="text-[10px] uppercase tracking-widest text-white/50 font-bold mb-0.5">
                       Drop us a line
                     </span>
                     <a
                       href="mailto:deadraon@gmail.com"
-                      className="text-blue-600 font-semibold text-sm hover:underline truncate"
+                      className="text-sky-400 font-semibold text-sm hover:underline truncate"
                     >
                       deadraon@gmail.com
                     </a>
@@ -236,13 +236,13 @@ export default function HomePage() {
                   
                   {/* Social Buttons */}
                   <div className="flex items-center gap-2 shrink-0">
-                    <SocialBtn href="https://github.com/Deadraon" bgClass="bg-gray-100" textClass="text-gray-800">
+                    <SocialBtn href="https://github.com/Deadraon" bgClass="bg-white/10 hover:bg-white/20" textClass="text-white">
                       <Github size={14} className="stroke-[2.5]" />
                     </SocialBtn>
-                    <SocialBtn href="https://wa.me/916396714325" bgClass="bg-emerald-50" textClass="text-emerald-500">
+                    <SocialBtn href="https://wa.me/916396714325" bgClass="bg-emerald-500/20 hover:bg-emerald-500/30" textClass="text-emerald-400">
                       <MessageCircle size={14} className="stroke-[2.5]" />
                     </SocialBtn>
-                    <SocialBtn href="https://twitter.com/Deadraon" bgClass="bg-blue-50" textClass="text-blue-400">
+                    <SocialBtn href="https://twitter.com/Deadraon" bgClass="bg-sky-500/20 hover:bg-sky-500/30" textClass="text-sky-400">
                       <Twitter size={14} className="stroke-[2.5]" />
                     </SocialBtn>
                   </div>
@@ -252,15 +252,15 @@ export default function HomePage() {
                   <>
                     {/* OR Divider */}
                     <div className="flex items-center gap-3 w-full">
-                      <div className="flex-1 h-px bg-gray-100" />
-                      <span className="text-[10px] font-bold text-gray-300 tracking-[0.2em] select-none">OR</span>
-                      <div className="flex-1 h-px bg-gray-100" />
+                      <div className="flex-1 h-px bg-white/10" />
+                      <span className="text-[10px] font-bold text-white/30 tracking-[0.2em] select-none">OR</span>
+                      <div className="flex-1 h-px bg-white/10" />
                     </div>
 
                     {/* Contact Form */}
                     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm font-medium text-black select-none">
+                        <label className="text-sm font-medium text-white/90 select-none">
                           Tell us about your vision
                         </label>
                         
@@ -272,7 +272,7 @@ export default function HomePage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
-                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50/55 focus:bg-white focus:outline-none focus:ring-2 focus:ring-black transition text-gray-900"
+                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] focus:bg-white/[0.06] focus:border-sky-400/50 focus:outline-none transition text-white placeholder:text-white/30"
                           />
                           <input
                             type="email"
@@ -280,7 +280,7 @@ export default function HomePage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50/55 focus:bg-white focus:outline-none focus:ring-2 focus:ring-black transition text-gray-900"
+                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] focus:bg-white/[0.06] focus:border-sky-400/50 focus:outline-none transition text-white placeholder:text-white/30"
                           />
                         </div>
                       </div>
@@ -292,12 +292,12 @@ export default function HomePage() {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         required
-                        className="w-full text-sm px-4 py-3 rounded-xl border border-gray-100 bg-gray-50/55 focus:bg-white focus:outline-none focus:ring-2 focus:ring-black resize-none transition text-gray-900"
+                        className="w-full text-sm px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus:bg-white/[0.06] focus:border-sky-400/50 focus:outline-none resize-none transition text-white placeholder:text-white/30"
                       />
 
                       {/* Service tags section */}
                       <div className="select-none">
-                        <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">
+                        <span className="block text-[11px] font-bold text-white/50 uppercase tracking-wider mb-2">
                           I need help with...
                         </span>
                         <div className="flex flex-wrap gap-1.5">
@@ -310,8 +310,8 @@ export default function HomePage() {
                                 onClick={() => toggleService(service)}
                                 className={`text-[10px] font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer ${
                                   isActive
-                                    ? 'bg-gray-900 text-white border-gray-900 shadow-xs'
-                                    : 'bg-white text-gray-600 border-gray-100 hover:border-gray-300'
+                                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white border-purple-400 shadow-sm'
+                                    : 'bg-white/[0.03] text-white/70 border-white/10 hover:border-white/20 hover:text-white'
                                 }`}
                               >
                                 {service}
@@ -325,7 +325,7 @@ export default function HomePage() {
                       <button
                         type="submit"
                         disabled={sending}
-                        className="w-full bg-black text-white text-sm font-bold py-4 rounded-2xl hover:bg-gray-800 transition-transform active:scale-[0.98] mt-2 cursor-pointer disabled:opacity-60"
+                        className="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white text-sm font-bold py-3.5 rounded-xl shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all mt-2 cursor-pointer disabled:opacity-60"
                       >
                         {sending ? 'Sending...' : 'Send my message'}
                       </button>
@@ -334,14 +334,14 @@ export default function HomePage() {
                 ) : (
                   /* Success State shown in place of the form */
                   <div className="flex flex-col items-start justify-start pt-2 pb-6 gap-4 animate-fade-in text-left">
-                    <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-xl text-green-600 font-bold shadow-xs">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-xl text-emerald-400 font-bold shadow-xs">
                       ✓
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-gray-900">
+                      <h3 className="text-lg font-bold text-white">
                         You're all set!
                       </h3>
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-sm text-white/60 mt-1">
                         Expect a reply within 24 hours.
                       </p>
                     </div>
@@ -354,7 +354,7 @@ export default function HomePage() {
                         setMessage('');
                         setSelected([]);
                       }}
-                      className="text-xs text-blue-600 hover:underline font-semibold transition-colors mt-2 cursor-pointer"
+                      className="text-xs text-sky-400 hover:underline font-semibold transition-colors mt-2 cursor-pointer"
                     >
                       Send another message
                     </button>
