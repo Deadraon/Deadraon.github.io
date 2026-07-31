@@ -5,14 +5,42 @@
 @tailwind utilities;
 
 @layer base {
-  :root, .dark {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 262 83% 58%;
+    --radius: 1.25rem;
+    
+    --brand-purple: 262 83% 58%;
+    --brand-blue: 217 91% 60%;
+    --brand-cyan: 199 89% 48%;
+    --brand-pink: 314 94% 68%;
+  }
+
+  .dark {
     --background: 222 42% 8.5%;
     --foreground: 210 40% 98%;
     --card: 222 36% 12%;
     --card-foreground: 210 40% 98%;
     --popover: 222 36% 10%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
     --secondary: 217 24% 16%;
     --secondary-foreground: 210 40% 98%;
@@ -24,13 +52,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 217 22% 20%;
     --input: 217 22% 20%;
-    --ring: 217 91% 60%;
-    --radius: 1.25rem;
-    
-    --brand-purple: 221 83% 53%;
-    --brand-blue: 217 91% 60%;
-    --brand-cyan: 199 89% 48%;
-    --brand-pink: 213 94% 68%;
+    --ring: 262 83% 58%;
   }
 }
 
@@ -47,13 +69,12 @@
     @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30;
     font-feature-settings: "rlig" 1, "calt" 1;
     background-image: 
-      radial-gradient(ellipse 90% 60% at 50% -20%, rgba(37, 99, 235, 0.22), transparent),
-      radial-gradient(ellipse 70% 50% at 100% 50%, rgba(14, 165, 233, 0.14), transparent),
-      radial-gradient(ellipse 60% 60% at 0% 80%, rgba(59, 130, 246, 0.12), transparent);
+      radial-gradient(ellipse 90% 60% at 50% -10%, rgba(139, 92, 246, 0.08), transparent),
+      radial-gradient(ellipse 70% 50% at 100% 50%, rgba(59, 130, 246, 0.06), transparent),
+      radial-gradient(ellipse 60% 60% at 0% 80%, rgba(168, 85, 247, 0.05), transparent);
   }
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
   }
 
   /* Prevent iOS input zoom glitch when font-size < 16px */
@@ -72,22 +93,22 @@
 }
 
 @layer components {
-  /* Premium Enterprise Glassmorphism */
+  /* Premium Glassmorphism */
   .glass {
-    @apply bg-white/[0.04] backdrop-blur-2xl border border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300;
+    @apply bg-white/80 dark:bg-white/[0.04] backdrop-blur-2xl border border-slate-200/80 dark:border-white/[0.12] shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300;
   }
   
   .glass-dark {
-    @apply bg-[#0f172a]/85 backdrop-blur-3xl border border-white/[0.14] shadow-[0_12px_40px_rgba(0,0,0,0.6)];
+    @apply bg-slate-900/90 dark:bg-[#0f172a]/85 backdrop-blur-3xl border border-slate-800 dark:border-white/[0.14] shadow-lg;
   }
   
-  /* Executive Gradient text */
+  /* Vibrant Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-white via-slate-200 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(37,99,235,0.2)];
+    @apply bg-gradient-to-r from-purple-600 via-blue-600 to-sky-500 dark:from-purple-400 dark:via-blue-400 dark:to-sky-300 bg-clip-text text-transparent;
   }
   
   .gradient-text-pink {
-    @apply bg-gradient-to-r from-sky-300 via-blue-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(14,165,233,0.2)];
+    @apply bg-gradient-to-r from-purple-600 via-pink-600 to-blue-500 dark:from-purple-400 dark:via-pink-400 dark:to-blue-300 bg-clip-text text-transparent;
   }
   
   /* Refined glowing effects */

@@ -79,11 +79,11 @@ export function Navbar() {
             transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
           }}
         >
-          <div className="relative w-8 h-8 bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-blue-500/30 transition-all duration-300">
+          <div className="relative w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
             <Code2 className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">
-            <span className="bg-gradient-to-r from-blue-400 to-sky-300 bg-clip-text text-transparent">
+          <span className="font-bold text-lg tracking-tight text-foreground">
+            <span className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
               Dead
             </span>
             <span>raon</span>

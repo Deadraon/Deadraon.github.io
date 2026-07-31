@@ -46,11 +46,11 @@ export function Footer() {
             {/* Brand */}
             <div className="lg:col-span-2">
               <Link href="/" className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
                   <Code2 className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-bold text-xl text-white">
-                  <span className="bg-gradient-to-r from-blue-400 to-sky-300 bg-clip-text text-transparent">Dead</span>
+                <span className="font-bold text-xl text-foreground">
+                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">Dead</span>
                   <span>raon</span>
                 </span>
               </Link>
