@@ -93,18 +93,24 @@ export function Navbar() {
         {/* ToolsOne pill */}
         <Link
           href="/tools"
-          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 text-sky-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl transition-all duration-200 shadow-sm hover:border-sky-500/50 hover:text-sky-300 shrink-0 hover:scale-[1.05] active:scale-[0.95]"
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-blue-600 to-sky-600 border border-blue-400 border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
+          style={{
+            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
+          }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           ToolsOne
         </Link>
 
         {/* DriveOne pill */}
         <Link
           href="/drive"
-          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 text-blue-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl transition-all duration-200 shadow-sm hover:border-blue-500/50 hover:text-blue-300 shrink-0 hover:scale-[1.05] active:scale-[0.95]"
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
+          style={{
+            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
+          }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           DriveOne
         </Link>
  
@@ -204,9 +210,9 @@ export function Navbar() {
             <Link
               href="/tools"
               onClick={() => setIsMobileOpen(false)}
-              className="flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider text-sky-400 bg-slate-900 border border-slate-700 rounded-xl transition-all shadow-sm w-full mb-2"
+              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-blue-600 to-sky-600 border border-blue-400 border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               ToolsOne
             </Link>
 
@@ -214,9 +220,9 @@ export function Navbar() {
             <Link
               href="/drive"
               onClick={() => setIsMobileOpen(false)}
-              className="flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider text-blue-400 bg-slate-900 border border-slate-700 rounded-xl transition-all shadow-sm w-full mb-2"
+              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               DriveOne
             </Link>
 
