@@ -154,14 +154,14 @@ function PaymentForm() {
       <div className="max-w-xl w-full px-4 relative z-10">
         {/* Header Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#be38f3]/20 bg-[#be38f3]/5 text-white/90 text-xs font-semibold mb-4 shadow-[0_0_15px_rgba(190,56,243,0.1)]">
-            <Lock className="w-3.5 h-3.5 text-[#be38f3]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-500/30 bg-sky-950/40 text-sky-300 text-xs font-semibold mb-4 shadow-md">
+            <Lock className="w-3.5 h-3.5 text-sky-400" />
             <span>Secure Checkout Gateway</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black mt-1 mb-3 tracking-tight">
-            Make a <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#d364ff] to-[#be38f3] drop-shadow-[0_0_15px_rgba(190,56,243,0.2)]">Payment</span>
+          <h1 className="text-4xl sm:text-5xl font-black mt-1 mb-3 tracking-tight text-white">
+            Make a <span className="text-sky-400">Payment</span>
           </h1>
-          <p className="text-muted-foreground text-sm max-w-sm mx-auto">
+          <p className="text-slate-300 text-sm max-w-sm mx-auto font-medium">
             Pay securely to <strong className="text-white">Deadraon Development</strong>.
           </p>
         </div>
@@ -169,19 +169,18 @@ function PaymentForm() {
         {/* Payment Card */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-6 p-6 sm:p-8 rounded-3xl border border-white/[0.08] bg-[#080810]/40 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] shadow-black/80 relative overflow-hidden"
+          className="space-y-6 p-6 sm:p-8 rounded-3xl border border-slate-700 bg-[#0f172a] shadow-2xl relative overflow-hidden"
         >
           {/* Subtle top brand border line */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#be38f3] to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-blue-500" />
           
           {/* Amount Section - Primary Focus */}
-          <div className="bg-[#be38f3]/[0.02] border border-[#be38f3]/15 p-5 rounded-2xl relative overflow-hidden shadow-[0_0_30px_rgba(190,56,243,0.02)]">
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#be38f3]/30 to-transparent" />
-            <label className="block text-center text-[10px] font-bold text-[#be38f3] uppercase tracking-widest mb-3">
-              Enter Amount to Pay <span className="text-[#be38f3]">*</span>
+          <div className="bg-slate-900 border border-slate-700 p-5 rounded-2xl relative overflow-hidden shadow-inner">
+            <label className="block text-center text-[10px] font-bold text-sky-400 uppercase tracking-widest mb-3">
+              Enter Amount to Pay <span className="text-sky-400">*</span>
             </label>
-            <div className="flex items-center justify-center gap-2 max-w-[240px] mx-auto border-b-2 border-[#be38f3]/20 focus-within:border-[#be38f3] pb-1.5 transition-all">
-              <span className="text-3xl font-extrabold text-[#be38f3] select-none mb-1">₹</span>
+            <div className="flex items-center justify-center gap-2 max-w-[240px] mx-auto border-b-2 border-slate-700 focus-within:border-blue-500 pb-1.5 transition-all">
+              <span className="text-3xl font-extrabold text-sky-400 select-none mb-1">₹</span>
               <input
                 name="amount"
                 type="number"
@@ -190,7 +189,7 @@ function PaymentForm() {
                 value={formData.amount}
                 onChange={handleChange}
                 required
-                className="bg-transparent text-white text-4xl font-black focus:outline-none placeholder:text-white/10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all"
+                className="bg-transparent text-white text-4xl font-black focus:outline-none placeholder:text-slate-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all"
                 style={{ width: formData.amount ? `${Math.max(1, formData.amount.length) * 22 + 10}px` : '40px' }}
               />
             </div>
@@ -202,14 +201,14 @@ function PaymentForm() {
                   key={preset}
                   type="button"
                   onClick={() => handlePresetClick(preset)}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#be38f3]/5 border border-[#be38f3]/10 text-white/70 hover:text-white hover:bg-[#be38f3]/25 hover:border-[#be38f3]/40 active:scale-95 transition-all shadow-sm"
+                  className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:bg-blue-600 hover:border-blue-400 active:scale-95 transition-all shadow-sm"
                 >
                   ₹{preset.toLocaleString("en-IN")}
                 </button>
               ))}
             </div>
 
-            <p className="text-center text-[9px] text-white/30 tracking-wide uppercase mt-4">
+            <p className="text-center text-[9px] text-slate-400 tracking-wide uppercase mt-4 font-semibold">
               Instant settlement via secure payment transfer
             </p>
           </div>
@@ -420,7 +419,7 @@ function PaymentForm() {
           <Button
             type="submit"
             size="lg"
-            className="w-full h-14 rounded-2xl bg-gradient-to-r from-[#8a2be2] via-[#be38f3] to-[#ff007f] hover:from-[#943be8] hover:to-[#ff1a8c] text-white font-bold tracking-wide shadow-[0_0_30px_rgba(190,56,243,0.25)] hover:shadow-[0_0_40px_rgba(190,56,243,0.45)] hover:-translate-y-[1px] active:translate-y-[1px] active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-2 text-base relative group"
+            className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-500 border border-blue-400 text-white font-extrabold tracking-wide shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-base relative group"
             disabled={loading}
           >
             {loading ? (

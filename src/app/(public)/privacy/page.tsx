@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
             <Shield className="w-3.5 h-3.5" /> Privacy & Trust
           </span>
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
-            Privacy <span className="gradient-text">Policy</span>
+            Privacy <span className="text-sky-400">Policy</span>
           </h1>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
             Last Updated: June 18, 2026. Your trust and privacy are our highest priorities.

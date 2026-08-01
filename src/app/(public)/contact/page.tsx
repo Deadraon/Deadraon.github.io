@@ -25,7 +25,7 @@ export default function ContactPage() {
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-primary text-sm font-semibold uppercase tracking-wider">Hire Me</span>
           <h1 className="text-5xl lg:text-6xl font-black mt-2 mb-6">
-            Start a <span className="gradient-text">Conversation</span>
+            Start a <span className="text-sky-400">Conversation</span>
           </h1>
           <p className="text-muted-foreground text-lg mb-10">
             Whether it&apos;s a new project, a quick question, or just saying hi — I&apos;m always happy to chat.

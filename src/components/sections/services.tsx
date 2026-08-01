@@ -79,23 +79,23 @@ export function ServicesSection() {
               style={{ transitionDelay: `${i * 100}ms` }}
             >
               {/* Icon */}
-              <div className={cn("w-12 h-12 rounded-xl bg-gradient-to-br mb-4 flex items-center justify-center shadow-lg", service.color)}>
+              <div className={cn("w-12 h-12 rounded-xl bg-blue-600 border border-blue-400 mb-4 flex items-center justify-center shadow-md", service.color)}>
                 <service.icon className="w-6 h-6 text-white" />
               </div>
 
               <h3 className="text-xl font-semibold mb-2 text-white">{service.title}</h3>
-              <p className="text-white/60 text-sm mb-4 leading-relaxed">{service.description}</p>
+              <p className="text-slate-300 text-sm mb-4 leading-relaxed font-medium">{service.description}</p>
 
               <ul className="space-y-2 mb-6">
                 {service.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-white/70">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/40 flex-shrink-0" />
+                  <li key={f} className="flex items-center gap-2 text-sm text-slate-300 font-medium">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
 
-              <Link href={service.href} className="text-white/80 text-sm font-medium flex items-center gap-1 group-hover:gap-2 group-hover:text-white transition-all">
+              <Link href={service.href} className="text-sky-400 text-sm font-bold flex items-center gap-1 group-hover:gap-2 group-hover:text-white transition-all">
                 Learn more <ArrowRight className="w-3 h-3" />
               </Link>
             </GlassCard>
@@ -105,7 +105,7 @@ export function ServicesSection() {
         <div className={cn("text-center mt-12 transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.03] active:scale-[0.97] transition-all duration-200"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400 hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 shadow-md"
           >
             View All Services & Pricing <ArrowRight className="w-4 h-4" />
           </Link>

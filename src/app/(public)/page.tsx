@@ -201,9 +201,9 @@ export default function HomePage() {
               
               {/* Typewriter role sub-headline */}
               <div className="h-8 flex items-center justify-start">
-                <p className="text-base sm:text-lg md:text-xl font-light text-white/50 tracking-wide">
+                <p className="text-base sm:text-lg md:text-xl font-normal text-slate-300 tracking-wide">
                   <span>I'm a </span>
-                  <span className="text-white font-medium">{displayed}</span>
+                  <span className="text-sky-400 font-bold">{displayed}</span>
                   <span className="typing-cursor">&nbsp;</span>
                 </p>
               </div>
@@ -211,7 +211,7 @@ export default function HomePage() {
 
             {/* Contact Form Card */}
             <div id="contact-card" className="w-full max-w-md md:max-w-none md:w-[380px] lg:w-[440px] shrink-0 self-center md:self-auto transition-all select-text">
-              <div className="glass-dark rounded-[32px] border border-white/12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-6 flex flex-col gap-5 backdrop-blur-2xl">
+              <div className="bg-[#0f172a] rounded-[32px] border border-slate-700 shadow-[0_20px_50px_rgba(0,0,0,0.8)] p-6 flex flex-col gap-5">
                 
                 {/* Heading */}
                 <div className="flex flex-col gap-1">
@@ -221,9 +221,9 @@ export default function HomePage() {
                 </div>
 
                 {/* Email + Socials row */}
-                <div className="flex flex-row items-center justify-between gap-3 bg-white/[0.03] border border-white/10 rounded-2xl px-4 py-3 min-w-0">
+                <div className="flex flex-row items-center justify-between gap-3 bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3 min-w-0">
                   <div className="flex flex-col min-w-0">
-                    <span className="text-[10px] uppercase tracking-widest text-white/50 font-bold mb-0.5">
+                    <span className="text-[10px] uppercase tracking-widest text-slate-300 font-bold mb-0.5">
                       Drop us a line
                     </span>
                     <a
@@ -236,13 +236,13 @@ export default function HomePage() {
                   
                   {/* Social Buttons */}
                   <div className="flex items-center gap-2 shrink-0">
-                    <SocialBtn href="https://github.com/Deadraon" bgClass="bg-white/10 hover:bg-white/20" textClass="text-white">
+                    <SocialBtn href="https://github.com/Deadraon" bgClass="bg-slate-800 hover:bg-slate-700 border border-slate-600" textClass="text-white">
                       <Github size={14} className="stroke-[2.5]" />
                     </SocialBtn>
-                    <SocialBtn href="https://wa.me/916396714325" bgClass="bg-emerald-500/20 hover:bg-emerald-500/30" textClass="text-emerald-400">
+                    <SocialBtn href="https://wa.me/916396714325" bgClass="bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600" textClass="text-emerald-400">
                       <MessageCircle size={14} className="stroke-[2.5]" />
                     </SocialBtn>
-                    <SocialBtn href="https://twitter.com/Deadraon" bgClass="bg-sky-500/20 hover:bg-sky-500/30" textClass="text-sky-400">
+                    <SocialBtn href="https://twitter.com/Deadraon" bgClass="bg-sky-950/80 hover:bg-sky-900 border border-sky-600" textClass="text-sky-400">
                       <Twitter size={14} className="stroke-[2.5]" />
                     </SocialBtn>
                   </div>
@@ -252,15 +252,15 @@ export default function HomePage() {
                   <>
                     {/* OR Divider */}
                     <div className="flex items-center gap-3 w-full">
-                      <div className="flex-1 h-px bg-white/10" />
-                      <span className="text-[10px] font-bold text-white/30 tracking-[0.2em] select-none">OR</span>
-                      <div className="flex-1 h-px bg-white/10" />
+                      <div className="flex-1 h-px bg-slate-700" />
+                      <span className="text-[10px] font-bold text-slate-400 tracking-[0.2em] select-none">OR</span>
+                      <div className="flex-1 h-px bg-slate-700" />
                     </div>
 
                     {/* Contact Form */}
                     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm font-medium text-white/90 select-none">
+                        <label className="text-sm font-semibold text-white select-none">
                           Tell us about your vision
                         </label>
                         
@@ -272,7 +272,7 @@ export default function HomePage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
-                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] focus:bg-white/[0.06] focus:border-sky-400/50 focus:outline-none transition text-white placeholder:text-white/30"
+                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 focus:bg-slate-850 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition text-white placeholder:text-slate-400 font-medium"
                           />
                           <input
                             type="email"
@@ -280,7 +280,7 @@ export default function HomePage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] focus:bg-white/[0.06] focus:border-sky-400/50 focus:outline-none transition text-white placeholder:text-white/30"
+                            className="flex-1 min-w-0 text-sm px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 focus:bg-slate-850 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition text-white placeholder:text-slate-400 font-medium"
                           />
                         </div>
                       </div>
@@ -292,12 +292,12 @@ export default function HomePage() {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         required
-                        className="w-full text-sm px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus:bg-white/[0.06] focus:border-sky-400/50 focus:outline-none resize-none transition text-white placeholder:text-white/30"
+                        className="w-full text-sm px-4 py-3 rounded-xl border border-slate-700 bg-slate-900 focus:bg-slate-850 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none resize-none transition text-white placeholder:text-slate-400 font-medium"
                       />
 
                       {/* Service tags section */}
                       <div className="select-none">
-                        <span className="block text-[11px] font-bold text-white/50 uppercase tracking-wider mb-2">
+                        <span className="block text-[11px] font-extrabold text-slate-300 uppercase tracking-wider mb-2">
                           I need help with...
                         </span>
                         <div className="flex flex-wrap gap-1.5">
@@ -308,10 +308,10 @@ export default function HomePage() {
                                 key={service}
                                 type="button"
                                 onClick={() => toggleService(service)}
-                                className={`text-[10px] font-semibold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer ${
+                                className={`text-[10px] font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 cursor-pointer ${
                                   isActive
-                                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white border-purple-400 shadow-sm'
-                                    : 'bg-white/[0.03] text-white/70 border-white/10 hover:border-white/20 hover:text-white'
+                                    ? 'bg-blue-600 text-white border-blue-400 shadow-sm'
+                                    : 'bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500 hover:text-white'
                                 }`}
                               >
                                 {service}
@@ -325,7 +325,7 @@ export default function HomePage() {
                       <button
                         type="submit"
                         disabled={sending}
-                        className="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-sky-600 hover:from-purple-500 hover:to-sky-500 text-white text-sm font-bold py-3.5 rounded-xl shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all mt-2 cursor-pointer disabled:opacity-60"
+                        className="w-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-extrabold py-3.5 rounded-xl shadow-md border border-blue-400 hover:scale-[1.01] active:scale-[0.98] transition-all mt-2 cursor-pointer disabled:opacity-60"
                       >
                         {sending ? 'Sending...' : 'Send my message'}
                       </button>

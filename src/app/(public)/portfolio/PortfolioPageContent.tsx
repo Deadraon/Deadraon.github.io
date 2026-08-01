@@ -188,9 +188,9 @@ export default function PortfolioPageContent() {
       {/* ── Header ── */}
       <section className="section-padding pb-12">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-primary text-sm font-semibold uppercase tracking-wider">Portfolio</span>
+          <span className="text-sky-400 text-sm font-bold uppercase tracking-wider">Portfolio</span>
           <h1 className="text-5xl lg:text-6xl font-black mt-2 mb-6">
-            My <span className="gradient-text">Work &amp; Projects</span>
+            My <span className="text-sky-400">Work &amp; Projects</span>
           </h1>
           <p className="text-muted-foreground text-lg">
             Curated showcase projects and every repo I&apos;ve built — updated automatically.

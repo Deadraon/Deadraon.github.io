@@ -25,13 +25,17 @@ export function AdminSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       <div className="p-6 border-b border-border">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-            <Code2 className="w-4 h-4 text-white" />
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-md border border-purple-400/40 shrink-0">
+            <Code2 className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-bold text-sm leading-none"><span className="gradient-text">Dead</span>raon</p>
-            <p className="text-xs text-amber-500 mt-0.5 font-medium">Admin Panel</p>
+            <p className="font-extrabold text-sm leading-none">
+              <span className="text-[#c084fc]">Dea</span>
+              <span className="text-[#60a5fa]">d</span>
+              <span className="text-white">raon</span>
+            </p>
+            <p className="text-xs text-amber-400 mt-1 font-bold">Admin Panel</p>
           </div>
         </Link>
       </div>

@@ -74,18 +74,14 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 group transition-all duration-300 shrink-0 mr-1 z-10 hover:scale-[1.08] active:scale-[0.92]"
-          style={{
-            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-          }}
+          className="flex items-center gap-2.5 group transition-all duration-300 shrink-0 mr-1 z-10 hover:scale-[1.05] active:scale-[0.95]"
         >
-          <div className="relative w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-all duration-300">
-            <Code2 className="w-4 h-4 text-white" />
+          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-md border border-purple-400/40 shrink-0 transition-all duration-300">
+            <Code2 className="w-5 h-5 text-white" />
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Dead
-            </span>
+          <span className="font-extrabold text-xl tracking-tight leading-none">
+            <span className="text-[#c084fc]">Dea</span>
+            <span className="text-[#60a5fa]">d</span>
             <span className="text-white">raon</span>
           </span>
         </Link>
@@ -93,24 +89,18 @@ export function Navbar() {
         {/* ToolsOne pill */}
         <Link
           href="/tools"
-          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-blue-600 to-sky-600 border border-blue-400 border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
-          style={{
-            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
-          }}
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 border border-blue-400 text-white text-[11px] font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-150 shadow-md shrink-0 hover:scale-[1.05] active:scale-[0.95]"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           ToolsOne
         </Link>
 
         {/* DriveOne pill */}
         <Link
           href="/drive"
-          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-100 shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 shrink-0 hover:scale-[1.08] active:scale-[0.92]"
-          style={{
-            transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s',
-          }}
+          className="relative z-10 hidden sm:inline-flex items-center gap-1.5 bg-cyan-600 hover:bg-cyan-500 border border-cyan-400 text-white text-[11px] font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-xl active:translate-y-[1px] transition-all duration-150 shadow-md shrink-0 hover:scale-[1.05] active:scale-[0.95]"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           DriveOne
         </Link>
  
@@ -210,9 +200,9 @@ export function Navbar() {
             <Link
               href="/tools"
               onClick={() => setIsMobileOpen(false)}
-              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-blue-600 to-sky-600 border border-blue-400 border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
+              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-blue-600 border border-blue-400 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               ToolsOne
             </Link>
 
@@ -220,9 +210,9 @@ export function Navbar() {
             <Link
               href="/drive"
               onClick={() => setIsMobileOpen(false)}
-              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-gradient-to-b from-[#24A1DE] to-[#0070F3] border border-[#24A1DE] border-b-[3px] border-b-blue-900 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
+              className="flex items-center justify-center gap-2 py-3 text-xs font-black uppercase tracking-wider text-white bg-cyan-600 border border-cyan-400 rounded-xl transition-all duration-100 shadow-md w-full mb-2"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               DriveOne
             </Link>
 

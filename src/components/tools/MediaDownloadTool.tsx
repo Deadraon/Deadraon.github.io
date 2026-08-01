@@ -320,15 +320,15 @@ export function MediaDownloadTool() {
             </span>
             <span className="font-mono text-primary">{progress}%</span>
           </div>
-          <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/[0.02]">
-            <div className="bg-gradient-to-r from-blue-600 to-sky-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
+          <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700">
+            <div className="bg-blue-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
         </div>
       )}
 
       {/* Error Message */}
       {error && (
-        <div className="flex gap-3 text-xs text-rose-300 bg-rose-500/10 border border-rose-500/20 rounded-2xl p-4 leading-relaxed">
+        <div className="flex gap-3 text-xs text-rose-300 bg-rose-950/80 border border-rose-600 rounded-2xl p-4 leading-relaxed font-semibold">
           <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
@@ -336,23 +336,23 @@ export function MediaDownloadTool() {
 
       {/* Download controls section */}
       {url.trim() && (
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-300 hover:border-primary/20">
+        <div className="rounded-2xl border border-slate-700 bg-[#0f172a] shadow-2xl overflow-hidden transition-all duration-200">
           
           {/* Optional Media Preview Cover */}
           {mediaInfo && (
-            <div className="relative h-44 bg-black overflow-hidden border-b border-white/5">
-              <img src={mediaInfo.thumbnail} alt="Thumbnail" className="w-full h-full object-cover opacity-60 scale-105 blur-[2px] absolute inset-0" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-[#0a0f1d]/40 to-transparent" />
+            <div className="relative h-44 bg-slate-950 overflow-hidden border-b border-slate-700">
+              <img src={mediaInfo.thumbnail} alt="Thumbnail" className="w-full h-full object-cover opacity-60 scale-105 absolute inset-0" />
+              <div className="absolute inset-0 bg-[#0f172a]/70" />
               
               {/* Overlay Content */}
               <div className="absolute inset-0 p-5 flex flex-col justify-end gap-1.5">
-                <span className="text-[9px] font-bold text-primary border border-primary/20 bg-primary/10 px-2 py-0.5 rounded uppercase tracking-widest w-max">
+                <span className="text-[9px] font-extrabold text-sky-300 border border-sky-600 bg-sky-950 px-2 py-0.5 rounded uppercase tracking-widest w-max">
                   {mediaInfo.duration}
                 </span>
                 <h3 className="text-sm md:text-base font-extrabold text-white line-clamp-1 select-none">
                   {mediaInfo.title}
                 </h3>
-                <p className="text-xs text-white/50 line-clamp-1 select-none">
+                <p className="text-xs text-slate-300 line-clamp-1 select-none font-medium">
                   {mediaInfo.author}
                 </p>
               </div>
@@ -364,16 +364,16 @@ export function MediaDownloadTool() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Format Select */}
               <div className="space-y-2.5">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                <label className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest">
                   Target Format
                 </label>
-                <div className="grid grid-cols-2 gap-2 bg-white/[0.03] p-1 rounded-xl border border-white/5">
+                <div className="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl border border-slate-700">
                   <button
                     onClick={() => setFormatType("video")}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+                    className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
                       formatType === "video"
-                        ? "bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-lg shadow-blue-500/10"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-blue-600 text-white shadow-md border border-blue-400"
+                        : "text-slate-400 hover:text-white"
                     }`}
                   >
                     <Film className="w-3.5 h-3.5" />
@@ -381,10 +381,10 @@ export function MediaDownloadTool() {
                   </button>
                   <button
                     onClick={() => setFormatType("audio")}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+                    className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
                       formatType === "audio"
-                        ? "bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-lg shadow-blue-500/10"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-blue-600 text-white shadow-md border border-blue-400"
+                        : "text-slate-400 hover:text-white"
                     }`}
                   >
                     <Music className="w-3.5 h-3.5" />
@@ -395,24 +395,24 @@ export function MediaDownloadTool() {
 
               {/* Quality Select */}
               <div className="space-y-2.5">
-                <label htmlFor="quality-selector" className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                <label htmlFor="quality-selector" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest">
                   Media Quality
                 </label>
                 <select
                   id="quality-selector"
                   value={selectedQuality}
                   onChange={(e) => setSelectedQuality(e.target.value)}
-                  className="w-full rounded-xl border border-white/5 bg-white/[0.03] text-foreground px-4 py-2.5 text-xs font-semibold focus:border-primary/50 outline-none transition-all cursor-pointer"
+                  className="w-full rounded-xl border border-slate-700 bg-slate-900 text-white px-4 py-2.5 text-xs font-semibold focus:border-blue-500 outline-none transition-all cursor-pointer"
                 >
                   {formatType === "video" ? (
                     <>
-                      <option value="best" className="bg-[#0f1423]">Best Quality (Auto)</option>
-                      <option value="1080p" className="bg-[#0f1423]">1080p Full HD</option>
-                      <option value="720p" className="bg-[#0f1423]">720p HD</option>
-                      <option value="480p" className="bg-[#0f1423]">480p SD</option>
+                      <option value="best" className="bg-slate-900 text-white">Best Quality (Auto)</option>
+                      <option value="1080p" className="bg-slate-900 text-white">1080p Full HD</option>
+                      <option value="720p" className="bg-slate-900 text-white">720p HD</option>
+                      <option value="480p" className="bg-slate-900 text-white">480p SD</option>
                     </>
                   ) : (
-                    <option value="audio" className="bg-[#0f1423]">High Quality (320kbps MP3)</option>
+                    <option value="audio" className="bg-slate-900 text-white">High Quality (320kbps MP3)</option>
                   )}
                 </select>
               </div>
@@ -422,7 +422,7 @@ export function MediaDownloadTool() {
             <button
               onClick={handleDownload}
               disabled={busy}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 disabled:opacity-40 text-white font-bold px-6 py-4 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:scale-[1.01]"
+              className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 border border-blue-400 disabled:opacity-40 text-white font-extrabold px-6 py-4 transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:scale-[1.01]"
             >
               <Download className="w-4 h-4" />
               {busy ? "Generating download..." : "Download Media"}

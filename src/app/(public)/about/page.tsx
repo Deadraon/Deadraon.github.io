@@ -43,18 +43,18 @@ export default function AboutPage() {
               <Code2 className="w-4 h-4" /> About Me
             </span>
             <h1 className="text-5xl lg:text-6xl font-black mb-6">
-              The Developer <br /><span className="gradient-text">Behind the Code</span>
+              The Developer <br /><span className="text-sky-400">Behind the Code</span>
             </h1>
-            <p className="text-white/60 text-lg leading-relaxed mb-6">
-              I&apos;m <strong className="text-white font-medium">Kunal Chauhan</strong>. I am a passionate Full Stack Developer with 2+ years of experience crafting digital products that combine elegant design with robust engineering.
+            <p className="text-slate-300 text-lg leading-relaxed mb-6 font-medium">
+              I&apos;m <strong className="text-white font-semibold">Kunal Chauhan</strong>. I am a passionate Full Stack Developer with 2+ years of experience crafting digital products that combine elegant design with robust engineering.
             </p>
-            <p className="text-white/50 leading-relaxed mb-8">
+            <p className="text-slate-300 leading-relaxed mb-8 font-medium">
               From enterprise SaaS dashboards to consumer mobile apps, I bring a product-minded approach to every project. My goal is always the same — deliver work that drives real business results and delights users at every interaction.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200"><Zap className="w-4 h-4" /> Hire Me</Link>
+              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400 shadow-md transition-all duration-200"><Zap className="w-4 h-4" /> Hire Me</Link>
               <ResumeRequestModal>
-                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white/80 hover:text-white transition-all duration-200" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
+                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-slate-900 border border-slate-700 hover:bg-slate-800 transition-all duration-200">
                   <Download className="w-4 h-4" /> Request CV
                 </button>
               </ResumeRequestModal>
@@ -63,27 +63,26 @@ export default function AboutPage() {
 
           {/* Photo placeholder with stats */}
           <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <GlassCard rounded="rounded-[2.5rem]" contentClassName="w-full h-full" className="relative w-full aspect-square max-w-md mx-auto p-1 shadow-[0_0_50px_rgba(139,92,246,0.15)]">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0070F3]/5 to-[#8A2BE2]/5 rounded-[2.5rem] pointer-events-none" />
+            <GlassCard rounded="rounded-[2.5rem]" contentClassName="w-full h-full" className="relative w-full aspect-square max-w-md mx-auto p-1 border border-slate-700 shadow-2xl">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center relative z-10">
-                  <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(0,112,243,0.4)] overflow-hidden bg-black/50 border border-white/10">
+                  <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 overflow-hidden bg-slate-900 border border-slate-700">
                     <Image src="/logo.png" alt="Profile Logo" width={128} height={128} className="object-cover" />
                   </div>
                   <p className="text-3xl font-bold text-white mb-2">Kunal Chauhan</p>
-                  <p className="text-[#0070F3] font-medium tracking-wide mb-1">@Deadraon</p>
-                  <p className="text-white/40 text-sm">Full Stack Developer</p>
+                  <p className="text-sky-400 font-bold tracking-wide mb-1">@Deadraon</p>
+                  <p className="text-slate-300 text-sm font-medium">Full Stack Developer</p>
                 </div>
               </div>
             </GlassCard>
             {/* Floating stat cards */}
-            <GlassCard rounded="rounded-2xl" className="absolute -bottom-6 -left-6 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.3)] animate-float">
-              <p className="text-4xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-1">50+</p>
-              <p className="text-sm text-white/60 font-medium">Projects Done</p>
+            <GlassCard rounded="rounded-2xl" className="absolute -bottom-6 -left-6 p-5 shadow-2xl border border-slate-700 bg-slate-900">
+              <p className="text-4xl font-black text-sky-400 mb-1">50+</p>
+              <p className="text-sm text-slate-300 font-bold">Projects Done</p>
             </GlassCard>
-            <GlassCard rounded="rounded-2xl" className="absolute -top-6 -right-6 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.3)] animate-float" style={{ animationDelay: '1.5s' }}>
-              <p className="text-4xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-1">2+</p>
-              <p className="text-sm text-white/60 font-medium">Years Exp.</p>
+            <GlassCard rounded="rounded-2xl" className="absolute -top-6 -right-6 p-5 shadow-2xl border border-slate-700 bg-slate-900">
+              <p className="text-4xl font-black text-cyan-400 mb-1">2+</p>
+              <p className="text-sm text-slate-300 font-bold">Years Exp.</p>
             </GlassCard>
           </div>
         </div>
@@ -92,20 +91,20 @@ export default function AboutPage() {
       {/* Experience */}
       <section className="section-padding relative z-10 mt-12">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Experience</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-white">Experience</h2>
           <div className="relative">
-            <div className="absolute left-6 top-4 bottom-4 w-[2px] bg-gradient-to-b from-[#0070F3] via-[#8A2BE2] to-transparent rounded-full opacity-50" />
+            <div className="absolute left-6 top-4 bottom-4 w-[2px] bg-blue-500 rounded-full" />
             <div className="space-y-6">
               {experience.map((exp, i) => (
                 <GlassCard key={i} rounded="rounded-3xl" className="relative pl-16 p-8 animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div>
-                      <h3 className="font-bold text-xl text-white mb-1 group-hover:text-purple-300 transition-colors">{exp.role}</h3>
-                      <span className="text-white/50 font-medium">{exp.company}</span>
+                      <h3 className="font-bold text-xl text-white mb-1">{exp.role}</h3>
+                      <span className="text-slate-300 font-semibold">{exp.company}</span>
                     </div>
-                    <span className="text-sm font-mono text-purple-300 bg-purple-500/10 px-3 py-1.5 rounded-full whitespace-nowrap self-start sm:self-auto border border-purple-400/20">{exp.year}</span>
+                    <span className="text-sm font-mono text-sky-400 bg-blue-950 px-3 py-1.5 rounded-full whitespace-nowrap self-start sm:self-auto border border-blue-500/30 font-bold">{exp.year}</span>
                   </div>
-                  <p className="text-white/60 leading-relaxed">{exp.desc}</p>
+                  <p className="text-slate-300 leading-relaxed font-medium">{exp.desc}</p>
                 </GlassCard>
               ))}
             </div>
@@ -117,8 +116,8 @@ export default function AboutPage() {
       <section className="section-padding relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl font-bold mb-4">My Work <span className="gradient-text">Process</span></h2>
-            <p className="text-white/50 text-lg">How I turn your ideas into polished digital products.</p>
+            <h2 className="text-4xl font-bold mb-4 text-white">My Work <span className="text-sky-400">Process</span></h2>
+            <p className="text-slate-300 text-lg font-medium">How I turn your ideas into polished digital products.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {workProcess.map((step, i) => (

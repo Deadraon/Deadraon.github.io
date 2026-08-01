@@ -25,13 +25,17 @@ export function DashboardSidebar() {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="p-6 border-b border-border">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-            <Code2 className="w-4 h-4 text-white" />
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-md border border-purple-400/40 shrink-0">
+            <Code2 className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-bold text-sm leading-none"><span className="gradient-text">Dead</span>raon</p>
-            <p className="text-xs text-muted-foreground mt-0.5">Client Portal</p>
+            <p className="font-extrabold text-sm leading-none">
+              <span className="text-[#c084fc]">Dea</span>
+              <span className="text-[#60a5fa]">d</span>
+              <span className="text-white">raon</span>
+            </p>
+            <p className="text-xs text-slate-400 mt-1 font-semibold">Client Portal</p>
           </div>
         </Link>
       </div>

@@ -79,19 +79,19 @@ export function SkillsSection() {
               className={cn("p-6 transition-all duration-700", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}
               style={{ transitionDelay: `${gi * 100}ms` }}
             >
-              <h3 className={cn("text-lg font-semibold mb-6 bg-gradient-to-r bg-clip-text text-transparent", group.color)}>
+              <h3 className="text-lg font-bold mb-6 text-sky-400">
                 {group.title}
               </h3>
               <div className="space-y-5">
                 {group.skills.map((skill, si) => (
                   <div key={skill.name}>
-                    <div className="flex justify-between text-sm mb-1.5">
-                      <span className="font-medium text-white/90">{skill.name}</span>
-                      <span className="text-white/50">{skill.level}%</span>
+                    <div className="flex justify-between text-sm mb-1.5 font-semibold">
+                      <span className="text-white">{skill.name}</span>
+                      <span className="text-slate-400">{skill.level}%</span>
                     </div>
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
                       <div
-                        className={cn("h-full bg-gradient-to-r rounded-full transition-all duration-1000 ease-out", group.barColor)}
+                        className="h-full bg-blue-500 rounded-full transition-all duration-1000 ease-out"
                         style={{ width: inView ? `${skill.level}%` : "0%", transitionDelay: `${gi * 100 + si * 150}ms` }}
                       />
                     </div>

@@ -89,8 +89,8 @@ function ToolIcon({ slug }: { slug: string }) {
   const IconComponent = iconMap[slug] || Wrench;
 
   return (
-    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600/10 to-blue-600/10 border border-white/[0.06] flex items-center justify-center text-primary group-hover:from-purple-600/20 group-hover:to-blue-600/20 group-hover:text-white group-hover:scale-105 transition-all duration-300">
-      <IconComponent className="w-5 h-5 text-primary group-hover:text-white transition-colors" strokeWidth={2} />
+    <div className="w-10 h-10 rounded-xl bg-blue-950/80 border border-blue-500/30 flex items-center justify-center text-sky-400 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-105 transition-all duration-200">
+      <IconComponent className="w-5 h-5 transition-colors" strokeWidth={2} />
     </div>
   );
 }
@@ -99,19 +99,17 @@ function ToolCard({ tool }: { tool: Tool }) {
   return (
     <Link
       href={`/tools/${tool.slug}`}
-      className="group relative flex flex-col rounded-2xl border border-white/[0.05] bg-gradient-to-b from-white/[0.03] to-white/[0.01] p-6 hover:border-primary/40 hover:bg-white/[0.04] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(59,130,246,0.1)] card-hover overflow-hidden"
+      className="group relative flex flex-col rounded-2xl border border-slate-700 bg-[#0f172a] p-6 hover:border-blue-500 hover:bg-slate-800/90 transition-all duration-200 shadow-md card-hover overflow-hidden"
     >
-      <div className="absolute -right-10 -top-10 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all duration-500" />
-      
       <div className="flex items-center justify-between mb-4">
         <ToolIcon slug={tool.slug} />
         <div className="flex items-center gap-2">
           {tool.local ? (
-            <span className="text-[9px] font-bold text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full bg-emerald-500/10 uppercase tracking-widest">
+            <span className="text-[9px] font-extrabold text-emerald-300 border border-emerald-600 px-2.5 py-0.5 rounded-full bg-emerald-950/90 uppercase tracking-widest">
               Local
             </span>
           ) : (
-            <span className="text-[9px] font-bold text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full bg-amber-500/10 uppercase tracking-widest">
+            <span className="text-[9px] font-extrabold text-amber-300 border border-amber-600 px-2.5 py-0.5 rounded-full bg-amber-950/90 uppercase tracking-widest">
               Cloud
             </span>
           )}
@@ -119,22 +117,22 @@ function ToolCard({ tool }: { tool: Tool }) {
       </div>
 
       <div className="flex-1 space-y-2">
-        <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1">
+        <h3 className="text-base font-bold text-white group-hover:text-sky-400 transition-colors flex items-center gap-1">
           {tool.name}
         </h3>
-        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+        <p className="text-xs text-slate-300 leading-relaxed line-clamp-2">
           {tool.tagline}
         </p>
       </div>
 
-      <div className="pt-4 border-t border-white/[0.05] flex items-center justify-between mt-5">
-        <span className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-wider flex items-center gap-1.5">
+      <div className="pt-4 border-t border-slate-700/80 flex items-center justify-between mt-5">
+        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5 font-bold">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           Ready
         </span>
-        <div className="flex items-center gap-1 text-primary text-xs font-semibold group-hover:translate-x-1 transition-transform">
+        <div className="flex items-center gap-1 text-sky-400 text-xs font-bold group-hover:translate-x-1 transition-transform">
           <span>Open</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-primary">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-sky-400">
             <path d="M5 12h14m-7-7l7 7-7 7" />
           </svg>
         </div>
@@ -229,7 +227,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
 
   return (
     <div className="relative pt-24 pb-20 tools-theme min-h-screen hero-mesh">
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         
         {/* ===== HERO ===== */}
         <section className="py-20 border-b border-border/50 text-center md:text-left">
@@ -240,10 +238,10 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-8 leading-tight">
-              Precision <span className="gradient-text">Developer Toolkit</span>
+              Precision <span className="text-sky-400">Developer Toolkit</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-12">
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl leading-relaxed mb-12 font-medium">
               A comprehensive suite of client-side web utilities for developers. Fast execution, zero server uploads, absolute privacy.
             </p>
 
@@ -253,9 +251,9 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
               </a>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3 border border-primary/30 border-b-4 border-b-primary/50 hover:bg-primary/10 rounded-xl transition-all duration-100 font-extrabold text-sm text-primary active:border-b-2 active:translate-y-[2px] flex items-center gap-2"
+                className="px-6 py-3 border border-blue-400 bg-slate-900 hover:bg-slate-800 rounded-xl transition-all duration-150 font-extrabold text-sm text-sky-400 flex items-center gap-2"
               >
-                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                <Sparkles className="w-4 h-4 text-sky-400 animate-pulse" />
                 Request a Tool
               </button>
             </div>
@@ -264,19 +262,19 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
 
         {/* ===== MODULE GRID ===== */}
         <section id="tools" className="py-20 scroll-mt-32">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-l-4 border-primary pl-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-l-4 border-blue-500 pl-6">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">
+              <h2 className="text-3xl font-bold tracking-tight text-white">
                 Available Instruments
               </h2>
-              <p className="text-muted-foreground text-sm mt-2">
+              <p className="text-slate-300 text-sm mt-2 font-medium">
                 Click on any card to initialize the module locally.
               </p>
             </div>
             
             {/* Search Bar */}
             <div className="relative w-full md:w-80 group/search">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within/search:text-primary transition-colors">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/search:text-sky-400 transition-colors">
                 <Search className="w-4 h-4" />
               </span>
               <input
@@ -284,7 +282,7 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search tools..."
-                className="w-full pl-10 pr-10 py-2.5 bg-white/[0.02] border border-white/10 hover:border-white/20 focus:border-primary/50 focus:bg-white/[0.04] rounded-xl text-xs font-semibold focus:outline-none transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+                className="w-full pl-10 pr-10 py-2.5 bg-slate-900 border border-slate-700 hover:border-slate-500 focus:border-blue-500 rounded-xl text-xs font-semibold text-white placeholder:text-slate-400 focus:outline-none transition-all duration-200"
               />
               {searchQuery && (
                 <button
@@ -327,19 +325,16 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
         </section>
 
         {/* ===== REQUEST A TOOL WIDGET ===== */}
-        <section className="py-16 border-t border-border/50 border-dashed">
-          <div className="relative rounded-3xl border border-white/10 bg-gradient-to-r from-blue-950/40 via-slate-900/30 to-sky-950/20 p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-            <div className="absolute inset-0 bg-grid-white/[0.02] pointer-events-none" />
-            <div className="absolute -right-24 -top-24 w-72 h-72 bg-primary/10 rounded-full blur-[100px] pointer-events-none animate-pulse-glow" />
-            
+        <section className="py-16 border-t border-slate-800">
+          <div className="relative rounded-3xl border border-slate-700 bg-[#0f172a] p-8 md:p-12 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div className="relative z-10 space-y-3 max-w-xl">
-              <span className="text-[10px] font-bold text-primary border border-primary/20 bg-primary/10 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="text-[10px] font-extrabold text-sky-400 border border-sky-600 bg-sky-950 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 Custom Utilities
               </span>
               <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white">
                 Need a specific digital tool?
               </h3>
-              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs md:text-sm text-slate-300 leading-relaxed font-medium">
                 Tell me what utility you are looking for (e.g., custom parsers, formatting aids, converters), and I will build and add it to the workbench suite.
               </p>
             </div>
@@ -347,13 +342,103 @@ export default function ToolsDashboardContent({ toolsList }: { toolsList: Tool[]
             <div className="relative z-10 shrink-0">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3.5 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white text-sm font-extrabold rounded-xl transition-all duration-200 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                className="px-6 py-3.5 bg-blue-600 hover:bg-blue-500 border border-blue-400 text-white text-sm font-extrabold rounded-xl transition-all duration-200 shadow-md cursor-pointer flex items-center justify-center gap-2"
               >
                 Request a Tool
               </button>
             </div>
           </div>
         </section>
+
+        {/* Modal popup */}
+        {isModalOpen && (
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <div 
+              className="bg-[#0f172a] border border-slate-700 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 sm:p-8 space-y-6">
+                <div className="space-y-2 text-center">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-600 border border-blue-400 flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Request a Tool</h3>
+                  <p className="text-xs text-slate-300 font-medium">
+                    Suggest a digital utility you need and I will construct it.
+                  </p>
+                </div>
+
+                <form onSubmit={handleRequestSubmit} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label htmlFor="req-tool-name" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest pl-1">
+                      Tool Name <span className="text-sky-400">*</span>
+                    </label>
+                    <input
+                      id="req-tool-name"
+                      type="text"
+                      placeholder="e.g. SVG Optimizer, YAML Validator"
+                      value={toolName}
+                      onChange={(e) => setToolName(e.target.value)}
+                      required
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 text-white text-xs focus:outline-none focus:border-blue-500 font-medium placeholder:text-slate-400"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="req-tool-desc" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest pl-1">
+                      Function Description <span className="text-sky-400">*</span>
+                    </label>
+                    <textarea
+                      id="req-tool-desc"
+                      rows={3}
+                      placeholder="Explain what the tool should do, how it should work, expected inputs and outputs..."
+                      value={toolDesc}
+                      onChange={(e) => setToolDesc(e.target.value)}
+                      required
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 text-white text-xs focus:outline-none focus:border-blue-500 resize-none font-medium placeholder:text-slate-400"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="req-user-email" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest pl-1">
+                      Your Email <span className="text-slate-400">(Optional)</span>
+                    </label>
+                    <input
+                      id="req-user-email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={userEmail}
+                      onChange={(e) => setUserEmail(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900 text-white text-xs focus:outline-none focus:border-blue-500 font-medium placeholder:text-slate-400"
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(false)}
+                      className="flex-1 py-3 border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs text-white font-extrabold rounded-xl transition-all"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 border border-blue-400 text-xs text-white font-extrabold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      {submitting ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : "Submit Request"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ===== SEO ARTICLE & FAQ SECTION ===== */}
         <section className="py-20 border-t border-border/50 border-dashed">

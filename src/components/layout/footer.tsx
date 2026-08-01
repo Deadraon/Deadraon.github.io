@@ -45,13 +45,14 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
             {/* Brand */}
             <div className="lg:col-span-2">
-              <Link href="/" className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                  <Code2 className="w-4 h-4 text-white" />
+              <Link href="/" className="flex items-center gap-2.5 mb-4">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-md border border-purple-400/40 shrink-0">
+                  <Code2 className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-bold text-xl text-foreground">
-                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">Dead</span>
-                  <span>raon</span>
+                <span className="font-extrabold text-xl tracking-tight leading-none">
+                  <span className="text-[#c084fc]">Dea</span>
+                  <span className="text-[#60a5fa]">d</span>
+                  <span className="text-white">raon</span>
                 </span>
               </Link>
               <p className="text-white/50 text-sm leading-relaxed max-w-xs mb-6">

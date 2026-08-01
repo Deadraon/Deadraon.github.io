@@ -80,17 +80,11 @@ export function ProjectsSection() {
               key={f}
               onClick={() => setActiveFilter(f)}
               className={cn(
-                "px-5 py-2 rounded-full text-sm font-medium capitalize transition-all duration-200",
+                "px-5 py-2 rounded-full text-sm font-bold capitalize transition-all duration-200 border",
                 activeFilter === f
-                  ? "bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-lg shadow-blue-500/25"
-                  : "text-white/70 hover:text-white"
+                  ? "bg-blue-600 text-white border-blue-400 shadow-md"
+                  : "bg-slate-900 text-slate-300 border-slate-700 hover:text-white hover:border-slate-500"
               )}
-              style={activeFilter !== f ? {
-                background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2)",
-              } : undefined}
             >
               {f}
             </button>
@@ -102,7 +96,7 @@ export function ProjectsSection() {
           {loading ? (
             Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
           ) : filtered.length === 0 ? (
-            <div className="col-span-full text-center py-16 text-white/50">
+            <div className="col-span-full text-center py-16 text-slate-400 font-medium">
               {projects.length === 0 ? "No projects yet." : "No projects in this category."}
             </div>
           ) : (
@@ -118,7 +112,7 @@ export function ProjectsSection() {
                 style={{ transitionDelay: `${i * 150}ms` }}
               >
                 {/* Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-48 overflow-hidden bg-slate-900 border-b border-slate-800">
                   {project.image ? (
                     <Image
                       src={project.image}
@@ -127,23 +121,21 @@ export function ProjectsSection() {
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-sky-600/20 flex items-center justify-center">
-                      <span className="text-4xl font-black text-white/20">{project.title.charAt(0)}</span>
+                    <div className="w-full h-full bg-slate-900 flex items-center justify-center">
+                      <span className="text-4xl font-black text-slate-600">{project.title.charAt(0)}</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   {/* Overlay links */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                  <div className="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
                     {project.github && (
                       <a href={project.github} target="_blank" rel="noopener noreferrer"
-                        className="p-2.5 rounded-xl text-white hover:scale-110 transition-transform"
-                        style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                        className="p-2.5 rounded-xl text-white hover:scale-110 transition-transform bg-slate-800 border border-slate-600">
                         <Github className="w-5 h-5" />
                       </a>
                     )}
                     {project.live && (
                       <a href={project.live} target="_blank" rel="noopener noreferrer"
-                        className="p-2.5 rounded-xl text-white hover:scale-110 transition-transform bg-gradient-to-r from-blue-600 to-sky-600">
+                        className="p-2.5 rounded-xl text-white hover:scale-110 transition-transform bg-blue-600 border border-blue-400">
                         <ExternalLink className="w-5 h-5" />
                       </a>
                     )}

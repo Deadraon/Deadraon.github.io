@@ -85,14 +85,13 @@ export function ContactSection() {
             </GlassCard>
 
             <GlassCard rounded="rounded-2xl" className="p-6">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-600/15 to-sky-600/15" />
               <h3 className="font-bold text-lg mb-2 text-white relative z-10">Response Time</h3>
-              <p className="text-white/70 text-sm relative z-10">
+              <p className="text-slate-300 text-sm relative z-10 font-medium">
                 I typically respond within <strong className="text-white">24 hours</strong>. For urgent projects, WhatsApp is fastest.
               </p>
               <div className="mt-4 flex items-center gap-2 relative z-10">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-sm font-medium text-white/80">Currently available for work</span>
+                <span className="text-sm font-semibold text-slate-200">Currently available for work</span>
               </div>
             </GlassCard>
           </div>
@@ -176,7 +175,7 @@ export function ContactSection() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full py-3 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md cursor-pointer"
                   >
                     {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : <><Send className="w-4 h-4" /> Send Message</>}
                   </button>

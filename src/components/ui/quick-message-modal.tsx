@@ -124,7 +124,7 @@ export function QuickMessageModal({ isOpen, onClose }: QuickMessageModalProps) {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
-                  className="w-full text-sm px-4 py-3 rounded-xl border border-white/10 bg-white/[0.02] focus:bg-white/[0.04] focus:outline-none focus:ring-1 focus:ring-blue-500/40 text-white placeholder-white/30 resize-none transition duration-200"
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-slate-700 bg-slate-900 focus:outline-none focus:border-blue-500 text-white placeholder-slate-400 resize-none transition duration-200"
                 />
               </div>
 
@@ -132,7 +132,7 @@ export function QuickMessageModal({ isOpen, onClose }: QuickMessageModalProps) {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white text-sm font-semibold py-3.5 rounded-2xl transition duration-300 shadow-md hover:shadow-blue-500/20 active:scale-[0.98] disabled:opacity-60 flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                className="w-full bg-blue-600 hover:bg-blue-500 border border-blue-400 text-white text-sm font-bold py-3.5 rounded-2xl transition duration-200 shadow-md active:scale-[0.98] disabled:opacity-60 flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 {sending ? (
                   <span>Sending...</span>

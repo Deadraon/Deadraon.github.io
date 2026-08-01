@@ -96,7 +96,7 @@ export function ResumeRequestModal({ children }: { children: React.ReactNode }) 
             />
           </div>
           <DialogFooter className="pt-4">
-            <Button type="submit" variant="gradient" size="lg" disabled={loading} className="w-full h-12 rounded-xl">
+            <Button type="submit" variant="default" size="lg" disabled={loading} className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold border border-blue-400">
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

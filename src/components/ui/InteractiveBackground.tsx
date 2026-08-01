@@ -148,10 +148,7 @@ export function InteractiveBackground() {
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mx, my);
-          const gradient = ctx.createLinearGradient(p.x, p.y, mx, my);
-          gradient.addColorStop(0, p.color + (force * 0.3) + ")");
-          gradient.addColorStop(1, "rgba(59, 130, 246, 0)");
-          ctx.strokeStyle = gradient;
+          ctx.strokeStyle = `rgba(59, 130, 246, ${force * 0.35})`;
           ctx.lineWidth = 0.9;
           ctx.stroke();
         } else {
@@ -163,10 +160,7 @@ export function InteractiveBackground() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color + p.alpha + ")";
-        ctx.shadowBlur = p.radius > 2.2 ? 10 : 0;
-        ctx.shadowColor = p.color + "0.6)";
         ctx.fill();
-        ctx.shadowBlur = 0;
 
         // Connect nearby particles
         for (let j = i + 1; j < particles.length; j++) {
@@ -204,95 +198,65 @@ export function InteractiveBackground() {
       ref={containerRef}
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#090b12]"
     >
-      {/* 1. Base Rich Gradient Mesh */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(59,130,246,0.14),rgba(255,255,255,0))]" />
+      {/* Crisp Solid Tech Grid Lines */}
+      <div 
+        className="absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #38bdf8 1px, transparent 1px),
+            linear-gradient(to bottom, #38bdf8 1px, transparent 1px)
+          `,
+          backgroundSize: "48px 48px",
+        }}
+      />
 
-      {/* 2. Floating Morphing Aurora Glow Orbs (Subdued Enterprise Tech Tones) */}
+      {/* Floating Animated Solid Tech Orbs */}
       <motion.div
         animate={{
-          x: [0, 30, -25, 0],
-          y: [0, -40, 25, 0],
-          scale: [1, 1.1, 0.95, 1],
+          x: [0, 40, -30, 0],
+          y: [0, -50, 30, 0],
+          scale: [1, 1.05, 0.95, 1],
         }}
         transition={{
-          duration: 20,
+          duration: 18,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-blue-600/20 via-indigo-600/15 to-sky-500/15 blur-[140px] opacity-75"
+        className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full border border-purple-500/25 bg-purple-950/15 pointer-events-none"
       />
 
       <motion.div
         animate={{
           x: [0, -40, 30, 0],
-          y: [0, 30, -30, 0],
-          scale: [1, 0.92, 1.08, 1],
+          y: [0, 40, -40, 0],
+          scale: [1, 0.95, 1.05, 1],
         }}
         transition={{
-          duration: 24,
+          duration: 22,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-[35%] -right-40 w-[650px] h-[650px] rounded-full bg-gradient-to-bl from-sky-600/18 via-cyan-600/12 to-slate-700/15 blur-[150px] opacity-70"
+        className="absolute top-[35%] -right-32 w-[600px] h-[600px] rounded-full border border-blue-500/20 bg-blue-950/15 pointer-events-none"
       />
 
       <motion.div
         animate={{
-          x: [0, 25, -35, 0],
-          y: [0, -25, 35, 0],
-          scale: [1, 1.08, 0.92, 1],
+          x: [0, 30, -40, 0],
+          y: [0, -30, 40, 0],
+          scale: [1, 1.04, 0.96, 1],
         }}
         transition={{
-          duration: 26,
+          duration: 25,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -bottom-40 left-[15%] w-[550px] h-[550px] rounded-full bg-gradient-to-tr from-cyan-600/15 via-blue-700/15 to-indigo-800/15 blur-[140px] opacity-65"
+        className="absolute -bottom-32 left-[15%] w-[500px] h-[500px] rounded-full border border-purple-500/20 bg-purple-950/15 pointer-events-none"
       />
 
-      {/* 3. Modern Tech Grid Lines (Linear/Vercel Style) */}
-      <div 
-        className="absolute inset-0 opacity-[0.14]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px)
-          `,
-          backgroundSize: "48px 48px",
-          maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)",
-        }}
-      />
-
-      {/* 4. Interactive HTML5 Canvas Particles */}
+      {/* Interactive HTML5 Canvas Particles */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 block w-full h-full"
-      />
-
-      {/* 5. Dynamic Mouse Spotlight Aura */}
-      <div
-        className="absolute inset-0 transition-opacity duration-700 ease-out"
-        style={{
-          opacity: isHovered ? 1 : 0.5,
-          background: `
-            radial-gradient(
-              600px circle at ${smoothMouse.x}px ${smoothMouse.y}px,
-              rgba(59, 130, 246, 0.12),
-              rgba(14, 165, 233, 0.08) 35%,
-              rgba(6, 182, 212, 0.04) 60%,
-              transparent 80%
-            )
-          `,
-        }}
-      />
-
-      {/* 6. Subtle Noise Texture Overlay for Rich Visual Depth */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-        }}
       />
     </div>
   );

@@ -21,7 +21,7 @@ export default function TermsAndConditionsPage() {
             <Scale className="w-3.5 h-3.5" /> Site Agreement
           </span>
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
-            Terms & <span className="gradient-text">Conditions</span>
+            Terms & <span className="text-sky-400">Conditions</span>
           </h1>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
             Last Updated: June 18, 2026. Please read this agreement before using our services or tools.

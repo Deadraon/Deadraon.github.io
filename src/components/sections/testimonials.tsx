@@ -103,7 +103,7 @@ export function TestimonialsSection() {
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">&ldquo;{t.content}&rdquo;</p>
 
               <div className="flex items-center gap-3">
-                <div className={cn("w-10 h-10 rounded-full bg-gradient-to-br flex items-center justify-center text-white text-sm font-bold flex-shrink-0", t.color)}>
+                <div className="w-10 h-10 rounded-full bg-blue-600 border border-blue-400 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                   {t.avatar}
                 </div>
                 <div>

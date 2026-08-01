@@ -73,11 +73,11 @@ export default function ServicesPage() {
       {/* Header */}
       <section className="section-padding pb-12">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-primary text-sm font-semibold uppercase tracking-wider">Services & Pricing</span>
+          <span className="text-sky-400 text-sm font-bold uppercase tracking-wider">Services & Pricing</span>
           <h1 className="text-5xl lg:text-6xl font-black mt-2 mb-6">
-            What I Can <span className="gradient-text">Build For You</span>
+            What I Can <span className="text-sky-400">Build For You</span>
           </h1>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-slate-300 text-lg leading-relaxed font-medium">
             End-to-end digital product development. I handle design, development, and deployment so you can focus on growing your business.
           </p>
         </div>
@@ -86,27 +86,24 @@ export default function ServicesPage() {
       {/* Services */}
       <section className="px-4 sm:px-6 lg:px-8 pb-20">
         <div className="max-w-7xl mx-auto space-y-8">
-          {services.map((service, i) => (
+          {services.map((service) => (
             <GlassCard key={service.id} rounded="rounded-3xl" className="p-8 group hover:scale-[1.01] transition-transform duration-300">
               <div className="grid lg:grid-cols-2 gap-8 items-start">
                 <div>
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 shadow-lg`}>
+                  <div className="w-14 h-14 rounded-2xl bg-blue-600 border border-blue-400 flex items-center justify-center mb-6 shadow-md">
                     <service.icon className="w-7 h-7 text-white" />
                   </div>
-                  <span className="text-sm text-primary font-medium">{service.tagline}</span>
+                  <span className="text-sm text-sky-400 font-bold">{service.tagline}</span>
                   <h2 className="text-3xl font-bold mt-1 mb-4 text-white">{service.title}</h2>
-                  <p className="text-white/60 leading-relaxed mb-6">{service.description}</p>
+                  <p className="text-slate-300 leading-relaxed mb-6 font-medium">{service.description}</p>
                   <div className="flex items-center gap-4">
                     <div>
-                       <p className="text-xs text-white/50">Starting at</p>
-                       <p className="text-2xl font-black bg-gradient-to-r from-blue-400 to-sky-300 bg-clip-text text-transparent">{service.startingAt}</p>
+                       <p className="text-xs text-slate-400 font-bold">Starting at</p>
+                       <p className="text-2xl font-black text-sky-400">{service.startingAt}</p>
                     </div>
                       <Link
                         href={`/contact?service=${service.id}`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:shadow-lg hover:shadow-blue-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
-                        style={{
-                          transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, background-color 0.2s',
-                        }}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400 shadow-md hover:scale-[1.05] active:scale-[0.95] transition-all duration-200"
                       >
                         <Zap className="w-4 h-4" /> Get a Quote
                       </Link>
@@ -114,8 +111,8 @@ export default function ServicesPage() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {service.features.map((f) => (
-                    <div key={f} className="flex items-center gap-2.5 text-sm text-white/70">
-                      <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                    <div key={f} className="flex items-center gap-2.5 text-sm text-slate-300 font-medium">
+                      <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                       <span>{f}</span>
                     </div>
                   ))}
@@ -129,14 +126,11 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="section-padding">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4 text-white">Ready to Start? <span className="gradient-text">Let&apos;s Talk</span></h2>
-          <p className="text-white/60 mb-8">Tell me about your project and I&apos;ll get back to you within 24 hours with a custom quote.</p>
+          <h2 className="text-4xl font-bold mb-4 text-white">Ready to Start? <span className="text-sky-400">Let&apos;s Talk</span></h2>
+          <p className="text-slate-300 mb-8 font-medium">Tell me about your project and I&apos;ll get back to you within 24 hours with a custom quote.</p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-[1.08] active:scale-[0.92] outline-none focus:outline-none transition-all duration-300"
-            style={{
-              transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, background-color 0.2s',
-            }}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-extrabold text-white bg-blue-600 hover:bg-blue-500 border border-blue-400 shadow-md hover:scale-[1.05] active:scale-[0.95] transition-all duration-200"
           >
             <ArrowRight className="w-5 h-5" /> Start a Project
           </Link>

@@ -27,10 +27,10 @@ export function StatsSection() {
               )}
               style={{ transitionDelay: `${i * 100}ms` }}
             >
-              <div className={cn("text-4xl lg:text-5xl font-black mb-2 bg-gradient-to-r bg-clip-text text-transparent drop-shadow-lg", stat.color)}>
+              <div className="text-4xl lg:text-5xl font-black mb-2 text-sky-400">
                 {stat.value}
               </div>
-              <p className="text-sm text-white/70 font-medium">{stat.label}</p>
+              <p className="text-sm text-slate-300 font-semibold">{stat.label}</p>
             </div>
           ))}
         </div>
