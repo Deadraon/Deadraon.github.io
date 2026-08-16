@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
       customer_name: name,
       customer_phone: phone,
       note: note || `Payment for ${name}`,
-      callback_url: `${appUrl}/api/payment/webhook`,
+      callback_url: `${appUrl}/pay`,
     };
 
     console.log("Calling MyMobPay API at:", apiUrl, "with payload:", {

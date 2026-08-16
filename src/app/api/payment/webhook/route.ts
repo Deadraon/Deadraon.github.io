@@ -181,3 +181,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function GET(req: NextRequest) {
+  const host = req.headers.get("host") || "www.deadraon.dev";
+  const protocol = host.includes("localhost") ? "http" : "https";
+  const appUrl = `${protocol}://${host}`;
+  const searchParams = req.nextUrl.searchParams;
+  const status = searchParams.get("status") || "success";
+  const orderId = searchParams.get("gateway_id") || searchParams.get("orderId") || "";
+  const utr = searchParams.get("utr") || "";
+
+  const redirectUrl = new URL(`${appUrl}/pay`);
+  redirectUrl.searchParams.set("status", status);
+  if (orderId) redirectUrl.searchParams.set("orderId", orderId);
+  if (utr) redirectUrl.searchParams.set("utr", utr);
+
+  return NextResponse.redirect(redirectUrl.toString(), 302);
+}
+

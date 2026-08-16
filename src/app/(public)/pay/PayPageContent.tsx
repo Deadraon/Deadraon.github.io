@@ -58,7 +58,7 @@ function PaymentForm() {
     }
   }, [isLoaded, user, payments.length]);
 
-  // Prefill form from query parameters or user session
+  // Prefill form from query parameters or user session and handle status
   useEffect(() => {
     if (isLoaded) {
       setFormData((prev) => ({
@@ -69,6 +69,14 @@ function PaymentForm() {
         amount: prev.amount || searchParams.get("amount") || searchParams.get("budget") || "",
         projectId: prev.projectId || searchParams.get("projectId") || "",
       }));
+
+      const status = searchParams.get("status");
+      if (status === "success" || status === "verified") {
+        toast.success("Payment confirmed successfully! Thank you.");
+        fetchPayments();
+      } else if (status === "failed" || status === "declined") {
+        toast.error("Payment was not completed. Please try again.");
+      }
     }
   }, [searchParams, user, isLoaded]);
 
